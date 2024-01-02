@@ -24,18 +24,18 @@ csl: files/bib/chicago-author-date.csl
 website:
   title: "Program Evaluation"
   description: "Use modern statistical and data scientific tools to measure causal effects and evaluate public policy"
-  site-url: "https://evalsp23.classes.andrewheiss.com"
+  site-url: "https://evalsp24.classes.andrewheiss.com"
 
   favicon: "/files/icon-512.png"
 
   twitter-card:
-    image: "/files/social-image-sp23.png"
+    image: "/files/social-image-sp24.png"
     card-style: summary_large_image
     creator: "@andrewheiss"
     # site: "@andrewheiss"
 
   open-graph:
-    image: "/files/social-image-sp23.png"
+    image: "/files/social-image-sp24.png"
     locale: en_US
   
   repo-url: "https://github.com/andrewheiss/datavizf23.classes.andrewheiss.com"
