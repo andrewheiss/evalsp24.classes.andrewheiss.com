@@ -1,6 +1,6 @@
 ---
 title: "Choosing and planning ethical evaluations"
-date: "2023-04-13"
+date: "2024-04-11"
 ---
 
 ```{r slides-videos, echo=FALSE, include=FALSE}
@@ -49,12 +49,14 @@ youtube_list(slide_details, playlist_id)
 ```
 
 ::: {.content-hidden}
+
 ## In-class stuff
 
 Here are all the materials we'll use in class:
 
 - [**Week 13 FAQ slides**](/slides/13-class.html) ([PDF](/slides/13-class.pdf))
 - [{{< fa brands r-project >}} Live R script](https://www.dropbox.com/s/f1a04qzvmhelwcs/synthetic-data-f22.R)
+
 :::
 
 

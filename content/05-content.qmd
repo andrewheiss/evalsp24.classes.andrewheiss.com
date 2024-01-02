@@ -1,6 +1,6 @@
 ---
 title: "DAGs and potential outcomes"
-date: "2023-02-09"
+date: "2024-02-08"
 ---
 
 ```{r slides-videos, echo=FALSE, include=FALSE}
@@ -48,6 +48,8 @@ slide_tabs(slide_details, "/slides/05-slides.html")
 youtube_list(slide_details, playlist_id)
 ```
 
+::: {.content-hidden}
+
 ## In-class stuff
 
 Here are all the materials we'll use in class:
@@ -91,6 +93,8 @@ DAG:
 ```{r echo=FALSE, out.width="80%"}
 knitr::include_graphics(here::here("files", "img", "streets-dag.jpg"), error = FALSE)
 ```
+
+:::
 
 ```{verbatim include=FALSE}
 Playlist: https://www.youtube.com/playlist?list=PLS6tnpTr39sHwqEeiG5xb3zAHcQCGWZUC

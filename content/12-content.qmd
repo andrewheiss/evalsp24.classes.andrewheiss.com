@@ -1,6 +1,6 @@
 ---
 title: "Instrumental variables II + Regression discontinuity II"
-date: "2023-04-06"
+date: "2024-04-04"
 ---
 
 ```{r slides-videos, echo=FALSE, include=FALSE}
@@ -44,6 +44,8 @@ slide_tabs(slide_details, "/slides/12-slides.html")
 youtube_list(slide_details, playlist_id)
 ```
 
+::: {.content-hidden}
+
 ## In-class stuff
 
 Here are all the materials we'll use in class:
@@ -53,6 +55,7 @@ Here are all the materials we'll use in class:
 - [The ultimate guide to generating synthetic data for causal inference](/example/synthetic-data.qmd)
 - [{{< fa brands r-project >}} Live R script](https://www.dropbox.com/s/mzaaxffdhu5tllp/synthetic-data-sp23.R)
 
+:::
 
 ```{verbatim include=FALSE}
 Playlist: https://www.youtube.com/playlist?list=PLS6tnpTr39sGrbGfvdp0Gob6qAghIdiLq

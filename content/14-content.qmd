@@ -1,6 +1,6 @@
 ---
 title: "Ethics, stories, and curiosity"
-date: "2023-04-20"
+date: "2024-04-18"
 ---
 
 ```{r slides-videos, echo=FALSE, include=FALSE}
@@ -79,6 +79,7 @@ slide_tabs(slide_details, "/slides/14-slides.html")
 youtube_list(slide_details, playlist_id)
 ```
 
+::: {.content-hidden}
 
 ## Synthetic data code from class
 
@@ -159,6 +160,7 @@ model_thing <- lm(happiness ~ cookies + time_of_day + like_blue, data = real_dat
 tidy(model_thing)
 ```
 
+:::
 
 
 ```{verbatim include=FALSE}

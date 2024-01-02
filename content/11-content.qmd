@@ -1,6 +1,6 @@
 ---
 title: "Instrumental variables I"
-date: "2023-03-30"
+date: "2024-03-28"
 ---
 
 ```{r slides-videos, echo=FALSE, include=FALSE}
@@ -48,6 +48,7 @@ slide_tabs(slide_details, "/slides/11-slides.html")
 youtube_list(slide_details, playlist_id)
 ```
 
+::: {.content-hidden}
 
 ## In-class stuff
 
@@ -56,6 +57,7 @@ Here are all the materials we'll use in class:
 - [**Week 11 FAQ slides**](/slides/11-class.html) ([PDF](/slides/11-class.pdf))
 - [Week 11 R code](/projects/week-11.zip) (on [Posit.cloud](https://posit.cloud/spaces/323551/content/5707238))
 
+:::
 
 
 ```{verbatim include=FALSE}

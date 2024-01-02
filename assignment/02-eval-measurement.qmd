@@ -1,6 +1,6 @@
 ---
 title: "Measurement"
-date: "2023-02-09"
+date: "2024-02-08"
 ---
 
 For your [final project](/assignment/final-project.qmd), you will conduct an evaluation for a social program of your choosing. In this assignment, you will decide how to best measure two of the program's outcomes. 

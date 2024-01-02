@@ -1,6 +1,6 @@
 ---
 title: "Final project"
-date: "2023-05-01"
+date: "2024-04-29"
 ---
 
 Evaluation research is tricky and costly. If you begin an intervention or launch a study prematurely, you can waste time and money—and potentially lives. 
@@ -27,11 +27,11 @@ You will submit **three things** via iCollege:
 2. The same PDF as above, but with all the R code in it (set `echo = TRUE` at the beginning of your document and reknit the file).
 3. A CSV file of [your fake data.](/example/synthetic-data.qmd)
 
-This project is due by **11:59 PM on Monday, May 1, 2023.** <span style="color: #81056F; font-weight: bold"> No late work will be accepted.</span>
+This project is due by **11:59 PM on Monday, April 29, 2024.** <span style="color: #81056F; font-weight: bold"> No late work will be accepted.</span>
 
 I will grade your project using this rubric. I *highly* recommend that you refer to the rubric as you work on your project!
 
-- {{< fa list-check >}}&ensp;[`evalsp23_final-project-rubric.xlsx`](/files/evalsp23_final-project-rubric.xlsx)
+- {{< fa list-check >}}&ensp;[`evalsp24_final-project-rubric.xlsx`](/files/evalsp24_final-project-rubric.xlsx)
 
 You can either run the analysis in RStudio locally on your computer (highly recommended(!!), since you won't have to worry about keeping all your work on Posit's servers), or use an Posit.cloud project. You can make a copy of this Posit.cloud project—it doesn't have anything in it, but I have preinstalled all the packages we've used over the course of the semester, so you don't have to.
 

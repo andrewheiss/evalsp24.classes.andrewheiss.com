@@ -1,12 +1,13 @@
 ---
 title: "Difference-in-differences II"
-date: "2023-03-09"
+date: "2024-03-07"
 ---
 
 ## Readings
 
 This session is a continuation of [session 8](/content/08-content/).
 
+::: {.content-hidden}
 
 ## In-class stuff
 
@@ -30,3 +31,5 @@ And Quarto stuff!
   - [Pandemic Pass?](https://stats.andrewheiss.com/mountainous-mackerel/)
   - [Are Donors Really Responding?](https://stats.andrewheiss.com/testy-turtle/)
   - [NGO Repression as a Predictor of Worsening Human Rights Abuses](https://stats.andrewheiss.com/cautioning-canary/)
+
+:::

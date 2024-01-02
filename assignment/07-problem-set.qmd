@@ -1,6 +1,6 @@
 ---
 title: "Problem set 7"
-date: "2023-04-06"
+date: "2024-04-04"
 ---
 
 For this problem set, you'll practice using instrumental variables with both real and simulated data. This example page will be incredibly useful for you:
