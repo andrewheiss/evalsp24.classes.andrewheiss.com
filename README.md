@@ -1,9 +1,10 @@
 
+
 <!-- README.md is generated from README.qmd. Please edit that file -->
 
-# Program Evaluation for Public Service <a href='https://evalsp23.classes.andrewheiss.com/'><img src='files/icon-512.png' align="right" height="139" /></a>
+# Program Evaluation for Public Service <a href='https://evalsp24.classes.andrewheiss.com/'><img src='files/icon-512.png' align="right" height="139" /></a>
 
-[PMAP 8521 • Spring 2023](https://evalsp23.classes.andrewheiss.com/)  
+[PMAP 8521 • Spring 2024](https://evalsp24.classes.andrewheiss.com/)  
 [Andrew Heiss](https://www.andrewheiss.com/) • Andrew Young School of
 Policy Studies • Georgia State University
 
@@ -24,8 +25,8 @@ Policy Studies • Georgia State University
     [Quarto](https://quarto.org/) installation embedded in it.
     Otherwise, download and install [Quarto](https://quarto.org/)
     separately.
-2.  Open `evalsp23.Rproj` to open an [RStudio
-    Project](https://r4ds.had.co.nz/workflow-projects.html).
+2.  Open `evalsp24.Rproj` to open an [RStudio
+    Project](https://r4ds.hadley.nz/workflow-scripts.html).
 3.  If it’s not installed already, R *should* try to install the [{renv}
     package](https://rstudio.github.io/renv/) when you open the RStudio
     Project for the first time. If you don’t see a message about package
@@ -107,47 +108,44 @@ graph on GitHub. You can also view it by pasting the code into
 
 ``` mermaid
 graph LR
+  style Graph fill:#FFFFFF00,stroke:#000000;
   subgraph Graph
     direction LR
-    x7ece18ea4dfd37ad(["data_barrels_rct"]):::queued --> x04215792a9a4d36b(["copy_barrels_rct"]):::queued
-    x1a70645cdb0e8eb9(["gen_barrels"]):::built --> x7ece18ea4dfd37ad(["data_barrels_rct"]):::queued
-    x676cecdcd5eb7813(["data_plot_barrel_dag_obs"]):::queued --> xa7f6f0c1b16f542a(["copy_plot_barrel_dag_obs"]):::queued
-    xdf832f8e1f99baf2(["schedule_file"]):::built --> x35552a73efe9c59f(["schedule_ical_data"]):::queued
-    x9061f97ff2027ff8(["data_attendance"]):::queued --> x7b056887098d4c56(["copy_attendance"]):::queued
-    x9c20b8c56debbe9a(["deploy_script"]):::built --> x78f3e0b711425f1c(["deploy_site"]):::queued
+    x9c20b8c56debbe9a(["deploy_script"]):::completed --> x78f3e0b711425f1c(["deploy_site"]):::queued
     x7aa56383a054e8ba(["site"]):::queued --> x78f3e0b711425f1c(["deploy_site"]):::queued
+    x07bd1301298fd82f(["gen_barrel_dags"]):::skipped --> xc72ce427df7cb6d6(["data_plot_barrel_dag_rct"]):::queued
+    x7ece18ea4dfd37ad(["data_barrels_rct"]):::queued --> x04215792a9a4d36b(["copy_barrels_rct"]):::queued
+    x1b5d71f80f0ded23(["gen_data_father_educ"]):::skipped --> x068350206b5f4fee(["data_father_educ"]):::queued
+    x20b85e3488818f5e(["gen_data_tutoring"]):::skipped --> x5c240766086c102f(["gen_data_tutoring_fuzzy"]):::queued
+    xb91d56300ed67e72(["gen_attendance"]):::skipped --> x9061f97ff2027ff8(["data_attendance"]):::queued
+    x5cef82ddbf74dbd2(["gen_data_tutoring_sharp"]):::queued --> x6182dfd3a1ca6e02(["data_tutoring_sharp"]):::queued
+    xb453b5ae08dcaee7(["build_data"]):::queued --> x1917c787a0a4a0fd["project_zips"]:::queued
+    x41092a7251862a9e(["copy_data"]):::queued --> x1917c787a0a4a0fd["project_zips"]:::queued
+    x7a8b235bff1bfb75["project_files"]:::queued --> x1917c787a0a4a0fd["project_zips"]:::queued
+    x1a70645cdb0e8eb9(["gen_barrels"]):::skipped --> xcd68d1a7c07ebab6(["data_barrels_obs"]):::queued
     x7b056887098d4c56(["copy_attendance"]):::queued --> x41092a7251862a9e(["copy_data"]):::queued
     x3b13eed8c2f4209e(["copy_barrels_obs"]):::queued --> x41092a7251862a9e(["copy_data"]):::queued
     x04215792a9a4d36b(["copy_barrels_rct"]):::queued --> x41092a7251862a9e(["copy_data"]):::queued
     xbbb6d7ed9a6f640a(["copy_eitc"]):::skipped --> x41092a7251862a9e(["copy_data"]):::queued
     xf17ad1e9c3822d18(["copy_evaluation"]):::skipped --> x41092a7251862a9e(["copy_data"]):::queued
-    xf812cd9b8b5444a5(["copy_food_health_politics"]):::built --> x41092a7251862a9e(["copy_data"]):::queued
-    xd2260b533f1829cb(["copy_monthly_panel"]):::built --> x41092a7251862a9e(["copy_data"]):::queued
+    xf812cd9b8b5444a5(["copy_food_health_politics"]):::skipped --> x41092a7251862a9e(["copy_data"]):::queued
+    xd2260b533f1829cb(["copy_monthly_panel"]):::skipped --> x41092a7251862a9e(["copy_data"]):::queued
     x2a5bb41380dcc5b0(["copy_penguins"]):::queued --> x41092a7251862a9e(["copy_data"]):::queued
     xa7f6f0c1b16f542a(["copy_plot_barrel_dag_obs"]):::queued --> x41092a7251862a9e(["copy_data"]):::queued
     x6271c0b6a170e94e(["copy_plot_barrel_dag_rct"]):::queued --> x41092a7251862a9e(["copy_data"]):::queued
     x9c50e551b1b09085(["copy_public_housing"]):::skipped --> x41092a7251862a9e(["copy_data"]):::queued
     x0897796b858a5b3d(["copy_wage"]):::queued --> x41092a7251862a9e(["copy_data"]):::queued
-    xb4844be3dca7f02b(["project_paths"]):::queued --> x7a8b235bff1bfb75["project_files"]:::queued
-    x1917c787a0a4a0fd["project_zips"]:::queued --> x7aa56383a054e8ba(["site"]):::queued
-    x4d31f5a49d5ae49f(["schedule_ical_file"]):::queued --> x7aa56383a054e8ba(["site"]):::queued
-    x063edd335cc1b36f(["schedule_page_data"]):::queued --> x7aa56383a054e8ba(["site"]):::queued
-    xccbb2c85646c611a["xaringan_pdfs"]:::queued --> x7aa56383a054e8ba(["site"]):::queued
-    x60c212b45249134a["xaringan_slides"]:::queued --> x7aa56383a054e8ba(["site"]):::queued
-    xdf832f8e1f99baf2(["schedule_file"]):::built --> x063edd335cc1b36f(["schedule_page_data"]):::queued
-    xccb29afdb6aede8f(["gen_nets"]):::queued --> xbe28472fe2bce29e(["data_nets"]):::queued
-    xa48826fcb4dc2e34(["project_paths_change"]):::queued --> xb4844be3dca7f02b(["project_paths"]):::queued
-    x20b85e3488818f5e(["gen_data_tutoring"]):::queued --> x5cef82ddbf74dbd2(["gen_data_tutoring_sharp"]):::queued
+    xa48826fcb4dc2e34(["project_paths_change"]):::completed --> xb4844be3dca7f02b(["project_paths"]):::queued
     x9061f97ff2027ff8(["data_attendance"]):::queued --> xb453b5ae08dcaee7(["build_data"]):::queued
     xcd68d1a7c07ebab6(["data_barrels_obs"]):::queued --> xb453b5ae08dcaee7(["build_data"]):::queued
     x7ece18ea4dfd37ad(["data_barrels_rct"]):::queued --> xb453b5ae08dcaee7(["build_data"]):::queued
     xcd2bd51d3f2880dc(["data_bed_nets_real"]):::queued --> xb453b5ae08dcaee7(["build_data"]):::queued
     x10e4e9d82e7b691d(["data_bed_nets_time_machine"]):::queued --> xb453b5ae08dcaee7(["build_data"]):::queued
-    xdba7a42d19fbbe49(["data_card"]):::queued --> xb453b5ae08dcaee7(["build_data"]):::queued
+    xdba7a42d19fbbe49(["data_card"]):::skipped --> xb453b5ae08dcaee7(["build_data"]):::queued
     x068350206b5f4fee(["data_father_educ"]):::queued --> xb453b5ae08dcaee7(["build_data"]):::queued
-    x8288901d8e9e8d55(["data_gapminder"]):::built --> xb453b5ae08dcaee7(["build_data"]):::queued
-    x81182810f96b04c1(["data_injury"]):::queued --> xb453b5ae08dcaee7(["build_data"]):::queued
-    x182180f03bcfc8dc(["data_mpg"]):::built --> xb453b5ae08dcaee7(["build_data"]):::queued
+    x8288901d8e9e8d55(["data_gapminder"]):::skipped --> xb453b5ae08dcaee7(["build_data"]):::queued
+    x81182810f96b04c1(["data_injury"]):::skipped --> xb453b5ae08dcaee7(["build_data"]):::queued
+    x182180f03bcfc8dc(["data_mpg"]):::skipped --> xb453b5ae08dcaee7(["build_data"]):::queued
     xbe28472fe2bce29e(["data_nets"]):::queued --> xb453b5ae08dcaee7(["build_data"]):::queued
     xa3d8306cecf136f4(["data_penguins"]):::skipped --> xb453b5ae08dcaee7(["build_data"]):::queued
     x676cecdcd5eb7813(["data_plot_barrel_dag_obs"]):::queued --> xb453b5ae08dcaee7(["build_data"]):::queued
@@ -156,35 +154,32 @@ graph LR
     x6182dfd3a1ca6e02(["data_tutoring_sharp"]):::queued --> xb453b5ae08dcaee7(["build_data"]):::queued
     x7ba0dec890393ab6(["data_village_obs"]):::queued --> xb453b5ae08dcaee7(["build_data"]):::queued
     x4df77a4d5c017917(["data_village_rct"]):::queued --> xb453b5ae08dcaee7(["build_data"]):::queued
-    x9a78ab75449e880d(["data_wage"]):::queued --> xb453b5ae08dcaee7(["build_data"]):::queued
-    xb9fb625c05443344(["data_wage2"]):::queued --> xb453b5ae08dcaee7(["build_data"]):::queued
-    x1a70645cdb0e8eb9(["gen_barrels"]):::built --> xcd68d1a7c07ebab6(["data_barrels_obs"]):::queued
-    xc5cdd24fb6bd9f0e(["gen_village"]):::queued --> x4df77a4d5c017917(["data_village_rct"]):::queued
-    x4a210bdf90796bca(["xaringan_files_files"]):::built --> xf4774655f169db90["xaringan_files"]:::queued
-    x9d65856d614f77f4(["gen_data_bed_nets_real"]):::queued --> xcd2bd51d3f2880dc(["data_bed_nets_real"]):::queued
-    x7a0d40becb063bda(["xaringan_html_files_files"]):::queued --> x0751853b619def05["xaringan_html_files"]:::queued
-    xf4774655f169db90["xaringan_files"]:::queued --> x60c212b45249134a["xaringan_slides"]:::queued
+    x9a78ab75449e880d(["data_wage"]):::skipped --> xb453b5ae08dcaee7(["build_data"]):::queued
+    xb9fb625c05443344(["data_wage2"]):::skipped --> xb453b5ae08dcaee7(["build_data"]):::queued
+    x9a78ab75449e880d(["data_wage"]):::skipped --> x0897796b858a5b3d(["copy_wage"]):::queued
+    xb4844be3dca7f02b(["project_paths"]):::queued --> x7a8b235bff1bfb75["project_files"]:::queued
+    xccb29afdb6aede8f(["gen_nets"]):::queued --> xbe28472fe2bce29e(["data_nets"]):::queued
     x6deca4ab95db78c5(["gen_data_bed_nets"]):::queued --> x9d65856d614f77f4(["gen_data_bed_nets_real"]):::queued
-    x9a78ab75449e880d(["data_wage"]):::queued --> x0897796b858a5b3d(["copy_wage"]):::queued
-    xb453b5ae08dcaee7(["build_data"]):::queued --> x1917c787a0a4a0fd["project_zips"]:::queued
-    x41092a7251862a9e(["copy_data"]):::queued --> x1917c787a0a4a0fd["project_zips"]:::queued
-    x7a8b235bff1bfb75["project_files"]:::queued --> x1917c787a0a4a0fd["project_zips"]:::queued
-    x20b85e3488818f5e(["gen_data_tutoring"]):::queued --> x5c240766086c102f(["gen_data_tutoring_fuzzy"]):::queued
-    x5c240766086c102f(["gen_data_tutoring_fuzzy"]):::queued --> x313ad24da404b651(["data_tutoring_fuzzy"]):::queued
-    x1b5d71f80f0ded23(["gen_data_father_educ"]):::skipped --> x068350206b5f4fee(["data_father_educ"]):::queued
-    x60c212b45249134a["xaringan_slides"]:::queued --> x7a0d40becb063bda(["xaringan_html_files_files"]):::queued
-    x07bd1301298fd82f(["gen_barrel_dags"]):::queued --> xc72ce427df7cb6d6(["data_plot_barrel_dag_rct"]):::queued
-    x5cef82ddbf74dbd2(["gen_data_tutoring_sharp"]):::queued --> x6182dfd3a1ca6e02(["data_tutoring_sharp"]):::queued
-    xb91d56300ed67e72(["gen_attendance"]):::built --> x9061f97ff2027ff8(["data_attendance"]):::queued
-    xf38d3f5e6365ad72(["workflow_graph"]):::started --> x6e52cb0f1668cc22(["readme"]):::queued
-    x0751853b619def05["xaringan_html_files"]:::queued --> xccbb2c85646c611a["xaringan_pdfs"]:::queued
-    x07bd1301298fd82f(["gen_barrel_dags"]):::queued --> x676cecdcd5eb7813(["data_plot_barrel_dag_obs"]):::queued
-    xcd68d1a7c07ebab6(["data_barrels_obs"]):::queued --> x3b13eed8c2f4209e(["copy_barrels_obs"]):::queued
-    xc5cdd24fb6bd9f0e(["gen_village"]):::queued --> x7ba0dec890393ab6(["data_village_obs"]):::queued
-    xc72ce427df7cb6d6(["data_plot_barrel_dag_rct"]):::queued --> x6271c0b6a170e94e(["copy_plot_barrel_dag_rct"]):::queued
-    x35552a73efe9c59f(["schedule_ical_data"]):::queued --> x4d31f5a49d5ae49f(["schedule_ical_file"]):::queued
-    x6deca4ab95db78c5(["gen_data_bed_nets"]):::queued --> x10e4e9d82e7b691d(["data_bed_nets_time_machine"]):::queued
+    x9061f97ff2027ff8(["data_attendance"]):::queued --> x7b056887098d4c56(["copy_attendance"]):::queued
+    x07bd1301298fd82f(["gen_barrel_dags"]):::skipped --> x676cecdcd5eb7813(["data_plot_barrel_dag_obs"]):::queued
+    xdf832f8e1f99baf2(["schedule_file"]):::skipped --> x35552a73efe9c59f(["schedule_ical_data"]):::queued
     xa3d8306cecf136f4(["data_penguins"]):::skipped --> x2a5bb41380dcc5b0(["copy_penguins"]):::queued
+    x1917c787a0a4a0fd["project_zips"]:::queued --> x7aa56383a054e8ba(["site"]):::queued
+    x4d31f5a49d5ae49f(["schedule_ical_file"]):::queued --> x7aa56383a054e8ba(["site"]):::queued
+    x063edd335cc1b36f(["schedule_page_data"]):::queued --> x7aa56383a054e8ba(["site"]):::queued
+    x1a70645cdb0e8eb9(["gen_barrels"]):::skipped --> x7ece18ea4dfd37ad(["data_barrels_rct"]):::queued
+    xc72ce427df7cb6d6(["data_plot_barrel_dag_rct"]):::queued --> x6271c0b6a170e94e(["copy_plot_barrel_dag_rct"]):::queued
+    x676cecdcd5eb7813(["data_plot_barrel_dag_obs"]):::queued --> xa7f6f0c1b16f542a(["copy_plot_barrel_dag_obs"]):::queued
+    xc5cdd24fb6bd9f0e(["gen_village"]):::queued --> x4df77a4d5c017917(["data_village_rct"]):::queued
+    xc5cdd24fb6bd9f0e(["gen_village"]):::queued --> x7ba0dec890393ab6(["data_village_obs"]):::queued
+    x6deca4ab95db78c5(["gen_data_bed_nets"]):::queued --> x10e4e9d82e7b691d(["data_bed_nets_time_machine"]):::queued
+    x9d65856d614f77f4(["gen_data_bed_nets_real"]):::queued --> xcd2bd51d3f2880dc(["data_bed_nets_real"]):::queued
+    xcd68d1a7c07ebab6(["data_barrels_obs"]):::queued --> x3b13eed8c2f4209e(["copy_barrels_obs"]):::queued
+    x35552a73efe9c59f(["schedule_ical_data"]):::queued --> x4d31f5a49d5ae49f(["schedule_ical_file"]):::queued
+    x5c240766086c102f(["gen_data_tutoring_fuzzy"]):::queued --> x313ad24da404b651(["data_tutoring_fuzzy"]):::queued
+    x20b85e3488818f5e(["gen_data_tutoring"]):::skipped --> x5cef82ddbf74dbd2(["gen_data_tutoring_sharp"]):::queued
+    xdf832f8e1f99baf2(["schedule_file"]):::skipped --> x063edd335cc1b36f(["schedule_page_data"]):::queued
+    x6e52cb0f1668cc22(["readme"]):::dispatched --> x6e52cb0f1668cc22(["readme"]):::dispatched
   end
 ```
 
