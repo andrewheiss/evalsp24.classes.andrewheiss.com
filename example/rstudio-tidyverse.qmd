@@ -11,27 +11,23 @@ You'll learn some of the basics of R, as well as some powerful methods for manip
 Complete these primers. It seems like there are a lot, but they're short and go fairly quickly (especially as you get the hang of the syntax). Also, **I have no way of seeing what you do or what you get wrong or right**, and that's totally fine! If you get stuck and want to skip some (or if it gets too easy), go right ahead and skip them!
 
 - **The Basics**
-	- [Visualization Basics](https://rstudio.cloud/learn/primers/1.1)
-	- [Programming Basics](https://rstudio.cloud/learn/primers/1.2)
+	- [Visualization Basics](https://andrewheiss.shinyapps.io/ath-primers-basics-01-visualization/)
+	- [Programming Basics](https://andrewheiss.shinyapps.io/ath-primers-basics-02-programming/)
 - **Work with Data**
-	- [Working with Tibbles](https://rstudio.cloud/learn/primers/2.1)
-	- [Isolating Data with dplyr](https://rstudio.cloud/learn/primers/2.2)
-	- [Deriving Information with dplyr](https://rstudio.cloud/learn/primers/2.3)
+	- [Working with Tibbles](https://andrewheiss.shinyapps.io/ath-primers-transform-data-01-tibbles/)
+	- [Isolating Data with dplyr](https://andrewheiss.shinyapps.io/ath-primers-transform-data-02-isolating/)
+	- [Deriving Information with dplyr](https://andrewheiss.shinyapps.io/ath-primers-transform-data-03-deriving/)
 - **Visualize Data**
-  - [Exploratory Data Analysis](https://rstudio.cloud/learn/primers/3.1)
-  - [Bar Charts](https://rstudio.cloud/learn/primers/3.2)
-  - [Histograms](https://rstudio.cloud/learn/primers/3.3)
-  - [Boxplots and Counts](https://rstudio.cloud/learn/primers/3.4)
-  - [Scatterplots](https://rstudio.cloud/learn/primers/3.5)
-  - [Line plots](https://rstudio.cloud/learn/primers/3.6)
-  - [Overplotting and Big Data](https://rstudio.cloud/learn/primers/3.7)
-  - [Customize Your Plots](https://rstudio.cloud/learn/primers/3.8)
+  - [Exploratory Data Analysis](https://andrewheiss.shinyapps.io/ath-primers-visualize-data-01-eda/)
+  - [Bar Charts](https://andrewheiss.shinyapps.io/ath-primers-visualize-data-02-bar-charts/)
+  - [Histograms](https://andrewheiss.shinyapps.io/ath-primers-visualize-data-03-histograms/)
+  - [Boxplots and Counts](https://andrewheiss.shinyapps.io/ath-primers-visualize-data-04-boxplots/)
+  - [Scatterplots](https://andrewheiss.shinyapps.io/ath-primers-visualize-data-05-scatterplots/)
+  - [Line plots](https://andrewheiss.shinyapps.io/ath-primers-visualize-data-06-line-graphs/)
+  - [Overplotting and Big Data](https://andrewheiss.shinyapps.io/ath-primers-visualize-data-07-overplotting/)
+  - [Customize Your Plots](https://andrewheiss.shinyapps.io/ath-primers-visualize-data-08-customize/)
 - **Tidy Your Data**
-  - [Reshape Data](https://rstudio.cloud/learn/primers/4.1)
-
-:::{.callout-note}
-Recent versions of **tidyr** have renamed these core functions: `gather()` is now `pivot_longer()` and `spread()` is now `pivot_wider()`. The syntax for these `pivot_*()` functions is *slightly* different from what it was in `gather()` and `spread()`, so you can't just replace the names. Fortunately, both `gather()` and `spread()` still work and won't go away for a while, so you can still use them as you learn about reshaping and tidying data. It would be worth learning how the newer `pivot_*()` functions work, eventually, though ([see here for examples](https://tidyr.tidyverse.org/articles/pivot.html)).
-:::
+  - [Reshape Data](https://andrewheiss.shinyapps.io/ath-primers-tidy-data-01-reshape/)
 
 The content from these primers comes from the (free and online!) book [*R for Data Science* by Garrett Grolemund and Hadley Wickham](https://r4ds.had.co.nz/). I highly recommend the book as a reference and for continuing to learn and use R in the future.
 
@@ -76,7 +72,7 @@ To ensure that the analysis and graphics you make are reproducible, you'll do th
 
 Do the following things: 
 
-1. Watch this video:
+1. Watch this video. It's all about R Markdown, which is Quarto's predecessor. The same general principles apply.
 
 <div class="ratio ratio-16x9">
 <iframe src="https://player.vimeo.com/video/178485416?color=428bca" frameborder="0"  allow="autoplay; fullscreen" allowfullscreen></iframe>
