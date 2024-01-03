@@ -5,7 +5,14 @@ title: Syllabus
 ```{r setup, message=FALSE, warning=FALSE, include=FALSE}
 library(dplyr)
 library(tibble)
-library(pander)
+library(gt)
+library(gtExtras)
+
+opts_theme <- function(x) {
+  x %>%
+    opt_table_font(font = c("Barlow", "serif")) %>%
+    tab_options(column_labels.font.weight = "bold")
+}
 ```
 
 ::: {.grid .course-details .course-details-smaller}
@@ -257,16 +264,15 @@ You can find descriptions for all the assignments on the [assignments page](/ass
 
 ```{r assignments-grades, include=FALSE}
 assignments <- tribble(
-  ~Points,   ~Assignment,
-  14 * 10,   "Weekly check-ins (14 × 10)",
-  9 * 30,    "Problem sets (9 × 30)",
-  4 * 30,    "Evaluation assignments (4 × 30)",
-  100,       "Exam 1",
-  100,       "Exam 2",
-  200,       "Final project"
+  ~Points,   ~Assignment, ~Group,
+  14 * 10,   "Weekly check-ins (14 × 10)", "Check-ins",
+  9 * 30,    "Problem sets (9 × 30)", "Assignments",
+  4 * 30,    "Evaluation assignments (4 × 30)", "Assignments",
+  100,       "Exam 1", "Exams",
+  100,       "Exam 2", "Exams",
+  200,       "Final project", "Projects"
 ) %>%
-  mutate(Percent = Points / sum(Points),
-         Percent = scales::percent(Percent))
+  mutate(Percent = Points / sum(Points))
 
 grading <- tribble(
   ~Grade, ~Range, ~Grade1, ~Range1,
@@ -279,28 +285,41 @@ grading <- tribble(
 )
 ```
 
-<div class="centered-table">
-
-```{r show-assignments-table, echo=FALSE, results="asis"}
-assignments_total <- tibble(Assignment = "Total",
-                            Points = sum(assignments$Points),
-                            Percent = NA)
-
-bind_rows(assignments, assignments_total) %>%
-  select(Assignment, Points, Percent) %>%
-  pandoc.table(justify = "lcc", missing = "—")
+```{r show-assignments-table, echo=FALSE}
+assignments %>%
+  select(Assignment, Points, Percent, Group) %>%
+  group_by(Group) %>% 
+  gt() %>% 
+  sub_missing(missing_text = "---") %>% 
+  grand_summary_rows(
+    columns = c(Points, Percent), 
+    fns = list(Total ~ sum(.)),
+    fmt = list(Total ~ fmt_percent(., columns = Percent, decimals = 0))
+  ) %>% 
+  fmt_percent(columns = Percent, decimals = 1) %>% 
+  tab_style(
+    locations = list(cells_grand_summary(), cells_stub_grand_summary()),
+    style = cell_text(weight = "bold")
+  ) %>% 
+  opts_theme() %>% 
+  opt_horizontal_padding(2) %>%
+  tab_options(
+    row_group.as_column = TRUE,
+    quarto.disable_processing = TRUE
+  )
 ```
-</div>
 
-<div class="centered-table">
-
-```{r show-grades-table, echo=FALSE, results="asis"}
+```{r show-grades-table, echo=FALSE}
 grading %>%
-  pandoc.table(justify = "lclc",
-               col.names = c("Grade", "Range", "Grade", "Range"))
+  gt() %>% 
+  cols_label(Grade1 = "Grade", Range1 = "Range") %>% 
+  cols_align(align = "left", columns = c(Grade, Grade1)) %>% 
+  cols_align(align = "center", columns = c(Range, Range1)) %>% 
+  opts_theme() %>% 
+  opt_horizontal_padding(3) %>% 
+  gt_add_divider(columns = Range, style = "dashed", weight = px(1)) %>% 
+  tab_options(quarto.disable_processing = TRUE)
 ```
-
-<div>
 
 
 ## Star Wars
