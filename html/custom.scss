@@ -38,7 +38,7 @@ $dark:          $gray-800 !default;
 $font-family-sans-serif:      Fira Sans Condensed, sans-serif !default;
 $font-family-serif:           Barlow, serif !default;  /* Not actually a serif font but whatever */
 
-$font-size-base:              1.25rem !default;
+$font-size-base:              1.15rem !default;
 $headings-font-weight:        700 !default;
 
 $h1-font-size: $font-size-base * 2.45;
@@ -48,9 +48,10 @@ $h4-font-size: $font-size-base * 1.2;
 $h5-font-size: $font-size-base * 1;
 $h6-font-size: $font-size-base * 0.8;
 
-$toc-font-size: 1.1rem;
+$toc-font-size: 0.95rem;
 $sidebar-font-size: 1.1rem;
-$sidebar-font-size-section: 0.9rem;
+$sidebar-font-size-section: 0.95rem;
+$footer-font-size: 0.9rem;
 
 $link-color: $red;
 $link-hover-color: $yellow;
@@ -242,7 +243,7 @@ main {
 .callout.callout-style-default {
   > div.callout-header,
   > .callout-body {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
   }
 
   .callout-icon::before {
@@ -252,32 +253,7 @@ main {
   }
 }
 
-// Increase font size in sidebar
-.sidebar-navigation .sidebar-section .sidebar-item,
-.sidebar-navigation .sidebar-item{
-  line-height: 1.2;
-  padding-bottom: 0.4rem;
-}
 
-.sidebar-item .sidebar-item-toggle .bi {
-  // The dongle for opening and closing sections
-  font-size: 1.1rem;
-  text-align: center;
-}
-
-// Increase font size in TOC
-#TOC {
-  padding-bottom: 0.1em;
-}
-
-#toc-title {
-  font-weight: 700;
-}
-
-.sidebar nav[role="doc-toc"] > ul li a {
-  padding-top: 0.3rem;
-  padding-bottom: 0.3rem;
-}
 
 
 // Code stuff

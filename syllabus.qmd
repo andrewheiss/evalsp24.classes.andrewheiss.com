@@ -183,7 +183,11 @@ If you test positive for COVID-19, hunker down and focus on getting better! Plea
 
 ### Masks and vaccines
 
-<small>GSU does not require this and I can't require this but I am allowed to urge it so here's me urging it:</small><br><br>Please get the COVID-19 vaccination and a booster shot. It is free. It saves lives. (I am fully vaccinated and repeatedly-boosted.)
+::: {.callout-note appearance="simple"}
+GSU does not require this and I can't require this but I am allowed to urge it so here's me urging it
+:::
+
+Please get the COVID-19 vaccination and a booster shot. It is free. It saves lives. (I am fully vaccinated and repeatedly-boosted.)
 
 GSU and the University System of Georgia do not have a mask mandate for students or faculty. However, I personally will be wearing a mask when [the CDC's wastewater surveillance ratings for Georgia](https://www.cdc.gov/nwss/rv/COVID19-currentlevels.html) are moderate or above.
 
