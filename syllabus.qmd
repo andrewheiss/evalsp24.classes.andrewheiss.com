@@ -15,29 +15,36 @@ opts_theme <- function(x) {
 }
 ```
 
-::: {.grid .course-details .course-details-smaller}
+:::: {.grid .course-details .course-details-smaller}
 
-::: {.g-col-6}
+::: {.g-col-12 .g-col-sm-6 .g-col-md-4}
 ### Instructor
 
-- {{< fa user >}} &nbsp; [{{< var instructor.name >}}]({{< var instructor.url >}})
-- {{< fa university >}} &nbsp; {{< var instructor.office >}}
-- {{< fa envelope >}} &nbsp; <a href='mailto:{{< var instructor.email >}}'>{{< var instructor.email >}}</a>
-- {{< fa brands twitter >}} &nbsp; [{{< var instructor.twitter >}}](https://www.twitter.com/{{< var instructor.twitter >}})
-- {{< fa calendar-check >}} &nbsp; [Schedule an appointment]({{< var instructor.appointment_url >}})
+- [{{< fa user >}}]{.fa-li} [{{< var instructor.name >}}]({{< var instructor.url >}})
+- [{{< fa university >}}]{.fa-li} {{< var instructor.office >}}
+- [{{< fa envelope >}}]{.fa-li} <a href='mailto:{{< var instructor.email >}}'>{{< var instructor.email >}}</a>
+- [{{< iconify ph butterfly-bold size=1.2em title='Bluesky' >}}]{.fa-li} [Bluesky]({{< var instructor.bluesky >}})
+- [{{< iconify bi mastodon size=1.1em title='Mastodon' >}}]{.fa-li} [Mastodon]({{< var instructor.mastodon >}})
+
 :::
 
-::: {.g-col-6}
+::: {.g-col-12 .g-col-sm-6 .g-col-md-4}
 ### Course details
 
-- {{< fa calendar >}} &nbsp; {{< var course.days >}}
-- {{< fa calendar-alt >}} &nbsp; {{< var course.dates >}}
-- {{< fa clock >}} &nbsp; {{< var course.time >}}
-- {{< fa location-dot >}} &nbsp; {{< var course.location >}}
-- {{< fa brands slack >}} &nbsp; [Slack]({{< var course.slack >}})
+- [{{< fa calendar >}}]{.fa-li} {{< var course.days >}}
+- [{{< fa calendar-alt >}}]{.fa-li} {{< var course.dates >}}
+- [{{< fa clock >}}]{.fa-li} {{< var course.time >}}
+- [{{< fa location-dot >}}]{.fa-li} {{< var course.location >}}
 :::
 
+::: {.g-col-12 .g-col-md-4 .contact-policy}
+### Contacting me
+
+- [{{< fa calendar-check >}}]{.fa-li} [Schedule an appointment]({{< var instructor.appointment_url >}})
+- [{{< fa brands slack >}}]{.fa-li} [Slack]({{< var course.slack >}})
 :::
+
+::::
 
 ## Course objectives
 
