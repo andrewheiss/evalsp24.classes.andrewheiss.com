@@ -412,11 +412,10 @@ Additionally, most of the automatic 2SLS R packages don't provide an easy way to
 
 Installing **ivpack** is a little tricky because the maintainers have abandoned it and didn't make necessary updates to keep it on CRAN, so it was removed in June 2022. That means you can't just run `install.packages("ivpack")`. Booo.
 
-Fortunately there's a way around this. Microsoft makes daily snapshots of CRAN and provides them to the public as [a service called MRAN](https://mran.microsoft.com/timemachine). You can use MRAN to install a version of package from a specific day. Since **ivpack** was removed in mid-June 2022, we can tell R to install the version that MRAN archived on June 1:
+Fortunately there's a way around this. Posit keeps copies of every version of CRAN packages and provides them to the public at [Posit Public Package Manager](https://packagemanager.posit.co/client/#/). You can use Posit Package Manager to install a specific version of any package. The [last working version of **ivpack** was 1.2](https://packagemanager.posit.co/client/#/repos/cran/packages/overview?search=ivpack), so we can use the `install_version()` function from the **devtools** package to install that version, like so:
 
 ```{r eval=FALSE}
-install.packages("ivpack", 
-                 repos = "https://cran.microsoft.com/snapshot/2022-06-01/")
+devtools::install_version("ivpack", "1.2")
 ```
 
 That should magically work.
