@@ -43,58 +43,30 @@ source("R/tar_data.R")
 source("R/tar_projects.R")
 source("R/tar_calendar.R")
 
-slides <- tibble::tibble(
-  name = list.files(here_rel("slides"), pattern = "\\.Rmd", full.names = TRUE)
-) %>%
-  mutate(
-    path = as.character(here_rel("projects", name)),
-    sym = syms(janitor::make_clean_names(paste0("proj_", name))),
-    zip_sym = syms(janitor::make_clean_names(paste0("zip_proj_", name)))
-  )
 
 # THE MAIN PIPELINE ----
 list(
+  ## Slides ----
+  # Render all the slides and make PDFs
+  build_slides,
 
-  ## xaringan stuff ----
-  #
-  ### Knit xaringan slides ----
-  #
-  # Use dynamic branching to get a list of all .Rmd files in slides/ and knit them
-  #
-  # The main index.qmd page loads xaringan_slides as a target to link it as a dependency
-  # tar_files(xaringan_files, list.files(here_rel("slides"),
-  #                                      pattern = "\\.Rmd",
-  #                                      full.names = TRUE)),
-  # tar_target(xaringan_slides,
-  #            render_xaringan(xaringan_files),
-  #            pattern = map(xaringan_files),
-  #            format = "file"),
-
-  ### Convert xaringan HTML slides to PDF ----
-  #
-  # Use dynamic branching to get a list of all knitted slide .html files and
-  # convert them to PDF with pagedown
-  #
-  # The main index.qmd page loads xaringan_pdfs as a target to link it as a dependency
-  # tar_files(xaringan_html_files, {
-  #   xaringan_slides
-  #   list.files(here_rel("slides"),
-  #              pattern = "\\.html",
-  #              full.names = TRUE)
-  # }),
-  # tar_target(xaringan_pdfs,
-  #            xaringan_to_pdf(xaringan_html_files),
-  #            pattern = map(xaringan_html_files),
-  #            format = "file"),
+  # The main index.qmd page loads all_slides as a target to link it as a dependency
+  tar_combine(
+    all_slides,
+    tar_select_targets(build_slides, starts_with("slide_pdf_"))
+  ),
 
 
   ## Project folders ----
   # Create/copy data and zip up all the project folders
   make_data_and_zip_projects,
+
+  # The main index.qmd page loads all_zipped_projects as a target to link it as a dependency
   tar_combine(
     all_zipped_projects,
     tar_select_targets(make_data_and_zip_projects, starts_with("zip_"))
   ),
+
 
   ## Class schedule calendar ----
   tar_target(schedule_file, here_rel("data", "schedule.csv"), format = "file"),

@@ -17,8 +17,7 @@ course-logo: /files/img/eval-hires.png
 # Site-wide targets dependencies
 withr::with_dir(here::here(), {
   targets::tar_load(all_zipped_projects)
-  targets::tar_load(xaringan_slides)
-  targets::tar_load(xaringan_pdfs)
+  targets::tar_load(all_slides)
 })
 ```
 
