@@ -102,7 +102,7 @@ knitr::include_graphics("/files/img/syllabus/hosrt_error_tweet.png", error = FAL
 
 ## Course materials
 
-Most of the readings in this class are free.
+All of the readings in this class are free.
 
 ### Books
 
@@ -115,8 +115,8 @@ Both of these books are written at a more general, easy-to-understand level with
 
 In previous versions of this class I used two different books instead of *The Effect*, and they're still fantastic and I'd recommend checking them out. *The Mixtape* is a phenomenal, more detailed, more economics-focused, and mathier approach to these causal inference methods (and it's free!), while *'Metrics Matter* is a fairly canonical (and accessible!) book in the world of econometrics. I refer to these books a few times in the video lectures—don't worry, you'll get pretty much the same content in *The Effect*.
 
-- Scott Cunningham, *Causal Inference: The Mixtape* (New Haven, CT: Yale University Press, 2021), <https://mixtape.scunning.com/>. ([**Also free(!)**](https://mixtape.scunning.com/), but there's also a print version for <span>$35</span> that you might want to get for reference after the class is over)
-- Joshua D. Angrist and Jörn-Steffen Pischke, Mastering ’Metrics: The Path from Cause to Effect (Princeton, NJ: Princeton University Press, 2015). (**<span>$25</span> used or <span>$30</span> new at [Amazon](https://www.amazon.com/Mastering-Metrics-Path-Cause-Effect/dp/0691152845/)**)
+- Scott Cunningham, *Causal Inference: The Mixtape* (New Haven, CT: Yale University Press, 2021), <https://mixtape.scunning.com/>. ([**Also free(!)**](https://mixtape.scunning.com/))
+- Joshua D. Angrist and Jörn-Steffen Pischke, Mastering ’Metrics: The Path from Cause to Effect (Princeton, NJ: Princeton University Press, 2015).
 
 
 ### Articles, book chapters, and other materials
@@ -127,28 +127,30 @@ There will also occasionally be additional articles and videos to read and watch
 
 You will do all of your analysis with the open source (and free!) programming language [R](https://cran.r-project.org/). You will use [RStudio](https://www.rstudio.com/) as the main program to access R. Think of R as an engine and RStudio as a car dashboard—R handles all the calculations and the actual statistics, while RStudio provides a nice interface for running R code.
 
-R is free, but it can sometimes be a pain to install and configure. To make life easier, you can (and should!) use the free [RStudio.cloud](http://rstudio.cloud/) service, which lets you run a full instance of RStudio in your web browser. This means you won't have to install anything on your computer to get started with R! We will have a shared class workspace in RStudio.cloud that will let you quickly copy templates for labs and problem sets.
+R is free, but it can sometimes be a pain to install and configure. To make life easier, you can (and should!) use the free [Posit.cloud](https://posit.cloud/) service, which lets you run a full instance of RStudio in your web browser. This means you won't have to install anything on your computer to get started with R! We will have a shared class workspace in Posit.cloud that will let you quickly copy templates for labs and problem sets.
 
-RStudio.cloud is convenient, but it can be slow and it is not designed to be able to handle larger datasets or more complicated analysis. Over the course of the semester, you'll probably want to get around to installing R, RStudio, and other R packages on your computer and wean yourself off of RStudio.cloud. This isn't necessary, but it's helpful.
+Posit.cloud is convenient, but it can be slow and it is not designed to be able to handle larger datasets or more complicated analysis. Over the course of the semester, you'll probably want to get around to installing R, RStudio, and other R packages on your computer and wean yourself off of Posit.cloud. This isn't necessary, but it's helpful.
 
-You can [find instructions for installing R, RStudio, and all the tidyverse packages here.](/resource/install/)
+You can [find instructions for installing R, RStudio, and all the tidyverse packages here.](/resource/install.qmd)
 
 ### Online help
 
 Data science and statistical programming can be difficult. Computers are stupid and little errors in your code can cause hours of headache (even if you've been doing this stuff for years!).
 
-Fortunately there are tons of online resources to help you with this. Two of the most important are [StackOverflow](https://stackoverflow.com/) (a Q&A site with hundreds of thousands of answers to all sorts of programming questions) and [RStudio Community](https://community.rstudio.com/) (a forum specifically designed for people using RStudio and the tidyverse (i.e. you)).
+Fortunately there are tons of online resources to help you with this. Two of the most important are [StackOverflow](https://stackoverflow.com/) (a Q&A site with hundreds of thousands of answers to all sorts of programming questions) and [Posit Community](https://community.rstudio.com/) (a forum specifically designed for people using RStudio and the tidyverse (i.e. you)).
 
-If you use Twitter, post R-related questions and content with [#rstats](https://twitter.com/search?q=%23rstats). The community there is exceptionally generous and helpful.
+If you use Mastodon or Twitter, post R-related questions and content with [#rstats](https://twitter.com/search?q=%23rstats). The community there is exceptionally generous and helpful.
+
+Large language models (LLMs) like [ChatGPT](https://chat.openai.com/) or [GitHub Copilot](https://github.com/features/copilot) are generally relatively okay with R questions, but they will often hallucinate responses—they really likes to imagine packages that don't exist and then give you answers with them. Think of these tools as glorified autocomplete. [I'd encourage you to read the first few paragraphs here](https://www.infoworld.com/article/3694611/8-chatgpt-tools-for-r-programming.html) about a few important things to keep in mind when using ChatGPT, though. You are free to use these tools, but **do not submit work that is fully generated with ChatGPT. This counts as plagiarism and you will receive a 0 on the assignment.** 
 
 Searching for help with R on Google can sometimes be tricky because the program name is, um, a single letter. Google is generally smart enough to figure out what you mean when you search for "r scatterplot", but if it does struggle, try searching for "rstats" instead (e.g. "rstats scatterplot").
 
-Additionally, we have a class chatroom at [Slack](https://gsuevalf2021.slack.com) where anyone in the class can ask questions and anyone can answer. **I will monitor Slack regularly and will respond quickly.** (It's one of the rare Slack workspaces where I actually have notifications enabled!) Ask questions about the readings, assignments, and project. You'll likely have similar questions as your peers, and you'll likely be able to answer other peoples' questions too.
+Additionally, we have a class chatroom at [Slack](https://gsudatavizsp2024.slack.com) where anyone in the class can ask questions and anyone can answer. **I will monitor Slack regularly and will respond quickly.** (It's one of the rare Slack workspaces where I actually have notifications enabled!) Ask questions about the readings, exercises, and project. You'll likely have similar questions as your peers, and you'll likely be able to answer other peoples' questions too.
 
 
 ## Course structure
 
-We meet weekly from 7:15–9:45 PM on Thursdays in 204 Aderhold. ***However***, despite policies and rhetoric to the contrary, we're still in the middle of a severe global pandemic, and the BA.5 variant of COVID-19 is raging.
+We meet weekly from 7:15–9:45 PM on Thursdays in Aderhold 204. ***However***, despite policies and rhetoric to the contrary, [we're still in the middle of a severe global pandemic](https://themessenger.com/health/covid-pandemic-who-cdc-russia-world-health-organization), and the JN.1 variant of COVID-19 is raging. By mid-January, [roughly 1 in 3 people in the US will likely get COVID](https://bsky.app/profile/luckytran.bsky.social/post/3khzv2q4uk62i).
 
 Accordingly, this semester we're going to have a [flipped classroom](https://en.wikipedia.org/wiki/Flipped_classroom), which will let us maximize flexibility during this pandemic. 
 
@@ -156,9 +158,9 @@ We will **not** have lectures during our regularly scheduled class time. Instead
 
 We will do several things during our Thursday in-person classes:
 
-- **Extensive Q&A**: As you do the readings and watch the videos prior to class, you will inevitably have questions. In [your weekly check-in assignment](/assignment/weekly-check-in.qmd), you'll submit (at least) 3 of those questions to me prior to class. We'll spend a good chunk of each class answering, clarifying, debating, and discussing your questions.
-- **Activities**: In some weeks, we'll do some in-class activities to help solidify concepts about logic models, DAGs, and other evaluation and causal inference principles.
 - **R labs**: We'll spend a substantial time during each class learning and working with R together. You'll need to bring a computer.
+- **Q&A**: As you do the readings and watch the videos prior to class, you will inevitably have questions. In [your weekly check-in assignment](/assignment/weekly-check-in.qmd), you'll submit (at least) 3 of those questions to me prior to class. We'll spend a time in each class answering, clarifying, debating, and discussing your questions.
+- **Activities**: In some weeks, we'll do some in-class activities to help solidify concepts about logic models, DAGs, and other evaluation and causal inference principles.
 
 ## Attendance and participation
 
@@ -166,17 +168,17 @@ You're expected to come to class each Thursday prepared—having read the materi
 
 Attendance and participation are important to your success in this course. However, again, we're still in the middle of a global pandemic. If you are sick or are incapable of participating meaningfully in class (e.g. you have stayed up all night and are going to fall asleep in class), please stay home. I will stream our in-person sessions on Thursdays via Webex (and will set up my own camera and microphone system to do it), so if you cannot attend, you can tune in if needed.
 
-GSU has some new process for getting absences excused because of illness, but I don't care about that process. If you're sick, I don't need a doctor's note or anything. If a relative dies and you have to attend a funeral, do it!—don't worry about sending me confirmation or anything. If your childcare situation falls through one week, focus on your kids!—again, don't worry about sending me confirmation. You're all adults—I trust you. Given the flipped nature of the course, you'll be able to catch up on the material.
+GSU has some process for getting absences excused because of illness, but I don't care about that process. If you're sick, I don't need a doctor's note or anything. If a relative dies and you have to attend a funeral, do it!—don't worry about sending me confirmation or anything. If your childcare situation falls through one week, focus on your kids!—again, don't worry about sending me confirmation. You're all adults—I trust you. Given the flipped nature of the course, you'll be able to catch up on the material.
 
-If you test positive for COVID-19, report it at <https://cc-gsu.force.com/s/>, hunker down, and focus on getting better! Please do not come to class. 
+If you test positive for COVID-19, hunker down and focus on getting better! Please do not come to class. 
 
 ## Pandemic stuff
 
 ### Masks and vaccines
 
-<small>GSU does not require this and I can't require this but I am allowed to urge it so here's me urging it:</small><br>Please get the COVID-19 vaccination and a booster shot ([sign up for one here!](https://covidinfo.gsu.edu/covid-19-resources/covid-19-vaccine/)). It is free. It saves lives. (I am fully vaccinated and boosted.)
+<small>GSU does not require this and I can't require this but I am allowed to urge it so here's me urging it:</small><br><br>Please get the COVID-19 vaccination and a booster shot. It is free. It saves lives. (I am fully vaccinated and repeatedly-boosted.)
 
-GSU and the University System of Georgia do not have a mask mandate for students or faculty. However, I personally will be wearing a mask when [the CDC's community transmission levels](https://covid.cdc.gov/covid-data-tracker/#county-view?list_select_state=Georgia&data-type=Risk&list_select_county=13121) in the Atlanta area are medium or above.
+GSU and the University System of Georgia do not have a mask mandate for students or faculty. However, I personally will be wearing a mask when [the CDC's wastewater surveillance ratings for Georgia](https://www.cdc.gov/nwss/rv/COVID19-currentlevels.html) are moderate or above.
 
 **I strongly recommend/urge/encourage you to wear a mask in class on Thursdays** regardless of your vaccination status. I will place a box of disposable masks by the door if you would like one. 
 
@@ -184,7 +186,7 @@ Again, GSU does not require either vaccines or masks, and if you aren't vaccinat
 
 ### Learning during a pandemic
 
-Life absolutely sucks right now. None of us is really okay. **We're all just pretending.**
+Life still sucks right now. None of us is really okay. **We're all just pretending.**
 
 You most likely know people who have lost their jobs, have tested positive for COVID-19, have been hospitalized, or have even died (I myself know people in all those categories). You all have increased (or possibly decreased) work responsibilities and increased family care responsibilities—you might be caring for extra people (young and/or old!) right now, and you are likely facing uncertain job prospects (or have been laid off!).
 
@@ -219,11 +221,20 @@ Student hours are set times dedicated to all of you (most professors call these 
 
 [^studenthours]: There's fairly widespread misunderstanding about what office hours actually are! [Many students often think that they are the times I *shouldn't* be disturbed](https://www.chronicle.com/article/Can-This-Man-Change-How-Elite/245714/), which is the exact opposite of what they're for!
 
-Because of the pandemic, it is easiest to meet with me online via Webex for student hours. [Make an appointment with me here](https://calendly.com/andrewheiss/)—the confirmation e-mail will contain a link for a Webex meeting. You can also find me through e-mail and Slack.
+Because of the pandemic, I am not on campus often and generally cannot meet in person. I will generally be on campus at least once a week though (typically on Thursdays), and I can always meet you online via Webex. [Make an appointment with me here](https://calendly.com/andrewheiss/). You can choose an online or in-person slot—if you choose an online slot, the confirmation e-mail will contain a link for a Webex meeting. You can also find me through e-mail and Slack.
 
 ### Late work
 
-You will lose 1 point per day for each day a problem set is late. This is designed to not be a huge penalty (3 days late = 27/30 points on a problem set that gets a ✓), but instead is a commitment device to help you stay on schedule.
+My general philosophy towards late work is that I don't care if stuff is late—if you turn it in, great! In past versions of this class (and other of my classes), I would have no late penalties and accept late work until the very end of the semester. 
+
+While many students have appreciated the flexibility of this system, I've received a lot of feedback from students that such a system actually hurts them. With total freedom and no hard deadlines, lots of people put off assignments until the end and then end up not learning much and feel incredibly stressed for weeks and weeks.
+
+So to counter this, I use kinda-sorta-hard-ish deadlines to help you stay on schedule but also provide flexibility when needed.
+
+You will lose 0.5 points per day for each day a problem set is late. This is designed to not be a huge penalty (3 days late = 28.5/30 points on a problem set that gets a ✓), but instead is a commitment device to help you stay on schedule.
+
+I will (typically) not accept work that is more than two weeks late. Again, this is not designed to be punitive—this is to help keep you on schedule. Being four or five weeks behind will make in-person time far less valuable and only make you fall even more behind. HOWEVER if you have extenuating circumstances, I'm more than happy to accommodate.
+
 
 ### Counseling and Psychological Services (CPS)
 
@@ -247,9 +258,9 @@ Any form of sexual harassment or violence will not be excused or tolerated at Ge
 
 ### Academic honesty
 
-Violation of [GSU's Policy on Academic Honesty](https://deanofstudents.gsu.edu/faculty-staff-resources/academic-honesty/) will result in an F in the course and possible disciplinary action.[^cheat] All violations will be formally reported to the Dean of Students.
+Violation of [GSU's Policy on Academic Honesty](https://deanofstudents.gsu.edu/faculty-staff-resources/academic-honesty/) will result in an F in the course and possible disciplinary action. All violations will be formally reported to the Dean of Students.
 
-[^cheat]: So seriously, just don't cheat or plagiarize!
+Do not turn assignments in that are fully generated with AI tools like ChatGPT or GitHub Copilot. This counts as plagiarism and you will receive a 0 on the assignment. I can tell when that happens (these tools generate code that has a particularly recognizable style or "flavor"). You can use these tools, but make sure you adapt the suggested code to fit your specific assignment.
 
 ### Special needs
 
