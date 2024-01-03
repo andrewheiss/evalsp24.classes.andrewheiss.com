@@ -15,7 +15,7 @@ You need to complete the four sections listed below. Ideally you should type thi
 
 [^citations]: And if you want to be super brave, try using [Quarto's citation system](/resource/markdown.qmd#citations)!
 
-**I've created a Quarto template you can use here:** [{{< fa file-archive >}} `background-theory.zip`](/projects/background-theory.zip). It's also [available on RStudio.cloud](https://posit.cloud/spaces/323551/content/5299586).
+**I've created a Quarto template you can use here:** [{{< fa file-archive >}} `background-theory.zip`](/projects/background-theory.zip). It's also [available on Posit.cloud](https://posit.cloud/spaces/323551/content/5299586).
 
 You can draw your impact theory and logic model charts by hand or with something like [Diagrams.net](https://www.diagrams.net/), [Lucidchart](https://www.lucidchart.com/pages/home), or [Creately](https://creately.com/). Export the image as a PNG, place it in the same directory as your Quarto file, and include the image with Markdown.
 

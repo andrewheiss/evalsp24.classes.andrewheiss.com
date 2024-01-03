@@ -11,9 +11,9 @@ date: "2024-02-01"
 
 For this problem set, you'll practice running and interpreting regression models using data about [penguins in Antarctica](https://github.com/allisonhorst/palmerpenguins) and data on food access and mortality in the US.
 
-You'll be doing all your R work in Quarto this time (and from now on). You should use an RStudio Project to keep your files well organized (either on your computer or on RStudio.cloud). Either create a new project for this exercise only, or make a project for all your work in this class.
+You'll be doing all your R work in Quarto this time (and from now on). You should use an RStudio Project to keep your files well organized (either on your computer or on Posit.cloud). Either create a new project for this exercise only, or make a project for all your work in this class.
 
-You'll need to download these two CSV files and put them somewhere on your computer or upload them to RStudio.cloud—preferably in a folder named `data` in your project folder:
+You'll need to download these two CSV files and put them somewhere on your computer or upload them to Posit.cloud—preferably in a folder named `data` in your project folder:
 
 - [{{< fa file-csv >}} `penguins.csv`](/files/data/package_data/penguins.csv)
 - [{{< fa file-csv >}} `food_health_politics.csv`](/files/data/external_data/food_health_politics.csv)
@@ -39,7 +39,7 @@ To check that you put everything in the right places, you can download and unzip
 
 You'll need to make sure you have these packages installed on your computer: `tidyverse` and `modelsummary`. If you try to load one of those packages with `library(tidyverse)` or `library(modelsummary)`, etc., and R gives an error that the package is missing, use the "Packages" panel in RStudio to install it.
 
-(Alternatively, you can open the project named "Problem Set 2" on RStudio.cloud and complete the assignment in your browser without needing to install anything. If you don't have access to the class RStudio.cloud account, *please let me know as soon as possible*. [This link should take you to the project](https://posit.cloud/spaces/323551/content/5299579)—if it doesn't, log in and look for the project named "Problem Set 2.")
+(Alternatively, you can open the project named "Problem Set 2" on Posit.cloud and complete the assignment in your browser without needing to install anything. If you don't have access to the class Posit.cloud account, *please let me know as soon as possible*. [This link should take you to the project](https://posit.cloud/spaces/323551/content/5299579)—if it doesn't, log in and look for the project named "Problem Set 2.")
 
 Remember that you can run an entire chunk by clicking on the green play arrow in the top right corner of the chunk. You can also run lines of code line-by-line if you place your cursor on some R code and press <kbd>⌘</kbd> + <kbd>enter</kbd> (for macOS users) or <kbd>ctrl</kbd> + <kbd>enter</kbd> (for Windows users).
 
