@@ -1,4 +1,5 @@
 library(targets)
+library(crew)
 library(tarchetypes)
 suppressPackageStartupMessages(library(tidyverse))
 
@@ -27,7 +28,8 @@ Sys.setenv("UPLOAD_WEBSITES" = FALSE)
 tar_option_set(
   packages = c("tibble"),
   format = "rds",
-  workspace_on_error = TRUE
+  workspace_on_error = TRUE,
+  controller = crew_controller_local(workers = 4)
 )
 
 # here::here() returns an absolute path, which then gets stored in tar_meta and
