@@ -80,17 +80,17 @@ Do the following things:
 
 &nbsp;
 
-2. Skim through the content at these pages:
+2. Skim through the content at these pages. Again, lots of these resources mention R Markdown, which is Quarto's predecessor, but the same principles apply to Quarto
 
     - [Using Markdown](/resource/markdown.qmd)
     - [Using Quarto](/resource/quarto.qmd)
-    - [How it Works](http://rmarkdown.rstudio.com/lesson-2.html)
-    - [Code Chunks](http://rmarkdown.rstudio.com/lesson-3.html)
-    - [Inline Code](http://rmarkdown.rstudio.com/lesson-4.html)
-    - [Markdown Basics](http://rmarkdown.rstudio.com/lesson-8.html) (The [R Markdown Reference Guide](https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf) is super useful here.)
-    - [Output Formats](http://rmarkdown.rstudio.com/lesson-9.html)
+    - [How it Works](https://rmarkdown.rstudio.com/lesson-2.html)
+    - [Code Chunks](https://rmarkdown.rstudio.com/lesson-3.html)
+    - [Inline Code](https://rmarkdown.rstudio.com/lesson-4.html)
+    - [Publish and Share with Quarto](https://rstudio.github.io/cheatsheets/html/quarto.html#publish)
+    - [Publish and Share with Quarto cheatsheet](https://rstudio.github.io/cheatsheets/quarto.pdf)
 
-3. Watch this video (again, it's from PMAP 8921, but the content works for this class):
+3. Watch this video (again, it's from PMAP 8921 *and* it's about R Markdown instead of Quarto, but the content works for this class):
 
     <div class="ratio ratio-16x9">
     <iframe src="https://www.youtube.com/embed/fT5xI1cmE2c" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
