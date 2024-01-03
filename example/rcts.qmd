@@ -17,7 +17,7 @@ If you want to follow along with this example, you can download the data below:
 - [{{< fa table >}} `village_randomized.csv`](/files/data/generated_data/village_randomized.csv)
 
 ```{r load-libraries, message=FALSE, warning=FALSE}
-library(tidyverse)  # ggplot(), %>%, mutate(), and friends
+library(tidyverse)  # ggplot(), mutate(), and friends
 library(ggdag)  # Make DAGs
 library(scales)  # Format numbers with functions like comma(), percent(), and dollar()
 library(broom)  # Convert models to data frames
@@ -87,16 +87,16 @@ You ran the study on `r comma(nrow(village_randomized))` participants over the c
 Before calculating the effect of the program, you first check to see how well balanced assignment was, and you find that assignment to the program was pretty much split 50/50, which is good:
 
 ```{r}
-village_randomized %>%
-  count(program) %>%
+village_randomized |>
+  count(program) |>
   mutate(prop = n / sum(n))
 ```
 
 You then check to see how well balanced the treatment and control groups were in participants' pre-treatment characteristics:
 
 ```{r}
-village_randomized %>%
-  group_by(program) %>%
+village_randomized |>
+  group_by(program) |>
   summarize(prop_male = mean(sex_num),
             avg_age = mean(age),
             avg_pre_income = mean(pre_income))
@@ -187,8 +187,8 @@ $$
 This is simply the average outcome for people in the program minus the average outcome for people not in the program. You calculate the group averages:
 
 ```{r program-diffs}
-village_randomized %>%
-  group_by(program) %>%
+village_randomized |>
+  group_by(program) |>
   summarize(avg_post = mean(post_income))
 ```
 
@@ -201,7 +201,7 @@ model_rct <- lm(post_income ~ program, data = village_randomized)
 tidy(model_rct)
 ```
 
-Based on your RCT, you conclude that the program causes an average increase of `r tidy(model_rct) %>% filter(term == "programProgram") %>% pull(estimate) %>% dollar()` in income.
+Based on your RCT, you conclude that the program causes an average increase of `r tidy(model_rct) |> filter(term == "programProgram") |> pull(estimate) |> dollar()` in income.
 
 ```{r rct-finding}
 ggplot(village_randomized, aes(x = program, y = post_income, color = program)) +

@@ -28,11 +28,11 @@ title: "Things you should know for Exam 1"
 
 **You should be able to…**
 
-- …write and interpret R code that calculates summary statistics for groups (i.e. `group_by() %>% summarize()`)
+- …write and interpret R code that calculates summary statistics for groups (i.e. `group_by() |> summarize()`)
 - …write and interpret R code that builds linear models (i.e. `lm()`)
 - …interpret regression coefficients
 - …interpret other regression diagnostics like $R^2$
-- …use the `%>%` pipe in R to chain functions together
+- …use the `|>` pipe in R to chain functions together
 - …use `ggplot()` to visualize data
 
 **Helpful resources:**

@@ -57,7 +57,7 @@ First, let's download the dataset (if you haven't already), put in a folder name
 - [{{< fa table >}} `injury.csv`](/files/data/package_data/injury.csv)
 
 ```{r load-libraries, message=FALSE, warning=FALSE}
-library(tidyverse)  # ggplot(), %>%, mutate(), and friends
+library(tidyverse)  # ggplot(), mutate(), and friends
 library(broom)  # Convert models to data frames
 library(scales)  # Format numbers with functions like comma(), percent(), and dollar()
 library(modelsummary)  # Create side-by-side regression tables
@@ -77,8 +77,8 @@ injury_raw <- read_csv(here::here("files", "data", "package_data", "injury.csv")
 Next we'll clean up the `injury_raw` data a little to limit the data to just observations from Kentucky. we'll also rename some awkwardly-named columns:
 
 ```{r clean-data}
-injury <- injury_raw %>%
-  filter(ky == 1) %>%
+injury <- injury_raw |>
+  filter(ky == 1) |>
   # The syntax for rename is `new_name = original_name`
   rename(duration = durat, log_duration = ldurat,
          after_1980 = afchnge)
@@ -144,11 +144,11 @@ We can already start to see the classical diff-in-diff plot! It looks like high 
 We can also use `group_by()` and `summarize()` to figure out group means before sending the data to ggplot. I prefer doing this because it gives me more control over the data that I'm plotting:
 
 ```{r plot-pointrange-manual}
-plot_data <- injury %>%
+plot_data <- injury |>
   # Make these categories instead of 0/1 numbers so they look nicer in the plot
   mutate(highearn = factor(highearn, labels = c("Low earner", "High earner")),
-         after_1980 = factor(after_1980, labels = c("Before 1980", "After 1980"))) %>%
-  group_by(highearn, after_1980) %>%
+         after_1980 = factor(after_1980, labels = c("Before 1980", "After 1980"))) |>
+  group_by(highearn, after_1980) |>
   summarize(mean_duration = mean(log_duration),
             se_duration = sd(log_duration) / sqrt(n()),
             upper = mean_duration + (1.96 * se_duration),
@@ -184,8 +184,8 @@ We can find that exact difference by filling out the 2x2 before/after treatment/
 A combination of `group_by()` and `summarize()` makes this really easy:
 
 ```{r calculate-diffs}
-diffs <- injury %>%
-  group_by(after_1980, highearn) %>%
+diffs <- injury |>
+  group_by(after_1980, highearn) |>
   summarize(mean_duration = mean(log_duration),
             # Calculate average with regular duration too, just for fun
             mean_duration_for_humans = mean(duration))
@@ -195,20 +195,20 @@ diffs
 We can pull each of these numbers out of the table with some `filter()`s and `pull()`:
 
 ```{r calculate-cells-manually}
-before_treatment <- diffs %>%
-  filter(after_1980 == 0, highearn == 1) %>%
+before_treatment <- diffs |>
+  filter(after_1980 == 0, highearn == 1) |>
   pull(mean_duration)
 
-before_control <- diffs %>%
-  filter(after_1980 == 0, highearn == 0) %>%
+before_control <- diffs |>
+  filter(after_1980 == 0, highearn == 0) |>
   pull(mean_duration)
 
-after_treatment <- diffs %>%
-  filter(after_1980 == 1, highearn == 1) %>%
+after_treatment <- diffs |>
+  filter(after_1980 == 1, highearn == 1) |>
   pull(mean_duration)
 
-after_control <- diffs %>%
-  filter(after_1980 == 1, highearn == 0) %>%
+after_control <- diffs |>
+  filter(after_1980 == 1, highearn == 0) |>
   pull(mean_duration)
 
 diff_treatment_before_after <- after_treatment - before_treatment
@@ -247,7 +247,7 @@ ggplot(diffs, aes(x = as.factor(after_1980),
 # don't like doing this and prefer to do that separately so there's less typing
 # in the ggplot code, like this:
 #
-# diffs <- diffs %>%
+# diffs <- diffs |>
 #   mutate(after_1980 = as.factor(after_1980), highearn = as.factor(highearn))
 #
 # ggplot(diffs, aes(x = after_1980, y = avg_durat, color = highearn)) +
@@ -295,7 +295,7 @@ Let's estimate an expanded version of the basic regression model with the follow
 
 ```{r fix-injury-factors}
 # Convert industry and injury type to categories/factors
-injury_fixed <- injury %>%
+injury_fixed <- injury |>
   mutate(indust = as.factor(indust),
          injtype = as.factor(injtype))
 ```
@@ -307,8 +307,8 @@ model_big <- lm(log_duration ~ highearn + after_1980 + highearn * after_1980 +
 tidy(model_big)
 
 # Extract just the diff-in-diff estimate
-diff_diff_controls <- tidy(model_big) %>%
-  filter(term == "highearn:after_1980") %>%
+diff_diff_controls <- tidy(model_big) |>
+  filter(term == "highearn:after_1980") |>
   pull(estimate)
 ```
 
@@ -324,11 +324,11 @@ modelsummary(list("Simple" = model_small, "Full" = model_big))
 ```
 
 ```{r all-models-together-real, echo=FALSE, warning=FALSE}
-gm <- modelsummary::gof_map %>%
+gm <- modelsummary::gof_map |>
   mutate(omit = !(raw %in% c("nobs", "r.squared", "adj.r.squared")))
 
 modelsummary(list("Simple" = model_small, "Full" = model_big),
-             gof_map = gm, stars = TRUE) %>%
-  kableExtra::row_spec(7, background = "#F6D645") %>%
+             gof_map = gm, stars = TRUE) |>
+  kableExtra::row_spec(7, background = "#F6D645") |>
   kableExtra::row_spec(36, extra_css = "border-bottom: 1px solid")
 ```

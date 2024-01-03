@@ -27,10 +27,10 @@ slide_details <- tibble::tribble(
 
 Look through your notes on regression from your last stats class. Also, you can skim through these resources:
 
-- {{< fa book >}} [5.1–5.4 in *ModernDive*](https://moderndive.com/5-regression.html) [@IsmayKim:2018]
-- {{< fa book >}} [6.1–6.4 in *ModernDive*](https://moderndive.com/6-multiple-regression.html) [@IsmayKim:2018]
-- {{< fa book >}} 7.1–7.3 in *OpenIntro Statistics* [@DiezBarrCetinkaya-Rundel:2017]
-- {{< fa book >}} 8.1 in *OpenIntro Statistics* [@DiezBarrCetinkaya-Rundel:2017]
+- {{< fa book >}} [5.1–5.4 in *ModernDive*](https://moderndive.com/5-regression.html) [@IsmayKim:2019]
+- {{< fa book >}} [6.1–6.4 in *ModernDive*](https://moderndive.com/6-multiple-regression.html) [@IsmayKim:2019]
+- {{< fa book >}} 7.1–7.3 in *OpenIntro Statistics* [@DiezCetinkaya-RundelBarr:2019]
+- {{< fa book >}} 8.1 in *OpenIntro Statistics* [@DiezCetinkaya-RundelBarr:2019]
 
 We'll review all this regression stuff in the videos, so *don't panic* if this all looks terrifying! Also, take advantage of the videos that accompany the *OpenIntro* chapters. And *also*, the *OpenIntro* chapters are heavier on the math—don't worry if you don't understand everything.
 

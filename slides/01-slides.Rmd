@@ -693,7 +693,7 @@ dagify(
   X ~ Z,
   coords = list(x = c(X = 1, Y = 3, Z = 2),
                 y = c(X = 1, Y = 1, Z = 2))
-) %>% 
+) |> 
   ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
   geom_dag_edges() +
   geom_dag_point(color = "grey80", size = 14) +
@@ -717,9 +717,9 @@ dagify(
   Earn ~ Edu,
   exposure = "Edu",
   outcome = "Earn",
-  coords = edu_earn_coords) %>% 
-  tidy_dagitty() %>% 
-  node_status() %>% 
+  coords = edu_earn_coords) |> 
+  tidy_dagitty() |> 
+  node_status() |> 
   ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
   geom_dag_edges(start_cap = ggraph::circle(3, "lines"),
                  end_cap = ggraph::circle(3, "lines"),
@@ -749,9 +749,9 @@ dagify(
              "Year" = "Year", "Bkgd" = "Background",
              "Loc" = "Location", "JobCx" = "Job connections",
              "U1" = "Unobserved stuff"),
-  coords = edu_earn_coords) %>% 
-  tidy_dagitty() %>% 
-  node_status() %>% 
+  coords = edu_earn_coords) |> 
+  tidy_dagitty() |> 
+  node_status() |> 
   ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
   geom_dag_edges() +
   geom_dag_point(aes(color = status), size = 14) +
@@ -777,7 +777,7 @@ dagify(cardiacarrest ~ cholesterol,
                   "weight" = "Weight"),
        latent = "unhealthy",
        exposure = "smoking",
-       outcome = "cardiacarrest") %>% 
+       outcome = "cardiacarrest") |> 
   ggdag(text = FALSE, use_labels = "label") +
   theme_dag()
 ```
@@ -908,8 +908,8 @@ From "Master the Tidyverse" by RStudio
 
 .small-code[
 ```{r example-code, eval=FALSE}
-strike_damages_month <- bird_strikes %>% 
-  group_by(Month) %>% 
+strike_damages_month <- bird_strikes |> 
+  group_by(Month) |> 
   summarize(total_damages = sum(Cost, na.rm = TRUE),
             average_damages = mean(Cost, na.rm = TRUE))
 

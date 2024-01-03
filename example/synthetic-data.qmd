@@ -43,7 +43,7 @@ happiness_simple <- tibble(
   happiness = rbeta(n_people, shape1 = 7, shape2 = 3),
   cookies = rpois(n_people, lambda = 1),
   color_blue = sample(c("Blue", "Not blue"), n_people, replace = TRUE)
-) %>%
+) |>
   # Adjust some of the columns
   mutate(happiness = round(happiness * 10, 1),
          cookies = cookies + 1,
@@ -90,9 +90,9 @@ We can invent our own coefficients and use some math to build them into the data
 When generating the data, we can't just use `rbeta()` by itself to generate happiness, since happiness depends on both cookies and favorite color (that's why we call it a dependent variable). To build in this effect, we can add a new column that uses math and modifies the underlying `rbeta()`-based happiness score:
 
 ```{r}
-happiness_with_effect <- happiness_simple %>%
+happiness_with_effect <- happiness_simple |>
   # Turn the categorical favorite color column into TRUE/FALSE so we can do math with it
-  mutate(color_blue_binary = ifelse(color_blue == "Blue", TRUE, FALSE)) %>%
+  mutate(color_blue_binary = ifelse(color_blue == "Blue", TRUE, FALSE)) |>
   # Make a new happiness column that uses coefficients for cookies and favorite color
   mutate(happiness_modified = happiness + (0.25 * cookies) + (0.75 * color_blue_binary))
 head(happiness_with_effect)
@@ -128,7 +128,7 @@ ggplot(happiness_with_effect, aes(x = happiness_modified)) +
 To fix that, we can use the `rescale()` function from the **scales** package to force the new `happiness_modified` variable to fit back in its original range:
 
 ```{r happiness-scaled-down}
-happiness_with_effect <- happiness_with_effect %>%
+happiness_with_effect <- happiness_with_effect |>
   mutate(happiness_rescaled = rescale(happiness_modified, to = c(3, 10)))
 
 ggplot(happiness_with_effect, aes(x = happiness_rescaled)) +
@@ -157,17 +157,17 @@ happiness_real_effect <- tibble(
   happiness_baseline = rbeta(n_people, shape1 = 7, shape2 = 3),
   cookies = rpois(n_people, lambda = 1),
   color_blue = sample(c("Blue", "Not blue"), n_people, replace = TRUE)
-) %>%
+) |>
   # Adjust some of the columns
   mutate(happiness_baseline = round(happiness_baseline * 10, 1),
          cookies = cookies + 1,
-         color_blue = fct_relevel(factor(color_blue), "Not blue")) %>%
+         color_blue = fct_relevel(factor(color_blue), "Not blue")) |>
   # Turn the categorical favorite color column into TRUE/FALSE so we can do math with it
-  mutate(color_blue_binary = ifelse(color_blue == "Blue", TRUE, FALSE)) %>%
+  mutate(color_blue_binary = ifelse(color_blue == "Blue", TRUE, FALSE)) |>
   # Make a new happiness column that uses coefficients for cookies and favorite color
   mutate(happiness_effect = happiness_baseline +
            (0.31 * cookies) +  # Cookie effect
-           (0.91 * color_blue_binary)) %>%  # Blue effect
+           (0.91 * color_blue_binary)) |>  # Blue effect
   # Rescale to 3-10, since that's what the original happiness column looked like
   mutate(happiness = rescale(happiness_effect, to = c(3, 10)))
 
@@ -180,7 +180,7 @@ There's nothing magical about the 0.31 and 0.91 numbers I used here; I just kept
 Phew. We successfully connected cookies and favorite color to happiness and we have effects that are measurable with regression! One last thing that I would do is get rid of some of the intermediate columns like `color_blue_binary` or `happiness_effect`—we only used those for the behind-the-scenes math of creating the effect. Here's our final synthetic dataset:
 
 ```{r}
-happiness <- happiness_real_effect %>%
+happiness <- happiness_real_effect |>
   select(id, happiness, cookies, color_blue)
 head(happiness)
 ```
@@ -238,19 +238,19 @@ happiness_cookies_blue <- tibble(
   happiness_baseline = rbeta(n_people, shape1 = 7, shape2 = 3),
   cookies = rpois(n_people, lambda = 1),
   color_blue = sample(c("Blue", "Not blue"), n_people, replace = TRUE)
-) %>%
+) |>
   # Adjust some of the columns
   mutate(happiness_baseline = round(happiness_baseline * 10, 1),
          cookies = cookies + 1,
-         color_blue = fct_relevel(factor(color_blue), "Not blue")) %>%
+         color_blue = fct_relevel(factor(color_blue), "Not blue")) |>
   # Turn the categorical favorite color column into TRUE/FALSE so we can do math with it
-  mutate(color_blue_binary = ifelse(color_blue == "Blue", TRUE, FALSE)) %>%
+  mutate(color_blue_binary = ifelse(color_blue == "Blue", TRUE, FALSE)) |>
   # Make blue have an effect on cookie consumption
-  mutate(cookies = cookies + (0.5 * color_blue_binary)) %>%
+  mutate(cookies = cookies + (0.5 * color_blue_binary)) |>
   # Make a new happiness column that uses coefficients for cookies and favorite color
   mutate(happiness_effect = happiness_baseline +
            (0.31 * cookies) +  # Cookie effect
-           (0.91 * color_blue_binary)) %>%  # Blue effect
+           (0.91 * color_blue_binary)) |>  # Blue effect
   # Rescale to 3-10, since that's what the original happiness column looked like
   mutate(happiness = rescale(happiness_effect, to = c(3, 10)))
 head(happiness_cookies_blue)
@@ -259,7 +259,7 @@ head(happiness_cookies_blue)
 Notice now that people who like blue eat partial cookies, as expected. We can verify that there's a relationship between liking blue and cookies by running a model:
 
 ```{r}
-lm(cookies ~ color_blue, data = happiness_cookies_blue) %>%
+lm(cookies ~ color_blue, data = happiness_cookies_blue) |>
   tidy()
 ```
 
@@ -288,7 +288,7 @@ If you wanted, we could rescale the number of cookies just like we rescaled happ
 Now that we have a good working dataset, we can keep the columns we care about and save it as a CSV file for later use:
 
 ```{r}
-happiness <- happiness_cookies_blue %>%
+happiness <- happiness_cookies_blue |>
   select(id, happiness, cookies, color_blue)
 head(happiness)
 ```
@@ -332,21 +332,21 @@ happiness_cookies_noisier <- tibble(
   cookies = rpois(n_people, lambda = 1),
   cookie_effect = rnorm(n_people, mean = 0.31, sd = 0.2),
   color_blue = sample(c("Blue", "Not blue"), n_people, replace = TRUE)
-) %>%
+) |>
   # Adjust some of the columns
   mutate(happiness_baseline = round(happiness_baseline * 10, 1),
          cookies = cookies + 1,
-         color_blue = fct_relevel(factor(color_blue), "Not blue")) %>%
+         color_blue = fct_relevel(factor(color_blue), "Not blue")) |>
   # Turn the categorical favorite color column into TRUE/FALSE so we can do math with it
-  mutate(color_blue_binary = ifelse(color_blue == "Blue", TRUE, FALSE)) %>%
+  mutate(color_blue_binary = ifelse(color_blue == "Blue", TRUE, FALSE)) |>
   # Make blue have an effect on cookie consumption
-  mutate(cookies = cookies + (0.5 * color_blue_binary)) %>%
+  mutate(cookies = cookies + (0.5 * color_blue_binary)) |>
   # Make a new happiness column that uses coefficients for cookies and favorite
   # color. Importantly, instead of using 0.31 * cookies, we'll use the random
   # cookie effect we generated earlier
   mutate(happiness_effect = happiness_baseline +
            (cookie_effect * cookies) +
-           (0.91 * color_blue_binary)) %>%
+           (0.91 * color_blue_binary)) |>
   # Rescale to 3-10, since that's what the original happiness column looked like
   mutate(happiness = rescale(happiness_effect, to = c(3, 10)))
 head(happiness_cookies_noisier)
@@ -419,7 +419,7 @@ set.seed(1234)
 
 temp_data <- tibble(
   x = rnorm(1000, mean = 100, sd = 25)
-) %>%
+) |>
   mutate(y = rbeta(1000, shape1 = 3, shape2 = 16) +  # Baseline distribution
            (0.25 * x) +  # Effect of x
            rnorm(1000, mean = 0, sd = 10))  # Add some noise
@@ -432,7 +432,7 @@ ggplot(temp_data, aes(x = x, y = y)) +
 We can confirm the effect with a model:
 
 ```{r}
-lm(y ~ x, data = temp_data) %>%
+lm(y ~ x, data = temp_data) |>
   tidy()
 ```
 
@@ -447,17 +447,17 @@ set.seed(1234)
 
 temp_data <- tibble(
   treatment = rbinom(1000, size = 1, prob = 0.5)  # Make 1000 0/1 values with 50% chance of each
-) %>%
+) |>
   mutate(outcome = rbeta(1000, shape1 = 3, shape2 = 16) +  # Baseline distribution
            (20 * treatment) +  # Effect of treatment
-           rnorm(1000, mean = 0, sd = 20)) %>%   # Add some noise
+           rnorm(1000, mean = 0, sd = 20)) |>   # Add some noise
   mutate(treatment = factor(treatment))  # Make treatment a factor/categorical variable
 ```
 
 We can check the numbers with a model:
 
 ```{r}
-lm(outcome ~ treatment, data = temp_data) %>% tidy()
+lm(outcome ~ treatment, data = temp_data) |> tidy()
 ```
 
 Here's what that looks like as a histogram:
@@ -566,7 +566,7 @@ net_data <- tibble(
   id = 1:n_people,
   # Generate income variable: normal, 500 ± 300
   income = rnorm(n_people, mean = 500, sd = 75)
-) %>%
+) |>
   # Generate health variable: beta, centered around 70ish
   mutate(health_base = rbeta(n_people, shape1 = 7, shape2 = 4) * 100,
          # Health increases by 0.02 for every dollar in income
@@ -574,13 +574,13 @@ net_data <- tibble(
          # Make the final health score and add some noise
          health = health_base + health_income_effect + rnorm(n_people, mean = 0, sd = 3),
          # Rescale so it doesn't go above 100
-         health = rescale(health, to = c(min(health), 100))) %>%
+         health = rescale(health, to = c(min(health), 100))) |>
   # Generate net variable based on income, health, and random noise
   mutate(net_score = (0.5 * income) + (1.5 * health) + rnorm(n_people, mean = 0, sd = 15),
          # Scale net score down to 0.05 to 0.95 to create a probability of using a net
          net_probability = rescale(net_score, to = c(0.05, 0.95)),
          # Randomly generate a 0/1 variable using that probability
-         net = rbinom(n_people, 1, net_probability)) %>%
+         net = rbinom(n_people, 1, net_probability)) |>
   # Finally generate a malaria risk variable based on income, health, net use,
   # and random noise
   mutate(malaria_risk_base = rbeta(n_people, shape1 = 4, shape2 = 5) * 100,
@@ -607,7 +607,7 @@ ggplot(net_data, aes(x = income, y = health)) +
   geom_point() +
   geom_smooth(method = "lm")
 
-lm(health ~ income, data = net_data) %>% tidy()
+lm(health ~ income, data = net_data) |> tidy()
 ```
 
    It looks like richer and healthier people are more likely to use nets:
@@ -627,7 +627,7 @@ net_income + net_health
    Income increasing makes it 1% more likely to use a net; health increasing make it 2% more likely to use a net:
 
 ```{r indent="   "}
-glm(net ~ income + health, family = binomial(link = "logit"), data = net_data) %>%
+glm(net ~ income + health, family = binomial(link = "logit"), data = net_data) |>
   tidy(exponentiate = TRUE)
 ```
 
@@ -657,7 +657,7 @@ tidy(model_net_ate)
 
 ```{r indent="   "}
 # In the end, all we need is id, income, health, net, and malaria risk:
-net_data_final <- net_data %>%
+net_data_final <- net_data |>
   select(id, income, health, net, malaria_risk)
 head(net_data_final)
 ```
@@ -724,7 +724,7 @@ rct_data <- tibble(
   id = 1:n_people,
   # Generate income variable: normal, 500 ± 300
   income = rnorm(n_people, mean = 500, sd = 75)
-) %>%
+) |>
   # Generate health variable: beta, centered around 70ish
   mutate(health_base = rbeta(n_people, shape1 = 7, shape2 = 4) * 100,
          # Health increases by 0.02 for every dollar in income
@@ -732,9 +732,9 @@ rct_data <- tibble(
          # Make the final health score and add some noise
          health = health_base + health_income_effect + rnorm(n_people, mean = 0, sd = 3),
          # Rescale so it doesn't go above 100
-         health = rescale(health, to = c(min(health), 100))) %>%
+         health = rescale(health, to = c(min(health), 100))) |>
   # Randomly assign people to use a net (this is nice and easy!)
-  mutate(net = rbinom(n_people, 1, 0.5)) %>%
+  mutate(net = rbinom(n_people, 1, 0.5)) |>
   # Finally generate a malaria risk variable based on income, health, net use,
   # and random noise
   mutate(malaria_risk_base = rbeta(n_people, shape1 = 4, shape2 = 5) * 100,
@@ -761,7 +761,7 @@ ggplot(net_data, aes(x = income, y = health)) +
   geom_point() +
   geom_smooth(method = "lm")
 
-lm(health ~ income, data = net_data) %>% tidy()
+lm(health ~ income, data = net_data) |> tidy()
 ```
 
 6. **Try it out!**
@@ -790,7 +790,7 @@ tidy(model_rct_controls)
 
 ```{r indent="   "}
 # In the end, all we need is id, income, health, net, and malaria risk:
-rct_data_final <- rct_data %>%
+rct_data_final <- rct_data |>
   select(id, income, health, net, malaria_risk)
 head(rct_data_final)
 ```
@@ -859,10 +859,10 @@ did_data <- tibble(
   # Generate city variable: binomial, 50% chance of being in a city. We'll use
   # sample() instead of rbinom()
   city = sample(c("City A", "City B"), n_people, replace = TRUE)
-) %>%
+) |>
   # Generate net variable. We're assuming perfect compliance, so this will only
   # be TRUE for people in City B after 2017
-  mutate(net = ifelse(city == "City B" & year > 2017, TRUE, FALSE)) %>%
+  mutate(net = ifelse(city == "City B" & year > 2017, TRUE, FALSE)) |>
   # Generate a malaria risk variable based on year, city, net use, and random noise
   mutate(malaria_risk_base = rbeta(n_people, shape1 = 6, shape2 = 3) * 100,
          # Risk goes up if you're in City B because they have a worse problem.
@@ -890,7 +890,7 @@ did_data <- tibble(
          # Finally combine all these effects to create the malaria risk variable
          malaria_risk = malaria_risk_base + city_effect + year_effect + net_effect,
          # Rescale so it doesn't go below 0 or above 100
-         malaria_risk = rescale(malaria_risk, to = c(0, 100))) %>%
+         malaria_risk = rescale(malaria_risk, to = c(0, 100))) |>
   # Make an indicator variable showing if the row is after 2017
   mutate(after = year > 2017)
 
@@ -910,8 +910,8 @@ ggplot(did_data, aes(x = city, y = malaria_risk, color = city)) +
    Does risk decrease over time? And are the trends parallel? There was a weird random spike in City B in 2017 for whatever reason, but in general, the trends in the two cities are pretty parallel from 2013 to 2017.
 
 ```{r check-parallel-trends, indent="   "}
-plot_data <- did_data %>%
-  group_by(year, city) %>%
+plot_data <- did_data |>
+  group_by(year, city) |>
   summarize(mean_risk = mean(malaria_risk),
             se_risk = sd(malaria_risk) / sqrt(n()),
             upper = mean_risk + (1.96 * se_risk),
@@ -943,8 +943,8 @@ tidy(model_did)
    Here's an obligatory diff-in-diff visualization:
 
 ```{r show-diff-diff, indent="   "}
-plot_data <- did_data %>%
-  group_by(after, city) %>%
+plot_data <- did_data |>
+  group_by(after, city) |>
   summarize(mean_risk = mean(malaria_risk),
             se_risk = sd(malaria_risk) / sqrt(n()),
             upper = mean_risk + (1.96 * se_risk),
@@ -975,7 +975,7 @@ ggplot(plot_data, aes(x = after, y = mean_risk, color = city, group = city)) +
    The data works, so let's get rid of the intermediate columns we don't need and save it as a CSV file.
 
 ```{r indent="   "}
-did_data_final <- did_data %>%
+did_data_final <- did_data |>
   select(id, year, city, net, malaria_risk)
 head(did_data_final)
 ```
@@ -1042,13 +1042,13 @@ rdd_data <- tibble(
   id = 1:n_people,
   # Generate income variable: normal, 500 ± 300
   income = rnorm(n_people, mean = 500, sd = 75)
-) %>%
+) |>
   # Generate cutoff variable
-  mutate(below_cutoff = ifelse(income < 450, TRUE, FALSE)) %>%
+  mutate(below_cutoff = ifelse(income < 450, TRUE, FALSE)) |>
   # Generate net variable. We'll make two: one that's sharp and has perfect
   # compliance, and one that's fuzzy
   # Here's the sharp one. It's easy. If you're below the cutoff you use a net.
-  mutate(net_sharp = ifelse(below_cutoff == TRUE, TRUE, FALSE)) %>%
+  mutate(net_sharp = ifelse(below_cutoff == TRUE, TRUE, FALSE)) |>
   # Here's the fuzzy one, which is a little trickier. If you're far away from
   # the cutoff, you follow what you're supposed to do (like if your income is
   # 800, you don't use the program; if your income is 200, you definitely use
@@ -1063,12 +1063,12 @@ rdd_data <- tibble(
     income < 450 & income >= 400 ~ sample(c(TRUE, FALSE), n_people, replace = TRUE, prob = c(0.8, 0.2)),
     # If your income is below 400, you definitely use the program
     income < 400 ~ TRUE
-  )) %>%
+  )) |>
   # Finally we can make the malaria risk score, based on income, net use, and
   # random noise. We'll make two outcomes: one using the sharp net use and one
   # using the fuzzy net use. They have the same effect built in, we just have to
   # use net_sharp and net_fuzzy separately.
-  mutate(malaria_risk_base = rbeta(n_people, shape1 = 4, shape2 = 5) * 100) %>%
+  mutate(malaria_risk_base = rbeta(n_people, shape1 = 4, shape2 = 5) * 100) |>
   # Make the sharp version. There's really a 10 point decrease, but because of
   # rescaling, we use 15. I only chose 15 through lots of trial and error (i.e.
   # I used -11, ran the RDD model, and the effect was too small; I used -20, ran
@@ -1076,11 +1076,11 @@ rdd_data <- tibble(
   # on -15). Risk also goes down as income increases.
   mutate(malaria_effect_sharp = (-15 * net_sharp) + (-0.01 * income),
          malaria_risk_sharp = malaria_risk_base + malaria_effect_sharp + rnorm(n_people, 0, sd = 3),
-         malaria_risk_sharp = rescale(malaria_risk_sharp, to = c(5, 70))) %>%
+         malaria_risk_sharp = rescale(malaria_risk_sharp, to = c(5, 70))) |>
   # Do the same thing, but with net_fuzzy
   mutate(malaria_effect_fuzzy = (-15 * net_fuzzy) + (-0.01 * income),
          malaria_risk_fuzzy = malaria_risk_base + malaria_effect_fuzzy + rnorm(n_people, 0, sd = 3),
-         malaria_risk_fuzzy = rescale(malaria_risk_fuzzy, to = c(5, 70))) %>%
+         malaria_risk_fuzzy = rescale(malaria_risk_fuzzy, to = c(5, 70))) |>
   # Make a version of income that's centered at the cutpoint
   mutate(income_centered = income - 450)
 
@@ -1190,11 +1190,11 @@ tidy(model_fuzzy)
    The data works, so let's get rid of the intermediate columns we don't need and save it as a CSV file. We'll make two separate CSV files for fuzzy and sharp, just because.
 
 ```{r indent="   "}
-rdd_data_final_sharp <- rdd_data %>%
+rdd_data_final_sharp <- rdd_data |>
   select(id, income, net = net_sharp, malaria_risk = malaria_risk_sharp)
 head(rdd_data_final_sharp)
 
-rdd_data_final_fuzzy <- rdd_data %>%
+rdd_data_final_fuzzy <- rdd_data |>
   select(id, income, net = net_fuzzy, malaria_risk = malaria_risk_fuzzy)
 head(rdd_data_final_fuzzy)
 ```
@@ -1274,9 +1274,9 @@ iv_data <- tibble(
   risk_factors = rnorm(n_people, mean = 100, sd = 25),
   # Generate distance to town hall variable
   distance = rbeta(n_people, shape1 = 1, shape2 = 4)
-) %>%
+) |>
   # Scale up distance to be 0.1-15 instead of 0-1
-  mutate(distance = rescale(distance, to = c(0.1, 15))) %>%
+  mutate(distance = rescale(distance, to = c(0.1, 15))) |>
   # Generate net variable based on distance, risk factors, and random noise
   # Note: These -40 and -2 effects are entirely made up and I got them through a
   # lot of trial and error and rerunning this stupid chunk dozens of times
@@ -1286,7 +1286,7 @@ iv_data <- tibble(
            rnorm(n_people, mean = 0, sd = 50),  # Random noise
         net_probability = rescale(net_score, to = c(0.15, 1)),
         # Randomly generate a 0/1 variable using that probability
-        net = rbinom(n_people, 1, net_probability)) %>%
+        net = rbinom(n_people, 1, net_probability)) |>
   # Generate malaria risk variable based on net use, risk factors, and random noise
   mutate(malaria_risk_base = rbeta(n_people, shape1 = 7, shape2 = 5) * 100,
          # We're aiming for a -10 net effect, but need to boost it because of rescaling
@@ -1357,7 +1357,7 @@ tidy(model_iv)
    The data works well enough, so we'll get rid of the extra intermediate columns and save it as a CSV file. We'll keep the forbidden `risk_factors` column just for fun.
 
 ```{r indent="   "}
-iv_data_final <- iv_data %>%
+iv_data_final <- iv_data |>
   select(id, net, distance, malaria_risk, risk_factors)
 
 head(iv_data_final)
@@ -1421,7 +1421,7 @@ panel_global_data <- fabricate(
     gdp_measure = base_gdp + year_shock + (ts_year * growth_units) +
       rnorm(N, sd = growth_error)
   )
-) %>%
+) |>
   # Scale up the years to be actual years instead of 1, 2, 3, etc.
   mutate(year = ts_year + 2010)
 
@@ -1485,10 +1485,10 @@ faux_data <- rnorm_multi(n = 100,
 head(faux_data)
 
 # Check averages and standard deviations
-faux_data %>%
+faux_data |>
   # Convert to long/tidy so we can group and summarize
-  pivot_longer(cols = everything(), names_to = "variable", values_to = "value") %>%
-  group_by(variable) %>%
+  pivot_longer(cols = everything(), names_to = "variable", values_to = "value") |>
+  group_by(variable) |>
   summarize(mean = mean(value),
             sd = sd(value))
 

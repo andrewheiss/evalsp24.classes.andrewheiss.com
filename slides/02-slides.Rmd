@@ -570,7 +570,7 @@ glance(happiness_model)
 
 .small-code[
 ```{r tidy-cookie-model-small, echo=FALSE}
-tidy(happiness_model, conf.int = TRUE) %>% 
+tidy(happiness_model, conf.int = TRUE) |> 
   select(term, estimate)
 ```
 ]
@@ -810,20 +810,20 @@ library(ggplot2movies)  # Lots of movies from IMDB
 
 # Clean up data
 set.seed(1234)  # Set seed so we get the same sampled rows every time
-movie_data <- movies %>% 
+movie_data <- movies |> 
   # Make a binary column for genre
-  select(title, year, rating, Action, Comedy) %>% 
-  filter(!(Action == 1 & Comedy == 1)) %>% 
+  select(title, year, rating, Action, Comedy) |> 
+  filter(!(Action == 1 & Comedy == 1)) |> 
   mutate(genre = case_when(Action == 1 ~ "Action",
                            Comedy == 1 ~ "Comedy",
-                           TRUE ~ "Neither")) %>%
-  filter(genre != "Neither") %>%
+                           TRUE ~ "Neither")) |>
+  filter(genre != "Neither") |>
   # Make genre a factor
-  mutate(genre = factor(genre)) %>% 
-  select(-Action, -Comedy) %>% 
+  mutate(genre = factor(genre)) |> 
+  select(-Action, -Comedy) |> 
   # Randomly select 200 movies in each genre
-  group_by(genre) %>% 
-  sample_n(200) %>% 
+  group_by(genre) |> 
+  sample_n(200) |> 
   ungroup()
 ```
 
@@ -864,8 +864,8 @@ head(movie_data)
 
 .right-code[
 ```{r movie-diffs}
-movie_data %>% 
-  group_by(genre) %>% 
+movie_data |> 
+  group_by(genre) |> 
   summarize(avg_rating = mean(rating))
 ```
 
@@ -909,13 +909,13 @@ class: title title-5
 library(infer)
 set.seed(1234)
 
-genre_diffs_null <- movie_data %>% 
-  specify(rating ~ genre) %>% 
-  hypothesize(null = "independence") %>% 
-  generate(reps = 5000, type = "permute") %>% 
+genre_diffs_null <- movie_data |> 
+  specify(rating ~ genre) |> 
+  hypothesize(null = "independence") |> 
+  generate(reps = 5000, type = "permute") |> 
   calculate("diff in means", order = c("Action", "Comedy"))
 
-genre_diffs_null %>% 
+genre_diffs_null |> 
   visualize() + 
   # geom_vline(xintercept = -0.43, size = 1, color = "#77002c") +
   labs(x = "Simulated difference in average ratings (Action − Comedy)", 
@@ -931,7 +931,7 @@ genre_diffs_null %>%
 
 .center[
 ```{r plot-null-delta, echo=FALSE, fig.dim=c(4.8, 2.7), out.width="50%"}
-genre_diffs_null %>% 
+genre_diffs_null |> 
   visualize() + 
   geom_vline(xintercept = -0.43, size = 1, color = "#FF4136") +
   labs(x = "Simulated difference in average ratings (Action − Comedy)", 
@@ -948,8 +948,8 @@ genre_diffs_null %>%
 # How likely is that δ in the null world?
 
 ```{r get-p-value, echo=FALSE}
-find_p_value <- genre_diffs_null %>% 
-  get_p_value(obs_stat = -0.43, direction = "both") %>% 
+find_p_value <- genre_diffs_null |> 
+  get_p_value(obs_stat = -0.43, direction = "both") |> 
   mutate(p_value_clean = scales::pvalue(p_value))
 ```
 

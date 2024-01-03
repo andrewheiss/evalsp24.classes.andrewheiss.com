@@ -54,11 +54,11 @@ library(broom)
 library(patchwork)
 library(MatchIt)
 
-barrels_rct <- read_csv("data/barrels_rct.csv") %>% 
+barrels_rct <- read_csv("data/barrels_rct.csv") |> 
   # This makes it so "No barrel" is the reference category
   mutate(barrel = fct_relevel(barrel, "No barrel"))
 
-barrels_obs <- read_csv("data/barrels_observational.csv") %>% 
+barrels_obs <- read_csv("data/barrels_observational.csv") |> 
   # This makes it so "No barrel" is the reference category
   mutate(barrel = fct_relevel(barrel, "No barrel"))
 ```

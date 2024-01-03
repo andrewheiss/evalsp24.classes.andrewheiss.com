@@ -34,7 +34,7 @@ tutoring <- read_csv(here::here("files", "data", "generated_data", "tutoring_pro
 ```
 
 ```{r eval=FALSE}
-library(tidyverse)  # ggplot(), %>%, mutate(), and friends
+library(tidyverse)  # ggplot(), mutate(), and friends
 library(broom)  # Convert models to data frames
 library(rdrobust)  # For robust nonparametric regression discontinuity
 library(estimatr)  # Run 2SLS models in one step with iv_robust()
@@ -73,10 +73,10 @@ ggplot(tutoring, aes(x = entrance_exam, y = tutoring_text, color = entrance_exam
 We can see the count and percentages of compliance with `group_by()` and `summarize()`:
 
 ```{r}
-tutoring %>%
-  group_by(tutoring, entrance_exam <= 70) %>%
-  summarize(count = n()) %>%
-  group_by(tutoring) %>%
+tutoring |>
+  group_by(tutoring, entrance_exam <= 70) |>
+  summarize(count = n()) |>
+  group_by(tutoring) |>
   mutate(prop = count / sum(count))
 ```
 
@@ -115,15 +115,15 @@ If this were a sharp design, every single bar to the left of the cutpoint would 
 # the range *does* include the number. (70, 75] thus means 71-75. You can
 # reverse that with an argument to cut() so taht it would do [70, 75), which
 # means 70-74.
-tutoring_with_bins <- tutoring %>%
-  mutate(exam_binned = cut(entrance_exam, breaks = seq(0, 100, 5))) %>%
+tutoring_with_bins <- tutoring |>
+  mutate(exam_binned = cut(entrance_exam, breaks = seq(0, 100, 5))) |>
   # Group by each of the new bins and tutoring status
-  group_by(exam_binned, tutoring) %>%
+  group_by(exam_binned, tutoring) |>
   # Count how many people are in each test bin + used/didn't use tutoring
-  summarize(n = n()) %>%
+  summarize(n = n()) |>
   # Make this summarized data wider so that there's a column for tutoring and no tutoring
-  pivot_wider(names_from = "tutoring", values_from = "n", values_fill = 0) %>%
-  rename(tutor_yes = `TRUE`, tutor_no = `FALSE`) %>%
+  pivot_wider(names_from = "tutoring", values_from = "n", values_fill = 0) |>
+  rename(tutor_yes = `TRUE`, tutor_no = `FALSE`) |>
   # Find the probability of tutoring in each bin by taking
   # the count of yes / count of yes + count of no
   mutate(prob_tutoring = tutor_yes / (tutor_yes + tutor_no))
@@ -154,7 +154,7 @@ Surprisingly, it meets all the qualifications of an instrument too:
 Let's make an instrument! We'll also center the running variable just like we did with sharp regression discontinuity:
 
 ```{r make-instrument}
-tutoring_centered <- tutoring %>%
+tutoring_centered <- tutoring |>
   mutate(entrance_centered = entrance_exam - 70,
          below_cutoff = entrance_exam <= 70)
 tutoring_centered
@@ -214,7 +214,7 @@ If we compare this fuzzy result to the sharp result, we can see a sizable differ
 modelsummary(list("No instrument (wrong)" = model_sans_instrument,
                   "Fuzzy RD (bw = 10)" = model_fuzzy),
              gof_omit = "IC|Log|Adj|p\\.value|statistic|se_type",
-             stars = TRUE) %>%
+             stars = TRUE) |>
   # Add a background color to row 5
   row_spec(5, background = "#F5ABEA")
 ```
@@ -229,7 +229,7 @@ To do fuzzy estimation with `rdrobust()`, use the `fuzzy` argument to specify th
 
 ```{r rdrobust-fuzzy}
 rdrobust(y = tutoring$exit_exam, x = tutoring$entrance_exam,
-         c = 70, fuzzy = tutoring$tutoring) %>%
+         c = 70, fuzzy = tutoring$tutoring) |>
   summary()
 ```
 

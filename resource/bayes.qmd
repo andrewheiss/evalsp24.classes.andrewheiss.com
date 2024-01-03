@@ -64,7 +64,7 @@ In Bayes land, you get a distribution of plausible values given the data (or wha
 
 ```{r plot-bayes-results}
 # Make a long dataset of the draws for these three coefficients
-posterior_draws <- model_bayes %>% 
+posterior_draws <- model_bayes |> 
   gather_draws(c(b_displ, b_drv, b_drvf, b_drvr))
 
 # Plot this thing
@@ -155,16 +155,16 @@ For fun, let's plot both these weekend estimates and their confidence intervals:
 
 ```{r plot-freq-results}
 # Save just the weekend coefficient from both models
-freq_results_naive <- tidy(model_naive, conf.int = TRUE) %>% 
-  mutate(model = "Naive model") %>% 
+freq_results_naive <- tidy(model_naive, conf.int = TRUE) |> 
+  mutate(model = "Naive model") |> 
   filter(term == "WeekendTRUE")
 
-freq_results_full <- tidy(model_adjusted, conf.int = TRUE) %>% 
-  mutate(model = "Full model") %>% 
+freq_results_full <- tidy(model_adjusted, conf.int = TRUE) |> 
+  mutate(model = "Full model") |> 
   filter(term == "WeekendTRUE")
 
 # Put these coefficients in a single dataset and plot them
-freq_results <- bind_rows(freq_results_naive, freq_results_full) %>% 
+freq_results <- bind_rows(freq_results_naive, freq_results_full) |> 
   # Make sure the model name follows the order it appears in the data instead of
   # alphabetical order
   mutate(model = fct_inorder(model))
@@ -266,11 +266,11 @@ tidy(model_bayes, conf.int = TRUE)
 ```
 
 ```{r warning=FALSE, include=FALSE}
-results <- tidy(model_bayes, conf.int = TRUE) %>% 
-  filter(effect == "fixed") %>% 
+results <- tidy(model_bayes, conf.int = TRUE) |> 
+  filter(effect == "fixed") |> 
   mutate(across(c(estimate, conf.low, conf.high), 
-                list(nice = ~as.character(round(., 2))))) %>% 
-  split(.$term)
+                list(nice = ~as.character(round(., 2))))) |> 
+  split(~ term)
 ```
 
 Our estimate for the weekend boost, or $\hat{\theta}$, is `r results$WeekendTRUE$estimate_nice`, which is basically the same as the frequentist estimate we found before. We have an interval too, but it's not a confidence interval—it's a credible interval. Instead of telling us about the range of the confidence interval net, this credible interval tells us the probability that $\hat{\theta}$ falls in that range. It's essentially the probability of the actual value, not the probability of the range. Based on this, there's a 95% chance that—given the data we have—the weekend score boost ($\hat{\theta}$) is between `r results$WeekendTRUE$conf.low_nice` and `r results$WeekendTRUE$conf.high_nice`.
@@ -278,15 +278,15 @@ Our estimate for the weekend boost, or $\hat{\theta}$, is `r results$WeekendTRUE
 We can visualize this posterior distribution to see more information than we could with our frequentist estimate. Remember, our simulation estimated thousands of possible coefficients for `WeekendTRUE`, and each of them are equally likely. The value that we see in `tidy()` is the median of all these simulated coefficients, or draws. We can see a few of them here:
 
 ```{r}
-model_bayes %>%
-  spread_draws(b_WeekendTRUE) %>%
+model_bayes |>
+  spread_draws(b_WeekendTRUE) |>
   head(10)
 ```
 
 Sometimes the weekend boost is 1.2, sometimes 1.7, sometimes 1.3, etc. There's a lot of variation in there. We can plot all these simulated coefficients to see where they mostly cluster:
 
 ```{r weekend-posterior-halfeye}
-weekend_draws <- model_bayes %>%
+weekend_draws <- model_bayes |>
   spread_draws(b_WeekendTRUE)
 
 ggplot(weekend_draws, aes(x = b_WeekendTRUE)) +
@@ -320,8 +320,8 @@ tribble(
   "Intuition", "Probability of the range", "Probability of the actual value",
   "Interpretation template", "There's a 95% probability that this range contains the true value of \\(\\theta\\)", "There's a 95% probability that the true value of \\(\\theta\\) falls in this range.",
   "", "Few people naturally think like this", "People <em>do</em> naturally think like this"
-) %>% 
-  kbl(escape = FALSE) %>% 
+) |> 
+  kbl(escape = FALSE) |> 
   kable_styling(full_width = FALSE, position = "center")
 ```
 
@@ -339,7 +339,7 @@ To figure this out, we can calculate something called the ["probability of direc
 
 ```{r}
 # Find the proportion of posterior draws that are bigger than 0
-weekend_draws %>% 
+weekend_draws |> 
   summarize(prop_greater_0 = sum(b_WeekendTRUE > 0) / n())
 ```
 
@@ -349,7 +349,7 @@ The neat thing about the probability of direction is that we can choose whatever
 
 ```{r}
 # Find the proportion of posterior draws that are bigger than 1
-weekend_draws %>% 
+weekend_draws |> 
   summarize(prop_greater_0 = sum(b_WeekendTRUE > 1) / n())
 ```
 
@@ -377,7 +377,7 @@ For this example, let's pretend that the health director tells you that any effe
 
 ```{r}
 # Find the proportion of posterior draws that are bigger than 0.5 or less than -0.5
-weekend_draws %>% 
+weekend_draws |> 
   summarize(prop_outside_rope = 1 - sum(b_WeekendTRUE >= -0.5 & b_WeekendTRUE <= 0.5) / n())
 ```
 
@@ -396,15 +396,15 @@ There are some debates over what you should check with the ROPE. Some people say
 
 ```{r}
 # Extract the 95% confidence interval range
-weekend_cred_int <- weekend_draws %>% 
+weekend_cred_int <- weekend_draws |> 
   median_hdi()
 weekend_cred_int$.lower
 
 # Find the proportion of posterior draws that are bigger than 0.5 or less than 
 # -0.5, but only look inside the 95% credible interval
-weekend_draws %>% 
+weekend_draws |> 
   # Only look inside the credible interval
-  filter(b_WeekendTRUE >= weekend_cred_int$.lower & b_WeekendTRUE <= weekend_cred_int$.upper) %>% 
+  filter(b_WeekendTRUE >= weekend_cred_int$.lower & b_WeekendTRUE <= weekend_cred_int$.upper) |> 
   summarize(prop_outside_rope = 1 - sum(b_WeekendTRUE >= -0.5 & b_WeekendTRUE <= 0.5) / n())
 ```
 
@@ -423,9 +423,9 @@ Based on this approach, our ROPE/dead zone should be −0.63 to 0.63. Let's see 
 ```{r}
 # Find the proportion of posterior draws that are bigger than 0.5 or less than 
 # -0.5, but only look inside the 95% credible interval
-weekend_draws %>% 
+weekend_draws |> 
   # Only look inside the credible interval
-  filter(b_WeekendTRUE >= weekend_cred_int$.lower & b_WeekendTRUE <= weekend_cred_int$.upper) %>% 
+  filter(b_WeekendTRUE >= weekend_cred_int$.lower & b_WeekendTRUE <= weekend_cred_int$.upper) |> 
   summarize(prop_outside_rope = 1 - sum(b_WeekendTRUE >= -0.63 & b_WeekendTRUE <= 0.63) / n())
 ```
 

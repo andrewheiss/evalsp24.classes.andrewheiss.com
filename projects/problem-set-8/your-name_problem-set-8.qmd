@@ -36,16 +36,16 @@ options(dplyr.summarise.inform = FALSE)
 hisp_raw <- read_stata("data/evaluation.dta")
 
 # Make nice clean dataset to use for the rest of the assignment
-hisp <- hisp_raw %>% 
+hisp <- hisp_raw |> 
   # Having a numeric 0/1 column is sometimes helpful for things that don't like
   # categories, like matchit()
-  mutate(enrolled_num = enrolled) %>% 
+  mutate(enrolled_num = enrolled) |> 
   # Convert these 0/1 values to actual categories
   mutate(eligible = factor(eligible, labels = c("Not eligible", "Eligible")),
          enrolled = factor(enrolled, labels = c("Not enrolled", "Enrolled")),
          round = factor(round, labels = c("Before", "After")),
          treatment_locality = factor(treatment_locality, labels = c("Control", "Treatment")),
-         promotion_locality = factor(promotion_locality, labels = c("No promotion", "Promotion"))) %>% 
+         promotion_locality = factor(promotion_locality, labels = c("No promotion", "Promotion"))) |> 
   # Get rid of this hospital column because (1) we're not using it, and (2) half
   # of the households are missing data, and matchit() complains if any data is
   # missing, even if you're not using it
@@ -138,7 +138,7 @@ model_logit <- glm(enrolled ~ COUNFOUNDER1 + COUNFOUNDER2 + ...,
 
 ```r
 enrolled_propensities <- augment_columns(MODEL_NAME, NAME_OF_YOUR_AFTER_DATASET, 
-                                         type.predict = "response") %>% 
+                                         type.predict = "response") |> 
   rename(p_enrolled = .fitted)                                         
 ```
 

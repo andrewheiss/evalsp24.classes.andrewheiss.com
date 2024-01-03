@@ -21,7 +21,7 @@ library(broom)           # Convert model objects into data frames
 library(palmerpenguins)  # Our favorite penguin data
 
 # Get rid of rows with missing values
-penguins <- penguins %>% drop_na(sex)
+penguins <- penguins |> drop_na(sex)
 ```
 
 ```{r model-basic}
@@ -108,21 +108,21 @@ decrypt("sD0f gCdC En JP2EdEPn ZZ")
 The fact that we can't tell is a good sign that the residuals are homoskedastic and independent and that we don't need to worry much about correcting the errors. 
 
 ```{r resid-shuffled-old, include=FALSE, eval=FALSE}
-shuffled_plot_data <- tibble(id = 1:8) %>% 
+shuffled_plot_data <- tibble(id = 1:8) |> 
   # Make 9 shuffled datasets
   mutate(plot_data = map(id, ~{
-    fitted_sans_gentoo %>% 
+    fitted_sans_gentoo |> 
       # Shuffle these two columns
       mutate(.resid = sample(.resid),
-             .fitted = sample(.fitted)) %>% 
+             .fitted = sample(.fitted)) |> 
       select(.fitted, .resid)
-  })) %>% 
+  })) |> 
   # Add the actual dataset
   bind_rows(tribble(~id, ~plot_data, ~actual, 
-                    9, select(fitted_sans_gentoo, .fitted, .resid), TRUE)) %>% 
+                    9, select(fitted_sans_gentoo, .fitted, .resid), TRUE)) |> 
   # Shuffle all these so that #9 isn't always the actual data
-  slice_sample(prop = 1) %>% 
-  mutate(id = 1:9) %>% 
+  slice_sample(prop = 1) |> 
+  mutate(id = 1:9) |> 
   unnest(plot_data)
 
 ggplot(shuffled_plot_data, aes(x = .fitted, y = .resid)) +
@@ -225,9 +225,9 @@ model1_robust_stata <- coeftest(model1,
                                 vcov = vcovHC,
                                 type = "HC1")
 
-tidy(model1_robust) %>% filter(term == "bill_length_mm")
+tidy(model1_robust) |> filter(term == "bill_length_mm")
 
-tidy(model1_robust_stata) %>% filter(term == "bill_length_mm")
+tidy(model1_robust_stata) |> filter(term == "bill_length_mm")
 ```
 
 Those errors shrunk a little, likely because just using robust standard errors here isn't enough. Remember that there are clear clusters in the residuals (Gentoo vs. not Gentoo), so we'll actually want to cluster the errors by species. `vcovCL()` lets us do that:
@@ -239,7 +239,7 @@ model1_robust_clustered <- coeftest(model1,
                                     type = "HC1",
                                     cluster = ~species)
 
-tidy(model1_robust_clustered, conf.int = TRUE) %>% 
+tidy(model1_robust_clustered, conf.int = TRUE) |> 
   filter(term == "bill_length_mm")
 ```
 
@@ -255,7 +255,7 @@ model1_robust_clustered_corrected <- coeftest(model1,
                                               df = 2,  # There are 3 species, so 3-1 = 2
                                               cluster = ~species)
 
-tidy(model1_robust_clustered_corrected, conf.int = TRUE) %>% 
+tidy(model1_robust_clustered_corrected, conf.int = TRUE) |> 
   filter(term == "bill_length_mm")
 ```
 
@@ -278,13 +278,13 @@ model_feols_hetero <- feols(body_mass_g ~ bill_length_mm + flipper_length_mm | s
                             vcov = "hetero",
                             data = penguins)
 
-tidy(model_feols_hetero) %>% filter(term == "bill_length_mm")
+tidy(model_feols_hetero) |> filter(term == "bill_length_mm")
 
 model_feols_clustered <- feols(body_mass_g ~ bill_length_mm + flipper_length_mm | species,
                                cluster = ~ species,
                                data = penguins)
 
-tidy(model_feols_clustered, conf.int = TRUE) %>% filter(term == "bill_length_mm")
+tidy(model_feols_clustered, conf.int = TRUE) |> filter(term == "bill_length_mm")
 ```
 
 We get basically the same standard errors we did before with `coeftest(lm(), vcov = ...)`, only now we did it all in one step.
@@ -302,7 +302,7 @@ model_lmrobust_clustered <- lm_robust(body_mass_g ~ bill_length_mm + flipper_len
                                       clusters = species,
                                       data = penguins)
 
-tidy(model_lmrobust_clustered, conf.int = TRUE) %>% filter(term == "bill_length_mm")
+tidy(model_lmrobust_clustered, conf.int = TRUE) |> filter(term == "bill_length_mm")
 ```
 
 
@@ -314,9 +314,9 @@ While it's neat that we can specify standard errors directly in `feols()` and `l
 model_feols_basic <- feols(body_mass_g ~ bill_length_mm + flipper_length_mm | species,
                            data = penguins)
 
-tidy(model_feols_basic, se = "hetero") %>% filter(term == "bill_length_mm")
+tidy(model_feols_basic, se = "hetero") |> filter(term == "bill_length_mm")
 
-tidy(model_feols_basic, cluster = "species") %>% filter(term == "bill_length_mm")
+tidy(model_feols_basic, cluster = "species") |> filter(term == "bill_length_mm")
 ```
 
 The `modelsummary()` function from [the **modelsummary** package](https://vincentarelbundock.github.io/modelsummary/) also lets us make SE adjustments on the fly. Check this out—with just one basic model with `lm()`, we can get all these different kinds of standard errors!

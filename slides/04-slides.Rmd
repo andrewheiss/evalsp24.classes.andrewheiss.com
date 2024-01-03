@@ -384,7 +384,7 @@ dagify(
   X ~ Z,
   coords = list(x = c(X = 1, Y = 3, Z = 2),
                 y = c(X = 1, Y = 1, Z = 2))
-) %>% 
+) |> 
   ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
   geom_dag_edges() +
   geom_dag_point(color = "grey80", size = 14) +
@@ -520,9 +520,9 @@ dagify(
   Earn ~ Edu,
   exposure = "Edu",
   outcome = "Earn",
-  coords = edu_earn_coords) %>% 
-  tidy_dagitty() %>% 
-  node_status() %>% 
+  coords = edu_earn_coords) |> 
+  tidy_dagitty() |> 
+  node_status() |> 
   ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
   geom_dag_edges() +
   geom_dag_point(aes(color = status), size = 14) +
@@ -553,9 +553,9 @@ dagify(
   Edu ~ Req + Loc + Bkgd + Year,
   exposure = "Edu",
   outcome = "Earn",
-  coords = edu_earn_coords) %>% 
-  tidy_dagitty() %>% 
-  node_status() %>% 
+  coords = edu_earn_coords) |> 
+  tidy_dagitty() |> 
+  node_status() |> 
   ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
   geom_dag_edges() +
   geom_dag_point(aes(color = status), size = 14) +
@@ -587,9 +587,9 @@ dagify(
   Edu ~ Req + Loc + Bkgd + Year,
   exposure = "Edu",
   outcome = "Earn",
-  coords = edu_earn_coords) %>% 
-  tidy_dagitty() %>% 
-  node_status() %>% 
+  coords = edu_earn_coords) |> 
+  tidy_dagitty() |> 
+  node_status() |> 
   ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
   geom_dag_edges() +
   geom_dag_point(aes(color = status), size = 14) +
@@ -621,9 +621,9 @@ dagify(
   JobCx ~ Edu,
   exposure = "Edu",
   outcome = "Earn",
-  coords = edu_earn_coords) %>% 
-  tidy_dagitty() %>% 
-  node_status() %>% 
+  coords = edu_earn_coords) |> 
+  tidy_dagitty() |> 
+  node_status() |> 
   ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
   geom_dag_edges() +
   geom_dag_point(aes(color = status), size = 14) +
@@ -662,9 +662,9 @@ dagify(
              "Year" = "Year", "Bkgd" = "Background",
              "Loc" = "Location", "JobCx" = "Job connections",
              "U1" = "Unobserved stuff"),
-  coords = edu_earn_coords) %>% 
-  tidy_dagitty() %>% 
-  node_status() %>% 
+  coords = edu_earn_coords) |> 
+  tidy_dagitty() |> 
+  node_status() |> 
   ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
   geom_dag_edges() +
   geom_dag_point(aes(color = status), size = 14) +
@@ -743,7 +743,7 @@ dagify(
   X ~ Z,
   coords = list(x = c(X = 1, Y = 3, Z = 2),
                 y = c(X = 1, Y = 1, Z = 2))
-) %>% 
+) |> 
   ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
   geom_dag_edges() +
   geom_dag_point(color = "grey80", size = 17) +
@@ -763,7 +763,7 @@ dagify(
   Z ~ X,
   coords = list(x = c(X = 1, Y = 3, Z = 2),
                 y = c(X = 1, Y = 1, Z = 2))
-) %>% 
+) |> 
   ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
   geom_dag_edges() +
   geom_dag_point(color = "grey80", size = 17) +
@@ -784,7 +784,7 @@ dagify(
   Z ~ X,
   coords = list(x = c(X = 1, Y = 3, Z = 2),
                 y = c(X = 1, Y = 1, Z = 2))
-) %>% 
+) |> 
   ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
   geom_dag_edges() +
   geom_dag_point(color = "grey80", size = 17) +
@@ -806,7 +806,7 @@ dagify(
   X ~ Z,
   coords = list(x = c(X = 1, Y = 3, Z = 2),
                 y = c(X = 1, Y = 1, Z = 2))
-) %>% 
+) |> 
   ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
   geom_dag_edges() +
   geom_dag_point(color = "grey80", size = 15) +
@@ -872,9 +872,9 @@ dagify(
   outcome = "Y",
   labels = c("X" = "Campaign money", "Y" = "Win margin",
              "Z" = "Candidate quality")
-) %>% 
-  tidy_dagitty() %>% 
-  node_status() %>% 
+) |> 
+  tidy_dagitty() |> 
+  node_status() |> 
   ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
   geom_dag_edges() +
   geom_dag_point(aes(color = status), size = 15) +
@@ -908,9 +908,9 @@ dagify(
   X ~ Z,
   coords = list(x = c(X = 1, Y = 3, Z = 2),
                 y = c(X = 1, Y = 1, Z = 2))
-) %>% 
-  tidy_dagitty() %>% 
-  adjust_for("Z") %>% 
+) |> 
+  tidy_dagitty() |> 
+  adjust_for("Z") |> 
   ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
   geom_dag_edges() +
   geom_dag_point(aes(shape = adjusted, color = adjusted), size = 15) +
@@ -949,10 +949,10 @@ dagify(
   outcome = "Y",
   labels = c("X" = "Campaign money", "Y" = "Win margin",
              "Z" = "Candidate quality")
-) %>% 
-  tidy_dagitty() %>% 
-  node_status() %>% 
-  adjust_for("Z") %>% 
+) |> 
+  tidy_dagitty() |> 
+  node_status() |> 
+  adjust_for("Z") |> 
   ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
   geom_dag_edges() +
   geom_dag_point(aes(color = status, shape = adjusted), size = 15) +
@@ -1073,10 +1073,10 @@ dagify(
              "Year" = "Year", "Bkgd" = "Background",
              "Loc" = "Location", "JobCx" = "Job connections",
              "U1" = "Unobserved stuff"),
-  coords = edu_earn_coords) %>% 
-  tidy_dagitty() %>% 
-  node_status() %>% 
-  adjust_for(c("Loc", "Bkgd", "Year")) %>% 
+  coords = edu_earn_coords) |> 
+  tidy_dagitty() |> 
+  node_status() |> 
+  adjust_for(c("Loc", "Bkgd", "Year")) |> 
   ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
   geom_dag_edges() +
   geom_dag_point(aes(color = status, shape = adjusted), size = 14) +
@@ -1128,7 +1128,7 @@ dagify(
   Z ~ X,
   coords = list(x = c(X = 1, Y = 3, Z = 2),
                 y = c(X = 1, Y = 1, Z = 2))
-) %>% 
+) |> 
   ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
   geom_dag_edges() +
   geom_dag_point(color = "grey80", size = 15) +
@@ -1185,7 +1185,7 @@ dagify(
   Z ~ X,
   coords = list(x = c(X = 1, Y = 3, Z = 2),
                 y = c(X = 1, Y = 1, Z = 2))
-) %>% 
+) |> 
   ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
   geom_dag_edges() +
   geom_dag_point(color = "grey80", size = 15) +
@@ -1220,9 +1220,9 @@ dagify(
   outcome = "Y",
   labels = c("X" = "Programming skills", "Y" = "Social skills",
              "Z" = "Hired by a tech company")
-) %>% 
-  tidy_dagitty() %>% 
-  node_status() %>% 
+) |> 
+  tidy_dagitty() |> 
+  node_status() |> 
   ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
   geom_dag_edges() +
   geom_dag_point(aes(color = status), size = 15) +
@@ -1323,9 +1323,9 @@ dagify(
   outcome = "Y",
   labels = c("X" = "Height", "Y" = "Points scored",
              "Z" = "Being in the NBA")
-) %>% 
-  tidy_dagitty() %>% 
-  node_status() %>% 
+) |> 
+  tidy_dagitty() |> 
+  node_status() |> 
   ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
   geom_dag_edges() +
   geom_dag_point(aes(color = status), size = 15) +

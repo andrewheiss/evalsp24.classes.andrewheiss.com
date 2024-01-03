@@ -34,7 +34,7 @@ The dataset I've provided (`eitc.dta`) is a Stata data file containing more than
 - `unearn`: The woman's family income minus her personal income, in *thousands* of 1997 dollars
 
 ```{r setup, warning=FALSE, message=FALSE}
-library(tidyverse)  # For ggplot, %>%, mutate, filter, group_by, and friends
+library(tidyverse)  # For ggplot, mutate, filter, group_by, and friends
 library(haven)      # For loading data from Stata
 library(broom)      # For showing models as data frames
 
@@ -43,7 +43,7 @@ library(broom)      # For showing models as data frames
 options(dplyr.summarise.inform = FALSE)
 
 # Load EITC data
-eitc <- read_stata("data/eitc.dta") %>% 
+eitc <- read_stata("data/eitc.dta") |> 
   # case_when() is a fancy version of ifelse() that takes multiple conditions
   # and outcomes. Here, we make a new variable named children_cat(egorical) 
   # with three different levels: 0, 1, and 2+
@@ -64,8 +64,8 @@ What is the average of `work`, `finc`, `earn`, `nonwhite`, `ed`, and `age` acros
 
 ```{r}
 # Work
-eitc %>% 
-  group_by(children_cat) %>% 
+eitc |> 
+  group_by(children_cat) |> 
   summarize(avg_work = mean(work))
 
 # stat_summary() here is a little different from the geom_*() layers you've seen
@@ -100,18 +100,18 @@ Create a new variable for treatment named `any_kids` (should be TRUE or 1 if `ch
 Remember you can use the following syntax for creating a new binary variable based on a test:
 
 ```r
-new_dataset <- original_dataset %>%
+new_dataset <- original_dataset |>
   mutate(new_variable = some_column > some_number)
 ```
 
 ```{r}
 # Make new dataset here. You can either do something like:
 #
-# eitc_new <- eitc %>% whatever
+# eitc_new <- eitc |> whatever
 # 
 # which would create a completely new data frame, or do something like:
 #
-# eitc <- eitc %>% whatever
+# eitc <- eitc |> whatever
 #
 # which would overwrite the original eitc data frame with the modified one. 
 # Either approach is fine.
@@ -127,7 +127,7 @@ Create a new dataset that shows the average proportion of employed women (`work`
 # Find average of work across year and any_kids
 # Store this as a new object and then print it, like so:
 # 
-# eitc_by_year_kids <- eitc %>% whatever
+# eitc_by_year_kids <- eitc |> whatever
 # print(eitc_by_year_kids)
 ```
 
@@ -218,8 +218,8 @@ To make sure this effect isn't driven by any pre-treatment trends, we can preten
 Create a new dataset that only includes data from 1991–1993 (hint: use `filter()`). Create a new binary before/after indicator named `after_1991` (hint: `year >= 1992`). Use regression to find the diff-in-diff estimate of the EITC on `work` (don't worry about adding demographic controls). 
 
 ```{r}
-eitc_fake_treatment <- eitc %>% 
-  filter(year < 1994) %>% 
+eitc_fake_treatment <- eitc |> 
+  filter(year < 1994) |> 
   mutate(after_1991 = year >= 1992)
 # Make new dataset that only includes rows less than 1994 (with filter), and add
 # a new binary indicator variable for after_1991

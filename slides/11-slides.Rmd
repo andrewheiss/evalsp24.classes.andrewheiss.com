@@ -42,14 +42,14 @@ father_education <- tibble(
   ability = rnorm(nrows, 35000, 10000),  # Ability
   fathereduc = rnorm(nrows, 15000, 20000),  # Father's education (IV)
   e_y = 0.43 * rnorm(nrows, 50000, 10000)  # Error for outcome
-) %>% 
+) |> 
   mutate(educ = 3.7 + 0.52*fathereduc + 0.40*ability,  # Education (policy variable)
-         wage = 5 + 0.23*educ + 0.5*ability - e_y) %>%  # Wage (outcome variable)
+         wage = 5 + 0.23*educ + 0.5*ability - e_y) |>  # Wage (outcome variable)
   mutate(wage = rescale(wage, to = c(7.75, 300)),  # Rescale from minimum wage to director wage (hourly)
          educ = rescale(educ, to = c(10, 23)),  # Rescale as years of school. Min 10 to max 23 (PhD)
          fathereduc = rescale(fathereduc, to = c(10, 23)),  # Rescale father's education
-         ability = rescale(ability, to = c(0, 600))) %>%  # Rescale as Hypothetical test scores
-  select(wage, educ, ability, fathereduc) %>% 
+         ability = rescale(ability, to = c(0, 600))) |>  # Rescale as Hypothetical test scores
+  select(wage, educ, ability, fathereduc) |> 
   mutate(across(everything(), ~round(., 2)))
 ```
 
@@ -118,18 +118,18 @@ node_details <- tribble(
   FALSE, FALSE, TRUE, "instrument", "Father's education", 0, 1, "Instrument", "Z"
 )
 
-node_labels <- node_details$label %>% 
+node_labels <- node_details$label |> 
   set_names(node_details$name)
 
-node_labels_generic <- node_details$generic %>% 
+node_labels_generic <- node_details$generic |> 
   set_names(node_details$name)
 
 iv_dag1 <- dagify(outcome ~ treatment,
                   exposure = "treatment",
                   outcome = "outcome",
                   coords = filter(node_details, plot1),
-                  labels =  node_labels) %>% 
-  tidy_dagitty() %>% 
+                  labels =  node_labels) |> 
+  tidy_dagitty() |> 
   node_status()
 
 ggplot(iv_dag1, aes(x = x, y = y, xend = xend, yend = yend)) +
@@ -235,11 +235,11 @@ iv_dag2 <- dagify(outcome ~ treatment + unmeasured,
                   outcome = "outcome",
                   latent = "unmeasured",
                   coords = filter(node_details, plot2),
-                  labels =  node_labels) %>% 
-  tidy_dagitty() %>% 
-  node_status() %>% 
-  node_exogenous() %>% 
-  node_dconnected() %>% 
+                  labels =  node_labels) |> 
+  tidy_dagitty() |> 
+  node_status() |> 
+  node_exogenous() |> 
+  node_dconnected() |> 
   control_for("unmeasured")
 
 ggplot(iv_dag2, aes(x = x, y = y, xend = xend, yend = yend)) +
@@ -329,7 +329,7 @@ $$\text{Earnings}_i = \beta_0 + \beta_1 \text{Education}_i + \beta_2 \text{Abili
 #   data = as.data.frame(father_education)
 # )
 
-# father_educ_ipw <- father_education %>% 
+# father_educ_ipw <- father_education |> 
 #   mutate(ipw = num / den)
 # model3 <- lm(wage ~ educ, data = father_educ_ipw, weights = ipw)
 
@@ -342,9 +342,9 @@ model2 <- lm(wage ~ educ + ability, data = father_education)
 ```{r show-table, echo=FALSE}
 model_results <- modelsummary(list("Unadjusted" = model1, "Adjusted" = model2),
                               gof_omit = 'IC|Log|Adj', stars = TRUE)
-model_results %>% 
-  add_header_above(c(" " = 1, "Outome = wage" = 2)) %>% 
-  row_spec(c(6, 9), extra_css = "border-bottom: 1px solid") %>% 
+model_results |> 
+  add_header_above(c(" " = 1, "Outome = wage" = 2)) |> 
+  row_spec(c(6, 9), extra_css = "border-bottom: 1px solid") |> 
   row_spec(3, background = "#FFC6C6")
 ```
 ]
@@ -478,11 +478,11 @@ iv_dag4 <- dagify(outcome ~ treatment + unmeasured,
                   outcome = "outcome",
                   latent = "unmeasured",
                   coords = filter(node_details, plot3),
-                  labels =  node_labels_generic) %>% 
-  tidy_dagitty() %>% 
-  node_status() %>% 
-  node_exogenous() %>% 
-  node_dconnected() %>% 
+                  labels =  node_labels_generic) |> 
+  tidy_dagitty() |> 
+  node_status() |> 
+  node_exogenous() |> 
+  node_dconnected() |> 
   control_for("unmeasured")
 
 ggplot(iv_dag4, aes(x = x, y = y, xend = xend, yend = yend)) +
@@ -514,11 +514,11 @@ iv_dag3 <- dagify(outcome ~ treatment + unmeasured,
                   outcome = "outcome",
                   latent = "unmeasured",
                   coords = filter(node_details, plot3),
-                  labels =  node_labels) %>% 
-  tidy_dagitty() %>% 
-  node_status() %>% 
-  node_exogenous() %>% 
-  node_dconnected() %>% 
+                  labels =  node_labels) |> 
+  tidy_dagitty() |> 
+  node_status() |> 
+  node_exogenous() |> 
+  node_dconnected() |> 
   control_for("unmeasured")
 
 ggplot(iv_dag3, aes(x = x, y = y, xend = xend, yend = yend)) +
@@ -544,8 +544,8 @@ ggplot(iv_dag3, aes(x = x, y = y, xend = xend, yend = yend)) +
 ---
 
 ```{r iv-dag-letters, echo=FALSE, fig.width=12, fig.height=6, out.width="100%"}
-mathy_coords <- node_details %>% 
-  filter(plot3) %>% 
+mathy_coords <- node_details |> 
+  filter(plot3) |> 
   select(name = mathy, x, y)
 
 iv_dag_mathy <- dagify(Y ~ X + U,
@@ -553,10 +553,10 @@ iv_dag_mathy <- dagify(Y ~ X + U,
                        exposure = "X",
                        outcome = "Y",
                        latent = "U",
-                       coords = mathy_coords) %>% 
-  tidy_dagitty() %>% 
-  node_status() %>% 
-  node_exogenous() %>% 
+                       coords = mathy_coords) |> 
+  tidy_dagitty() |> 
+  node_status() |> 
+  node_exogenous() |> 
   node_dconnected()
 
 ggplot(iv_dag_mathy, aes(x = x, y = y, xend = xend, yend = yend)) +
@@ -706,8 +706,8 @@ instruments <- tribble(
   "Conflicts", "Economic growth", "Simultaneous causality", "Rainfall"
 )
 
-instruments %>% 
-  kbl(align = "l") %>% 
+instruments |> 
+  kbl(align = "l") |> 
   row_spec(c(2:8), extra_css = "color: #ffffff; background-color: #ffffff;")
 ```
 ]
@@ -716,8 +716,8 @@ instruments %>%
 
 .small[
 ```{r echo=FALSE}
-instruments %>% 
-  kbl(align = "l") %>% 
+instruments |> 
+  kbl(align = "l") |> 
   row_spec(3:8, extra_css = "color: #ffffff; background-color: #ffffff;")
 ```
 ]
@@ -726,8 +726,8 @@ instruments %>%
 
 .small[
 ```{r echo=FALSE}
-instruments %>% 
-  kbl(align = "l") %>% 
+instruments |> 
+  kbl(align = "l") |> 
   row_spec(4:8, extra_css = "color: #ffffff; background-color: #ffffff;")
 ```
 ]
@@ -736,8 +736,8 @@ instruments %>%
 
 .small[
 ```{r echo=FALSE}
-instruments %>% 
-  kbl(align = "l") %>% 
+instruments |> 
+  kbl(align = "l") |> 
   row_spec(5:8, extra_css = "color: #ffffff; background-color: #ffffff;")
 ```
 ]
@@ -746,8 +746,8 @@ instruments %>%
 
 .small[
 ```{r echo=FALSE}
-instruments %>% 
-  kbl(align = "l") %>% 
+instruments |> 
+  kbl(align = "l") |> 
   row_spec(6:8, extra_css = "color: #ffffff; background-color: #ffffff;")
 ```
 ]
@@ -756,8 +756,8 @@ instruments %>%
 
 .small[
 ```{r echo=FALSE}
-instruments %>% 
-  kbl(align = "l") %>% 
+instruments |> 
+  kbl(align = "l") |> 
   row_spec(7:8, extra_css = "color: #ffffff; background-color: #ffffff;")
 ```
 ]
@@ -766,8 +766,8 @@ instruments %>%
 
 .small[
 ```{r echo=FALSE}
-instruments %>% 
-  kbl(align = "l") %>% 
+instruments |> 
+  kbl(align = "l") |> 
   row_spec(8, extra_css = "color: #ffffff; background-color: #ffffff;")
 ```
 ]
@@ -776,7 +776,7 @@ instruments %>%
 
 .small[
 ```{r echo=FALSE}
-instruments %>% 
+instruments |> 
   kbl(align = "l")
 ```
 ]
@@ -854,7 +854,7 @@ covid_nodes <- tribble(
   "instrument", "COVID-19", 0, 2 
 )
 
-node_labels_covid <- covid_nodes$label %>% 
+node_labels_covid <- covid_nodes$label |> 
   set_names(covid_nodes$name)
 
 covid_dag1 <- dagify(outcome ~ treatment + unmeasured,
@@ -863,11 +863,11 @@ covid_dag1 <- dagify(outcome ~ treatment + unmeasured,
                      outcome = "outcome",
                      latent = "unmeasured",
                      coords = covid_nodes,
-                     labels =  node_labels_covid) %>%
-  tidy_dagitty() %>% 
-  node_status() %>% 
-  node_exogenous() %>% 
-  node_dconnected() %>% 
+                     labels =  node_labels_covid) |>
+  tidy_dagitty() |> 
+  node_status() |> 
+  node_exogenous() |> 
+  node_dconnected() |> 
   control_for("unmeasured")
 
 ggplot(covid_dag1, aes(x = x, y = y, xend = xend, yend = yend)) +
@@ -908,7 +908,7 @@ covid_nodes_2 <- tribble(
   "anxiety", "Anxiety", 0, 2
 )
 
-node_labels_covid_2 <- covid_nodes_2$label %>% 
+node_labels_covid_2 <- covid_nodes_2$label |> 
   set_names(covid_nodes_2$name)
 
 covid_dag2 <- dagify(outcome ~ treatment + unmeasured + deaths + health + jobs + isolation + anxiety,
@@ -922,11 +922,11 @@ covid_dag2 <- dagify(outcome ~ treatment + unmeasured + deaths + health + jobs +
                      outcome = "outcome",
                      latent = "unmeasured",
                      coords = covid_nodes_2,
-                     labels =  node_labels_covid_2) %>%
-  tidy_dagitty() %>% 
-  node_status() %>% 
-  node_exogenous() %>% 
-  node_dconnected() %>% 
+                     labels =  node_labels_covid_2) |>
+  tidy_dagitty() |> 
+  node_status() |> 
+  node_exogenous() |> 
+  node_dconnected() |> 
   control_for("unmeasured")
 
 ggplot(covid_dag2, aes(x = x, y = y, xend = xend, yend = yend)) +
@@ -995,8 +995,8 @@ $$\text{Earnings}_i = \beta_0 + \beta_1 \text{Education}_i + \varepsilon_i$$
 ```{r show-table-again, echo=FALSE}
 model_results <- modelsummary(list("Unadjusted" = model1, "Forbidden" = model2),
                               gof_omit = 'IC|Log|Adj', stars = TRUE)
-model_results %>% 
-  row_spec(c(6, 9), extra_css = "border-bottom: 1px solid") %>% 
+model_results |> 
+  row_spec(c(6, 9), extra_css = "border-bottom: 1px solid") |> 
   row_spec(3, background = "#F5ABEA")
 ```
 ]
@@ -1176,7 +1176,7 @@ glance(first_stage)
 ```
 
 ```{r check-first-stage-real, echo=FALSE}
-glance(first_stage) %>% select(1:5)
+glance(first_stage) |> select(1:5)
 ```
 
 ---
@@ -1191,7 +1191,7 @@ $$
 
 .small-code[
 ```{r make-educ-hat-fake, eval=FALSE}
-data_with_predictions <- augment_columns(first_stage, data = father_education) %>% 
+data_with_predictions <- augment_columns(first_stage, data = father_education) |> 
   rename(educ_hat = .fitted)
 head(data_with_predictions)
 ```
@@ -1199,10 +1199,10 @@ head(data_with_predictions)
 
 .pull-left.small-code[
 ```{r show-educ-hat-real, echo=FALSE}
-data_with_predictions <- augment_columns(first_stage, data = father_education) %>% 
+data_with_predictions <- augment_columns(first_stage, data = father_education) |> 
   rename(educ_hat = .fitted)
 
-head(data_with_predictions) %>% select(1:5)
+head(data_with_predictions) |> select(1:5)
 ```
 ]
 
@@ -1233,8 +1233,8 @@ layout: false
 ```{r show-table-again-2sls, echo=FALSE}
 model_results <- modelsummary(list("Unadjusted" = model1, "Forbidden" = model2, "2SLS IV" = second_stage),
                               gof_omit = 'IC|Log|Adj', stars = TRUE)
-model_results %>% 
-  row_spec(c(8, 11), extra_css = "border-bottom: 1px solid") %>% 
+model_results |> 
+  row_spec(c(8, 11), extra_css = "border-bottom: 1px solid") |> 
   row_spec(c(3, 7), background = "#F5ABEA")
 ```
 ]
@@ -1270,7 +1270,7 @@ node_details_multiple <- tribble(
   "instrument2", "Mother's education", 4, 1.5
 )
 
-node_labels_multiple <- node_details_multiple$label %>% 
+node_labels_multiple <- node_details_multiple$label |> 
   set_names(node_details_multiple$name)
 
 multiple_dag1 <- dagify(outcome ~ treatment + unmeasured,
@@ -1279,11 +1279,11 @@ multiple_dag1 <- dagify(outcome ~ treatment + unmeasured,
                         outcome = "outcome",
                         latent = "unmeasured",
                         coords = node_details_multiple,
-                        labels =  node_labels_multiple) %>% 
-  tidy_dagitty() %>% 
-  node_status() %>% 
-  node_exogenous() %>% 
-  node_dconnected() %>% 
+                        labels =  node_labels_multiple) |> 
+  tidy_dagitty() |> 
+  node_status() |> 
+  node_exogenous() |> 
+  node_dconnected() |> 
   control_for("unmeasured")
 
 ggplot(multiple_dag1, aes(x = x, y = y, xend = xend, yend = yend)) +
@@ -1359,7 +1359,7 @@ Control variables and other backdoors (exogenous ones go in both stages, even if
 ```{r eval=FALSE}
 first_stage <- lm(educ ~ fathereduc, data = father_education)
 
-data_with_predictions <- augment_columns(first_stage, data = father_education) %>% 
+data_with_predictions <- augment_columns(first_stage, data = father_education) |> 
   rename(educ_hat = .fitted)
 
 second_stage <- lm(wage ~ educ_hat, data = data_with_predictions)
@@ -1439,16 +1439,16 @@ layout: false
 
 .smaller[
 ```{r show-table-final-2sls, echo=FALSE}
-gm <- modelsummary::gof_map %>% 
+gm <- modelsummary::gof_map |> 
   mutate(omit = !(raw %in% c("nobs", "r.squared", "adj.r.squared")))
 
 modelsummary(list("Unadjusted" = model1, "Forbidden" = model2, 
                   "2SLS IV (by hand)" = second_stage,
                   "2SLS IV (ivreg())" = model_ivreg, 
                   "2SLS IV (iv_robust())" = model_iv_robust),
-             gof_map = gm, gof_omit = "p\\.value|statistic|se_type", stars = TRUE) %>% 
-  row_spec(c(8, 11), extra_css = "border-bottom: 1px solid") %>% 
-  row_spec(c(3, 7), background = "#F5ABEA") %>% 
+             gof_map = gm, gof_omit = "p\\.value|statistic|se_type", stars = TRUE) |> 
+  row_spec(c(8, 11), extra_css = "border-bottom: 1px solid") |> 
+  row_spec(c(3, 7), background = "#F5ABEA") |> 
   row_spec(10, background = "#FFE2D0")
 ```
 ]

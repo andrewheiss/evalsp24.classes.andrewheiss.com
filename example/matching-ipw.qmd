@@ -66,7 +66,7 @@ First, let's download the dataset (if you haven't already), put in a folder name
 - [{{< fa table >}} `mosquito_nets.csv`](/files/data/generated_data/mosquito_nets.csv)
 
 ```{r load-libraries, message=FALSE, warning=FALSE}
-library(tidyverse)  # ggplot(), %>%, mutate(), and friends
+library(tidyverse)  # ggplot(), mutate(), and friends
 library(ggdag)  # Make DAGs
 library(dagitty)  # Do DAG logic with R
 library(broom)  # Convert models to data frames
@@ -131,8 +131,8 @@ For fun, we can calculate the difference in average malaria risk for those who d
 We can do this with a table (but then we have to do manual math to subtract the `FALSE` average from the `TRUE` average):
 
 ```{r super-wrong-answer-table}
-nets %>%
-  group_by(net) %>%
+nets |>
+  group_by(net) |>
   summarize(number = n(),
             avg = mean(malaria_risk))
 ```
@@ -145,7 +145,7 @@ model_wrong <- lm(malaria_risk ~ net, data = nets)
 tidy(model_wrong)
 ```
 
-According to this estimate, using a mosquito net is associated with a `r tidy(model_wrong) %>% filter(term == "netTRUE") %>% pull(estimate) %>% abs()` point decrease in malaria risk, on average. We can't legally talk about this as a causal effect though—there are confounding variables to deal with.
+According to this estimate, using a mosquito net is associated with a `r tidy(model_wrong) |> filter(term == "netTRUE") |> pull(estimate) |> abs()` point decrease in malaria risk, on average. We can't legally talk about this as a causal effect though—there are confounding variables to deal with.
 
 
 ## Matching
@@ -187,7 +187,7 @@ model_matched <- lm(malaria_risk ~ net,
 tidy(model_matched)
 ```
 
-The `r tidy(model_matched) %>% filter(term == "netTRUE") %>% pull(estimate) %>% abs()` point decrease here is better than the naive estimate, but it's not the true 10 point causal effect (that I built in to the data). Perhaps that's because the matches aren't great, or maybe we threw away too much data. There are a host of diagnostics you can look at to see how well things are matched (check [the documentation for **MatchIt**](http://gking.harvard.edu/matchit) for examples.)
+The `r tidy(model_matched) |> filter(term == "netTRUE") |> pull(estimate) |> abs()` point decrease here is better than the naive estimate, but it's not the true 10 point causal effect (that I built in to the data). Perhaps that's because the matches aren't great, or maybe we threw away too much data. There are a host of diagnostics you can look at to see how well things are matched (check [the documentation for **MatchIt**](http://gking.harvard.edu/matchit) for examples.)
 
 Actually, the most likely culprit for the incorrect estimate is that there's some imbalance in the data. Because we set `replace = TRUE`, we did _not_ do 1:1 matching—untreated observations were paired with more than one treated observation. As a result, the multiply-matched observations are getting overcounted and have too much importance in the model. Fortunately, `matchit()` provides us with a column called `weights` that allows us to scale down the overmatched observations when running the model. **Importantly,** these weights have nothing to do with causal inference or backdoors or inverse probability weighting—their only purpose is to help scale down the imbalance arising from overmatching. If you use `replace = FALSE` and enforce 1:1 matching, the whole `weights` column will just be 1.
 
@@ -200,7 +200,7 @@ model_matched_wts <- lm(malaria_risk ~ net,
 tidy(model_matched_wts)
 ```
 
-After weighting to account for under- and over-matching, we find a `r tidy(model_matched_wts) %>% filter(term == "netTRUE") %>% pull(estimate)` point causal effect. That's much better than any of the other estimates we've tried so far! The reason it's accurate is because we've closed the confounding backdoors and isolated the arrow between net use and malaria risk.
+After weighting to account for under- and over-matching, we find a `r tidy(model_matched_wts) |> filter(term == "netTRUE") |> pull(estimate)` point causal effect. That's much better than any of the other estimates we've tried so far! The reason it's accurate is because we've closed the confounding backdoors and isolated the arrow between net use and malaria risk.
 
 
 ## Inverse probability weighting
@@ -279,19 +279,19 @@ bolded_tex <- function(str) parse(text = paste0("bold(", TeX(str), ")"))
 
 set.seed(1234)
 
-logit_df <- tibble(x = seq(-5, 5, length.out = 100)) %>%
-  mutate(p = 1 / (1 + exp(-x))) %>%
+logit_df <- tibble(x = seq(-5, 5, length.out = 100)) |>
+  mutate(p = 1 / (1 + exp(-x))) |>
   mutate(y = rbinom(n(), size = 1, prob = p))
 
 example_logit <- glm(y ~ x, data = logit_df, family = binomial(link = "logit"))
 
 logit_df_odds <- augment_columns(example_logit, logit_df,
-                                 type.predict = c("link")) %>%
-  rename(log_odds = .fitted) %>%
+                                 type.predict = c("link")) |>
+  rename(log_odds = .fitted) |>
   mutate(odds_ratio = exp(log_odds))
 
 logit_df_probs <- augment_columns(example_logit, logit_df,
-                                  type.predict = c("response")) %>%
+                                  type.predict = c("response")) |>
   rename(pred_prob = .fitted)
 
 plot_log_odds <- ggplot(logit_df_odds, aes(x = x, y = log_odds)) +
@@ -364,13 +364,13 @@ We can then plug in the income, temperatures, and health for every row in our da
 # uninterpretable log odds scale.
 net_probabilities <- augment_columns(model_net,
                                      nets,
-                                     type.predict = "response") %>%
+                                     type.predict = "response") |>
   # The predictions are in a column named ".fitted", so we rename it here
   rename(propensity = .fitted)
 
 # Look at the first few rows of a few columns
-net_probabilities %>%
-  select(id, net, income, temperature, health, propensity) %>%
+net_probabilities |>
+  select(id, net, income, temperature, health, propensity) |>
   head()
 ```
 
@@ -387,12 +387,12 @@ This equation will create weights that provide the average treatment effect (ATE
 We'll use `mutate()` to create a column for the inverse probability weight:
 
 ```{r make-ipw}
-net_ipw <- net_probabilities %>%
+net_ipw <- net_probabilities |>
   mutate(ipw = (net_num / propensity) + ((1 - net_num) / (1 - propensity)))
 
 # Look at the first few rows of a few columns
-net_ipw %>%
-  select(id, net, income, temperature, health, propensity, ipw) %>%
+net_ipw |>
+  select(id, net, income, temperature, health, propensity, ipw) |>
   head()
 ```
 
@@ -410,14 +410,14 @@ model_ipw <- lm(malaria_risk ~ net,
 tidy(model_ipw)
 ```
 
-Cool! After using the inverse probability weights, we find a `r tidy(model_ipw) %>% filter(term == "netTRUE") %>% pull(estimate)` point causal effect. That's a tiiiny bit off from the true value of 10, but not bad at all!
+Cool! After using the inverse probability weights, we find a `r tidy(model_ipw) |> filter(term == "netTRUE") |> pull(estimate)` point causal effect. That's a tiiiny bit off from the true value of 10, but not bad at all!
 
 It's important to check the values of your inverse probability weights. Sometimes they can get too big, like if someone had an income of 0 and the lowest possible health and lived in a snow field *and yet* still used a net. Having really really high IPW values can throw off estimation. To fix this, we can truncate weights at some lower level. There's no universal rule of thumb for a good maximum weight—I've often seen 10 used. In our mosquito net data, no IPWs are higher than 10 (the max is exactly 10 with person 877), so we don't need to worry about truncation.
 
 If you did want to truncate, you'd do something like this (here we're truncating at 8 instead of 10 so truncation actually does something):
 
 ```{r ipw-truncated}
-net_ipw <- net_ipw %>%
+net_ipw <- net_ipw |>
   # If the IPW is larger than 8, make it 8, otherwise use the current IPW
   mutate(ipw_truncated = ifelse(ipw > 8, 8, ipw))
 
@@ -428,7 +428,7 @@ model_ipw_truncated <- lm(malaria_risk ~ net,
 tidy(model_ipw_truncated)
 ```
 
-Now the causal effect is `r tidy(model_ipw_truncated) %>% filter(term == "netTRUE") %>% pull(estimate)`, which is slightly lower and probably less accurate since we don't really have any exceptional cases messing up our original IPW estimate.
+Now the causal effect is `r tidy(model_ipw_truncated) |> filter(term == "netTRUE") |> pull(estimate)`, which is slightly lower and probably less accurate since we don't really have any exceptional cases messing up our original IPW estimate.
 
 
 ## Results from all the models
@@ -444,14 +444,14 @@ modelsummary(list("Naive" = model_wrong,
 ```
 
 ```{r all-models-together-real, echo=FALSE, warning=FALSE}
-gm <- modelsummary::gof_map %>%
+gm <- modelsummary::gof_map |>
   mutate(omit = !(raw %in% c("nobs", "r.squared", "adj.r.squared")))
 
 modelsummary(list("Naive" = model_wrong,
                   "Matched" = model_matched, "Matched + weights" = model_matched_wts,
                   "IPW" = model_ipw, "IPW truncated at 8" = model_ipw_truncated),
-             gof_map = gm, stars = TRUE) %>%
-  kableExtra::row_spec(3, background = "#F6D645") %>%
+             gof_map = gm, stars = TRUE) |>
+  kableExtra::row_spec(3, background = "#F6D645") |>
   kableExtra::row_spec(4, extra_css = "border-bottom: 1px solid")
 ```
 
@@ -461,16 +461,16 @@ Which one is right? In this case, because this is fake simulated data where I bu
 ## jklol we're not all done! Fixing IPW standard errors and confidence intervals
 
 ```{r extract-ipw-results, include=FALSE}
-ipw_results <- model_ipw %>% 
-  tidy(conf.int = TRUE) %>% 
-  mutate(term = janitor::make_clean_names(term)) %>% 
-  mutate(conf = glue::glue("[{round(conf.low, 2)}, {round(conf.high, 2)}]")) %>% 
+ipw_results <- model_ipw |> 
+  tidy(conf.int = TRUE) |> 
+  mutate(term = janitor::make_clean_names(term)) |> 
+  mutate(conf = glue::glue("[{round(conf.low, 2)}, {round(conf.high, 2)}]")) |> 
   split(~term)
 
-matching_results <- model_matched_wts %>% 
-  tidy(conf.int = TRUE) %>% 
-  mutate(term = janitor::make_clean_names(term)) %>% 
-  mutate(conf = glue::glue("[{round(conf.low, 2)}, {round(conf.high, 2)}]")) %>% 
+matching_results <- model_matched_wts |> 
+  tidy(conf.int = TRUE) |> 
+  mutate(term = janitor::make_clean_names(term)) |> 
+  mutate(conf = glue::glue("[{round(conf.low, 2)}, {round(conf.high, 2)}]")) |> 
   split(~term)
 ```
 
@@ -494,12 +494,12 @@ library(kableExtra)
 
 withr::with_seed(1234, {
   example_data <- tibble(ID = 1:10, 
-                         Name = randomNames(n = 10, which.names = "first")) %>% 
+                         Name = randomNames(n = 10, which.names = "first")) |> 
     mutate(Cookies = rpois(n(), 3))
 })
 
-example_data %>% 
-  kbl() %>% 
+example_data |> 
+  kbl() |> 
   kable_styling(full_width = FALSE)
 ```
 
@@ -507,16 +507,16 @@ With bootstrapping, we randomly select 10 rows from this original dataset to cre
 
 ```{r show-bootstrap-example, echo=FALSE, warning=FALSE, message=FALSE}
 set.seed(12345)
-boot1 <- tibble(ID = sample(example_data$ID, size = 10, replace = TRUE)) %>% 
-  left_join(example_data, by = "ID") %>% 
+boot1 <- tibble(ID = sample(example_data$ID, size = 10, replace = TRUE)) |> 
+  left_join(example_data, by = "ID") |> 
   arrange(ID)
 
-boot2 <- tibble(ID = sample(example_data$ID, size = 10, replace = TRUE)) %>% 
-  left_join(example_data, by = "ID") %>% 
+boot2 <- tibble(ID = sample(example_data$ID, size = 10, replace = TRUE)) |> 
+  left_join(example_data, by = "ID") |> 
   arrange(ID)
 
-boot3 <- tibble(ID = sample(example_data$ID, size = 10, replace = TRUE)) %>% 
-  left_join(example_data, by = "ID") %>% 
+boot3 <- tibble(ID = sample(example_data$ID, size = 10, replace = TRUE)) |> 
+  left_join(example_data, by = "ID") |> 
   arrange(ID)
 
 blank <- tibble(dots = rep("", 10))
@@ -525,11 +525,11 @@ columns <- c(rep(c("ID", "Name", "Cookies"), times = 3),
              "…",
              c("ID", "Name", "Cookies"))
 
-bind_cols(example_data, boot1, boot2, blank, boot3) %>% 
-  kbl(col.names = columns) %>% 
-  kable_styling() %>% 
+bind_cols(example_data, boot1, boot2, blank, boot3) |> 
+  kbl(col.names = columns) |> 
+  kable_styling() |> 
   add_header_above(c("Original data" = 3, "Bootstrap sample #1" = 3,
-                     "Bootstrap sample #2" = 3, " " = 1, "Bootstrap sample #1000" = 3)) %>% 
+                     "Bootstrap sample #2" = 3, " " = 1, "Bootstrap sample #1000" = 3)) |> 
   column_spec(1:3, background = "#dedede")
 ```
 
@@ -598,7 +598,7 @@ cookie_samples$splits[[5]]$in_id
 Now that everything is split up and we have 500 datasets, we'll apply our `find_stats()` function to each of the datasets using the `map()` function from the `purrr` package:
 
 ```{r find-cookie-stats, cache=TRUE}
-cookie_bootstrap_stats <- cookie_samples %>% 
+cookie_bootstrap_stats <- cookie_samples |> 
   mutate(stats = map(splits, find_stats))
 cookie_bootstrap_stats
 ```
@@ -614,8 +614,8 @@ That looks like a regular table of regression results, with columns for the coef
 But all those numbers are nested inside datasets inside cells, which makes it really hard to work with. We can use the `unnest()` function to extract everything into regular columns:
 
 ```{r see-unnested-cookie-df, cache=TRUE}
-cookie_bootstrap_stats_unnested <- cookie_samples %>% 
-  mutate(stats = map(splits, find_stats)) %>% 
+cookie_bootstrap_stats_unnested <- cookie_samples |> 
+  mutate(stats = map(splits, find_stats)) |> 
   unnest(stats)
 cookie_bootstrap_stats_unnested
 ```
@@ -627,7 +627,7 @@ That's much more manageable! Now we can start finding the three estimands we're 
 To find the average number of cookies eaten, based on our boostrapped samples, we can calculate the average of the `estimate` column. That's it.
 
 ```{r boot-avg-cookies}
-cookie_bootstrap_stats_unnested %>% 
+cookie_bootstrap_stats_unnested |> 
   summarize(avg_cookies = mean(estimate))
 ```
 
@@ -650,7 +650,7 @@ sqrt(mean(errors^2) + var(estimates))
 Let's do that with our cookie bootstraps:
 
 ```{r boot-se-cookies}
-cookie_bootstrap_stats_unnested %>% 
+cookie_bootstrap_stats_unnested |> 
   summarize(avg_cookies = mean(estimate),
             avg_se = sqrt(mean(std.error^2) + var(estimate)))
 ```
@@ -664,7 +664,7 @@ The `.lower` and `.upper` columns here show the confidence interval, while the `
 ```{r boot-conf-cookies}
 # (Note that we have to use this function on the dataset of nested results, not
 # the one where we unnested everything.)
-cookie_bootstrap_stats %>% 
+cookie_bootstrap_stats |> 
   int_t(stats)
 ```
 
@@ -693,7 +693,7 @@ fit_one_ipw <- function(split) {
   # Calculate inverse probability weights
   net_ipw <- augment_columns(model_net,
                              current_data,
-                             type.predict = "response") %>%
+                             type.predict = "response") |>
     mutate(ipw = (net_num / .fitted) + ((1 - net_num) / (1 - .fitted)))
   
   # Fit outcome model with IPWs 
@@ -709,7 +709,7 @@ fit_one_ipw <- function(split) {
 With that function, we can take our `nets` data and make 1000 random copies of it. We'll then apply our neat `fit_one_ipw()` function to each of the datasets
 
 ```{r ipw-boot, cache=TRUE}
-ipw_bootstrap_stats <- bootstraps(nets, 1000, apparent = TRUE) %>% 
+ipw_bootstrap_stats <- bootstraps(nets, 1000, apparent = TRUE) |> 
   mutate(results = map(splits, fit_one_ipw))
 ```
 
@@ -722,15 +722,15 @@ ipw_bootstrap_stats
 If we unnest that column, we can see the actual results. Notice how there are 2,002 rows here instead of 1,001—each dataset has two values in it: the intercept and the coefficient for `netTRUE`.
 
 ```{r show-ipw-boot-unnested, cache=TRUE, message=FALSE}
-ipw_bootstrap_stats %>% 
+ipw_bootstrap_stats |> 
   unnest(results)
 ```
 
 Since we're interested in the effect of net usage, we'll filter the data so we only look at that coefficient:
 
 ```{r show-ipw-boot-nested-net-only, cache=TRUE, message=FALSE}
-ipw_bootstrap_net <- ipw_bootstrap_stats %>% 
-  unnest(results) %>% 
+ipw_bootstrap_net <- ipw_bootstrap_stats |> 
+  unnest(results) |> 
   filter(term == "netTRUE")
 
 ipw_bootstrap_net
@@ -739,13 +739,13 @@ ipw_bootstrap_net
 Now we can use Rubin's Rules to collapse all these estimates into a single average and a single standard error:
 
 ```{r ipw-net-mean-se}
-ipw_bootstrap_net %>% 
+ipw_bootstrap_net |> 
   summarize(avg_net = mean(estimate),
             avg_se = sqrt(mean(std.error^2) + var(estimate)))
 ```
 
 ```{r extract-bootstrap-stats, include=FALSE}
-boot_stats <- ipw_bootstrap_net %>% 
+boot_stats <- ipw_bootstrap_net |> 
   summarize(avg_net = mean(estimate),
             avg_se = sqrt(mean(std.error^2) + var(estimate)))
 ```
@@ -755,15 +755,15 @@ The average net effect (or point estimate) of `r boot_stats$avg_net` is the same
 Finally we can find the confidence interval for the estimate with `int_t()`:
 
 ```{r ipw-net-conf}
-ipw_bootstrap_stats %>% 
-  int_t(results) %>% 
+ipw_bootstrap_stats |> 
+  int_t(results) |> 
   filter(term == "netTRUE")
 ```
 
 ```{r extract-bootstrap-conf, include=FALSE}
-boot_conf <- ipw_bootstrap_stats %>% 
-  int_t(results) %>% 
-  filter(term == "netTRUE") %>% 
+boot_conf <- ipw_bootstrap_stats |> 
+  int_t(results) |> 
+  filter(term == "netTRUE") |> 
   mutate(conf = glue::glue("[{round(.lower, 2)}, {round(.upper, 2)}]"))
 ```
 

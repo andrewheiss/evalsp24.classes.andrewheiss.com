@@ -310,7 +310,7 @@ cor(mosquito_nets$income, mosquito_nets$resistance)
 
 ```{r indent="  "}
 lm(malaria_risk ~ household + health + income + net + temperature,
-   data = mosquito_nets) %>%
+   data = mosquito_nets) |>
   broom::tidy()
 ```
 

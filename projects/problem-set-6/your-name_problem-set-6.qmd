@@ -142,7 +142,7 @@ Run the same model (`grade ~ attendance_centered + program`) using each of these
 
 Next you'll use nonparametric estimation to figure out the size of the gap around the cutpoint. Remember from class that this means we're not using straight lines anymore---we're using curvy lines that don't really have neat $y = mx + b$ equations behind them, so we can't use `lm()` and regular coefficients. Instead, we can use `rdrobust` to measure the size of the gap.
 
-Use `rdrobust` with all its default options to find the effect of the program. You'll need to specify `y`, `x`, and `c`. Recall from the in-class example that you'll need to type the name of the variables slighlty differently. To refer to the grade column in the program data frame, you'll have to type `program$grade`. Also, make sure you pipe the output of `rdrobust()` to `summary()`, otherwise you won't see the actual program effect (so make sure you type `rdrobust(...) %>% summary()`).
+Use `rdrobust` with all its default options to find the effect of the program. You'll need to specify `y`, `x`, and `c`. Recall from the in-class example that you'll need to type the name of the variables slighlty differently. To refer to the grade column in the program data frame, you'll have to type `program$grade`. Also, make sure you pipe the output of `rdrobust()` to `summary()`, otherwise you won't see the actual program effect (so make sure you type `rdrobust(...) |> summary()`).
 
 **How big of an effect does the program have at the cutpoint? Is the effect statistically significant?** Important: if you see a negative number, you can pretend that it's positive. It's negative because the change in trend goes down.
 
@@ -165,7 +165,7 @@ First we'll play with the bandwidth. Find the ideal bandwidth with with `rdbwsel
 
 ```{r}
 # Find the ideal bandwidth. Make sure rdbwselect() pipes into summary() so you
-# can see the results: rdbwselect() %>% summary()
+# can see the results: rdbwselect() |> summary()
 #
 # You'll use the same y, x, and c as before
 ```

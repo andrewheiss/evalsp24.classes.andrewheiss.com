@@ -42,25 +42,25 @@ tutoring <- tibble(
   id = 1:num_students,
   entrance_exam = rbeta(num_students, shape1 = 7, shape2 = 2),
   exit_exam_base = rbeta(num_students, shape1 = 5, shape2 = 3)
-) %>% 
-  mutate(entrance_exam = entrance_exam * 100) %>% 
-  mutate(tutoring_sharp = entrance_exam <= 70) %>%
+) |> 
+  mutate(entrance_exam = entrance_exam * 100) |> 
+  mutate(tutoring_sharp = entrance_exam <= 70) |>
   mutate(tutoring_fuzzy = case_when(
     entrance_exam >= 50 & entrance_exam <= 70 ~ sample(c(TRUE, FALSE), n(), replace = TRUE, prob = c(0.8, 0.2)),
     entrance_exam > 70 & entrance_exam <= 90 ~ sample(c(TRUE, FALSE), n(), replace = TRUE, prob = c(0.2, 0.8)),
     entrance_exam < 50 ~ TRUE,
     entrance_exam > 90 ~ FALSE
-  )) %>% 
+  )) |> 
   mutate(tutoring_text = factor(tutoring_sharp, levels = c(FALSE, TRUE),
                                 labels = c("No tutor", "Tutor")),
          tutoring_fuzzy_text = factor(tutoring_fuzzy, levels = c(FALSE, TRUE),
-                                      labels = c("No tutor", "Tutor"))) %>% 
-  mutate(exit_exam = exit_exam_base * 40 + 10 * tutoring_sharp + entrance_exam / 2) %>% 
-  mutate(exit_exam_fuzzy = exit_exam_base * 40 + 10 * tutoring_fuzzy + entrance_exam / 2) %>% 
-  mutate(entrance_centered = entrance_exam - 70) %>% 
+                                      labels = c("No tutor", "Tutor"))) |> 
+  mutate(exit_exam = exit_exam_base * 40 + 10 * tutoring_sharp + entrance_exam / 2) |> 
+  mutate(exit_exam_fuzzy = exit_exam_base * 40 + 10 * tutoring_fuzzy + entrance_exam / 2) |> 
+  mutate(entrance_centered = entrance_exam - 70) |> 
   mutate(below_cutoff = entrance_exam <= 70)
 
-tutoring <- tutoring %>% 
+tutoring <- tutoring |> 
   select(id, entrance_exam, tutoring = tutoring_fuzzy, 
          tutoring_text = tutoring_fuzzy_text, exit_exam = exit_exam_fuzzy)
 ```
@@ -389,44 +389,44 @@ df <- tibble(
   status = sample(c("Always taker", "Never taker", "Complier"), N, 
                   replace = TRUE, prob = c(0.2, 0.4, 0.4)),
   treatment = sample(c("Treatment", "Control"), N, replace = TRUE, prob = c(0.5, 0.5))
-) %>% 
+) |> 
   mutate(bed_net_0 = (status == "Always taker") * 1,
-         bed_net_1 = (status != "Never taker") * 1) %>% 
+         bed_net_1 = (status != "Never taker") * 1) |> 
   mutate(health_0 = case_when(
     status == "Always taker" ~ rnorm(N, 1, 0.5),
     status == "Never taker"  ~ rnorm(N, 0, 0.6),
     status == "Complier"     ~ rnorm(N, 0.1, 0.4),
-  )) %>% 
+  )) |> 
   mutate(health_1 = case_when(
     status == "Always taker" ~ rnorm(N, 1, 0.5),
     status == "Never taker"  ~ rnorm(N, 0, 0.6),
     status == "Complier"     ~ rnorm(N, 0.9, 0.7),
-  )) %>% 
+  )) |> 
   mutate(bed_net = case_when(
     treatment == "Treatment" ~ bed_net_1,
     treatment == "Control"   ~ bed_net_0
-  )) %>% 
+  )) |> 
   mutate(health = case_when(
     bed_net == 0 ~ health_0,
     bed_net == 1 ~ health_1
-  )) %>% 
+  )) |> 
   mutate(bed_net = factor(bed_net, labels = c("No bed net", "Bed net")))
 
 min_health <- min(df$health_0, df$health_1)
 max_health <- max(df$health_0, df$health_1)
 
-df <- df %>% 
+df <- df |> 
   mutate(across(starts_with("health"), 
                 ~rescale(., to = c(0, 100), 
                          from = c(min_health, max_health))))
 
-df_real <- df %>% 
+df_real <- df |> 
   select(treatment, bed_net, health)
 
-bed_nets_time_machine <- df %>% 
+bed_nets_time_machine <- df |> 
   mutate(bed_net = fct_relevel(bed_net, "No bed net"),
          status = fct_relevel(status, "Complier"))
-bed_nets <- df_real %>% 
+bed_nets <- df_real |> 
   mutate(bed_net = fct_relevel(bed_net, "No bed net"))
 
 # write_csv(df, here::here("static", "data", "bed_nets_time_machine.csv"))
@@ -586,8 +586,8 @@ $$\text{ITT} = (\bar{y}\ |\ \text{Treatment}) - (\bar{y}\ |\ \text{Control)}$$
 
 .pull-left.small-code[
 ```{r}
-bed_nets %>% 
-  group_by(treatment) %>% 
+bed_nets |> 
+  group_by(treatment) |> 
   summarize(avg = mean(health))
 ```
 ]
@@ -604,7 +604,7 @@ tidy(itt_model)
 ```{r echo=FALSE}
 itt_model <- lm(health ~ treatment, 
                 data = bed_nets)
-tidy(itt_model) %>% select(term, estimate)
+tidy(itt_model) |> select(term, estimate)
 ```
 ]
 
@@ -658,9 +658,9 @@ $$
 
 .pull-left.small-code.small[
 ```{r}
-bed_nets %>% 
-  group_by(treatment, bed_net) %>% 
-  summarize(n = n()) %>% 
+bed_nets |> 
+  group_by(treatment, bed_net) |> 
+  summarize(n = n()) |> 
   mutate(prop = n / sum(n))
 ```
 ]
@@ -689,8 +689,8 @@ $$\text{CACE} = \frac{\text{ITT}}{{\pi_\text{C}}}$$
 
 .pull-left.small-code.small[
 ```{r}
-ITT <- tidy(itt_model) %>% 
-  filter(term == "treatmentTreatment") %>% 
+ITT <- tidy(itt_model) |> 
+  filter(term == "treatmentTreatment") |> 
   pull(estimate)
 ITT
 
@@ -762,7 +762,7 @@ tidy(model_2sls)
 ```{r echo=FALSE}
 model_2sls <- iv_robust(health ~ bed_net | treatment, 
                         data = bed_nets)
-tidy(model_2sls) %>% select(1:5)
+tidy(model_2sls) |> select(1:5)
 ```
 ]
 
@@ -905,7 +905,7 @@ tribble(
   2, 55, TRUE, FALSE,
   3, 52, FALSE, FALSE,
   4, 39, FALSE, TRUE
-) %>% 
+) |> 
   kbl(align = "c")
 ```
 ]
@@ -1029,13 +1029,13 @@ ggplot(tutoring, aes(x = entrance_exam, y = tutoring_text, fill = entrance_exam 
 .box-inv-6[Step 1: Center running variable + make threshold variable]
 
 ```{r include=FALSE}
-tutoring <- tutoring %>% 
+tutoring <- tutoring |> 
   select(-tutoring_text)
 ```
 
 .small-code[
 ```{r}
-tutoring_centered <- tutoring %>% 
+tutoring_centered <- tutoring |> 
   mutate(entrance_centered = entrance_exam - 70,
          below_cutoff = entrance_exam <= 70)
 head(tutoring_centered, 6)
@@ -1066,7 +1066,7 @@ fuzzy1 <- iv_robust(
   data = filter(tutoring_centered, entrance_centered >= -10 & entrance_centered <= 10)
 )
 
-tidy(fuzzy1) %>% select(1:5)
+tidy(fuzzy1) |> select(1:5)
 ```
 ]
 
@@ -1081,7 +1081,7 @@ tidy(fuzzy1) %>% select(1:5)
 .small-code[
 ```{r eval=FALSE}
 rdrobust(y = tutoring$exit_exam, x = tutoring$entrance_exam, 
-         c = 70, fuzzy = tutoring$tutoring) %>% 
+         c = 70, fuzzy = tutoring$tutoring) |> 
   summary()
 ```
 

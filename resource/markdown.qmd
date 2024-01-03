@@ -191,10 +191,10 @@ math_table <- tribble(
   "Bonus fun", "Use colors!; see <a href='https://www.overleaf.com/learn/latex/Using_colours_in_LaTeX'>here</a> for more details and <a href='https://www.overleaf.com/learn/latex/Using_colours_in_LaTeX#Reference_guide'>here</a> for a list of color names", "<code>\\color{red}{y} = \\color{blue}{\\beta_1 x_1}</code>", "\\(\\color{red}{y}\\ \\color{black}{=}\\ \\color{blue}{\\beta_1 x_1}\\)"
 )
 
-math_table %>% 
-  select(-group) %>% 
-  kable(escape = FALSE) %>%
-  kableExtra::pack_rows(index = table(fct_inorder(math_table$group))) %>% 
+math_table |> 
+  select(-group) |> 
+  kable(escape = FALSE) |>
+  kableExtra::pack_rows(index = table(fct_inorder(math_table$group))) |> 
   kable_styling()
 ```
 

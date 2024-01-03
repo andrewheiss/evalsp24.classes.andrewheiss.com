@@ -51,7 +51,7 @@ We'll explore the question with three different datasets: a fake one I made up a
 Make sure you load all these libraries before getting started:
 
 ```{r load-libraries, message=FALSE, warning=FALSE}
-library(tidyverse)  # ggplot(), %>%, mutate(), and friends
+library(tidyverse)  # ggplot(), mutate(), and friends
 library(broom)  # Convert models to data frames
 library(modelsummary)  # Create side-by-side regression tables
 library(kableExtra)  # Add fancier formatting to tables
@@ -174,7 +174,7 @@ Note a couple of these new columns. `.fitted` is the fitted/predicted value of e
 Instead of dealing with weird names like `.fitted`, I like to rename the fitted variable to something more understandable after I use `augment_columns`:
 
 ```{r}
-ed_fake_with_prediction <- augment_columns(first_stage, ed_fake) %>%
+ed_fake_with_prediction <- augment_columns(first_stage, ed_fake) |>
   rename(educ_hat = .fitted)
 
 head(ed_fake_with_prediction)
@@ -235,7 +235,7 @@ We can put all the models side-by-side to compare them:
 modelsummary(list("Forbidden" = model_forbidden, "OLS" = model_naive,
                   "2SLS (by hand)" = second_stage, "2SLS (automatic)" = model_2sls),
              gof_omit = "IC|Log|Adj|p\\.value|statistic|se_type",
-             stars = TRUE) %>%
+             stars = TRUE) |>
   # Add a background color to rows 3 and 7
   row_spec(c(3, 7), background = "#F5ABEA")
 ```
@@ -269,8 +269,8 @@ This dataset includes a bunch of different variables. If you run `library(wooldr
 To make life easier, we'll rename some of the columns and get rid of rows with missing data:
 
 ```{r}
-ed_real <- wage2 %>%
-  rename(education = educ, education_dad = feduc, education_mom = meduc) %>%
+ed_real <- wage2 |>
+  rename(education = educ, education_dad = feduc, education_mom = meduc) |>
   na.omit()  # Get rid of rows with missing values
 ```
 
@@ -299,7 +299,7 @@ We can check for relevance by looking at the relationship between the instrument
 
 ```{r message=FALSE}
 # Combine father's and mother's education into one column so we can plot both at the same time
-ed_real_long <- ed_real %>%
+ed_real_long <- ed_real |>
   pivot_longer(cols = c(education_dad, education_mom),
                names_to = "instrument", values_to = "instrument_value")
 
@@ -349,7 +349,7 @@ first_stage <- lm(education ~ education_dad + education_mom, data = ed_real)
 We can then extract the predicted education and add it to our main dataset, renaming the `.fitted` variable to something more useful along the way:
 
 ```{r}
-ed_real_with_predicted <- augment_columns(first_stage, ed_real) %>%
+ed_real_with_predicted <- augment_columns(first_stage, ed_real) |>
   rename(education_hat = .fitted)
 ```
 
@@ -383,7 +383,7 @@ Let's compare all the findings and interpret the results!
 modelsummary(list("OLS" = model_naive, "2SLS (by hand)" = second_stage,
                   "2SLS (automatic)" = model_2sls),
              gof_omit = "IC|Log|Adj|p\\.value|statistic|se_type",
-             stars = TRUE) %>%
+             stars = TRUE) |>
   # Add a background color to rows 3 and 5
   row_spec(c(3, 5), background = "#F5ABEA")
 ```
@@ -541,7 +541,7 @@ For fun, we can look at the results side-by-side:
 ```{r}
 modelsummary(list("Naive OLS" = model_naive, "2SLS" = model_2sls),
              gof_omit = "IC|Log|Adj|p\\.value|statistic|se_type",
-             stars = TRUE) %>%
+             stars = TRUE) |>
   # Add a background color to row 3
   row_spec(3, background = "#F5ABEA")
 ```

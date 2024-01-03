@@ -90,9 +90,9 @@ library(tidyverse)
 pal <- viridisLite::viridis(8, option = "inferno", begin = 0.1, end = 0.9)
 
 tibble(x = 1:length(pal),
-       color = pal) %>% 
-  mutate(x_nice = glue::glue("[{x}]")) %>% 
-  mutate(across(c(color, x_nice), ~fct_inorder(.))) %>% 
+       color = pal) |> 
+  mutate(x_nice = glue::glue("[{x}]")) |> 
+  mutate(across(c(color, x_nice), ~fct_inorder(.))) |> 
   ggplot(aes(x = color, y = 1, fill = color)) +
   geom_tile() +
   scale_x_discrete(expand = c(0, 0)) +

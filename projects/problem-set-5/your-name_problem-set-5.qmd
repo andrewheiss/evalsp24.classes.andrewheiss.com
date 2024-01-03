@@ -34,7 +34,7 @@ The dataset I've provided (`MonthlyPanel.dta`) is a Stata data file nearly 10,00
 ---
 
 ```{r setup, warning=FALSE, message=FALSE}
-library(tidyverse)     # For ggplot, %>%, mutate, filter, group_by, and friends
+library(tidyverse)     # For ggplot, mutate, filter, group_by, and friends
 library(haven)         # For loading data from Stata
 library(broom)         # For showing models as data frames
 library(fixest)        # For fast, nice, fixed effects regression
@@ -45,23 +45,23 @@ library(modelsummary)  # For side-by-side regression tables
 options(dplyr.summarise.inform = FALSE)
 
 # Load terror data
-terror <- read_stata("data/MonthlyPanel.dta") %>% 
+terror <- read_stata("data/MonthlyPanel.dta") |> 
   # The attack happened on July 18. The authors omitted data from July 19-31, so
   # all July observations are from before the attack. Make a new indicator
   # variable `after` to mark if the row is from before or after the attack
-  mutate(after = mes > 7) %>% 
+  mutate(after = mes > 7) |> 
   # There are some weird months in the data like 73. Filter out anything > 12
-  filter(mes <= 12) %>% 
+  filter(mes <= 12) |> 
   # Rename some columns to be more readable
   rename(same_block = institu1,
          distance = distanci,
          car_theft = totrob,
          month = mes,
-         block = observ) %>% 
+         block = observ) |> 
   # Create indicator variables for the distance of each block to a synagogue
   mutate(one_block_away = ifelse(distance == 1, 1, 0),
          two_blocks_away = ifelse(distance == 2, 1, 0),
-         more_than_two_away = ifelse(distance > 2, 1, 0)) %>% 
+         more_than_two_away = ifelse(distance > 2, 1, 0)) |> 
   # Make these factors/categories
   mutate(block = as.factor(block),
          month = as.factor(month),
@@ -153,7 +153,7 @@ To fix this, run a diff-in-diff model that includes two additional control varia
 **Don't use `tidy` to view the results**. You'll get a table with almost 900 rows and it'll take up pages and pages of your rendered document. If you really want to see the results, filter out the block and month rows (like this:).
 
 ```r
-tidy(name_of_model) %>% 
+tidy(name_of_model) |> 
   filter(!str_starts(term, "month"), 
          !str_starts(term, "block"))
 ```

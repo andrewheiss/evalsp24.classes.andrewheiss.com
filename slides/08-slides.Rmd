@@ -34,8 +34,8 @@ library(kableExtra)
 library(scales)
 library(patchwork)
 
-world_happiness <- read_csv("data/world_happiness.csv") %>% 
-  mutate(latin_america = region == "Latin America & Caribbean") %>% 
+world_happiness <- read_csv("data/world_happiness.csv") |> 
+  mutate(latin_america = region == "Latin America & Caribbean") |> 
   mutate(latin_america = factor(latin_america, labels = c("Not Latin America", "Latin America")))
 ```
 
@@ -267,7 +267,7 @@ ggplot(world_happiness, aes(x = life_expectancy, y = happiness_score)) +
 
 ```{r plot-indicator-2, echo=FALSE, fig.width=12, fig.height=5.5, out.width="100%"}
 model1_coefs <- tidy(model1)
-la_shift <- filter(model1_coefs, term == "latin_americaLatin America")$estimate %>% round(2)
+la_shift <- filter(model1_coefs, term == "latin_americaLatin America")$estimate |> round(2)
 world_slope <- filter(model1_coefs, term == "life_expectancy")$estimate
 
 ggplot(world_happiness, aes(x = life_expectancy, y = happiness_score)) +
@@ -612,8 +612,8 @@ my_dag <- dagify(outcome ~ treatment + time + nj,
                  exposure = "treatment",
                  outcome = "outcome",
                  coords = node_details,
-                 labels = node_labels) %>% 
-  tidy_dagitty() %>%
+                 labels = node_labels) |> 
+  tidy_dagitty() |>
   node_status()   # Add column for exposure/outcome/latent
 
 status_colors <- c(exposure = "#0074D9", outcome = "#FF851B", latent = "grey50")
@@ -647,14 +647,14 @@ dd <- tribble(
   "∆<br><span class='smaller'>(treatment − control)</span>", "<b>C − A</b>", "<b>D − B</b>", "<span class=''><b>(B − A) − (D − C)</b></span> <i>or</i><br><span class=''><b>(B − D) − (A − C)</b></span>"
 )
 
-dd %>% 
-  kbl(escape = FALSE, align = "cccc") %>% 
-  kable_styling(bootstrap_options = "none") %>% 
-  row_spec(1:2, background = "#FFFFFF") %>% 
-  column_spec(4, background = "#DDDDDD") %>% 
-  row_spec(0, bold = TRUE, background = "#FFC6C6", color = "#CF4446") %>% 
-  column_spec(1, bold = TRUE, background = "#FFC6C6", color = "#CF4446") %>% 
-  column_spec(4, background = "#FFFFFF", color = "#FFFFFF") %>% 
+dd |> 
+  kbl(escape = FALSE, align = "cccc") |> 
+  kable_styling(bootstrap_options = "none") |> 
+  row_spec(1:2, background = "#FFFFFF") |> 
+  column_spec(4, background = "#DDDDDD") |> 
+  row_spec(0, bold = TRUE, background = "#FFC6C6", color = "#CF4446") |> 
+  column_spec(1, bold = TRUE, background = "#FFC6C6", color = "#CF4446") |> 
+  column_spec(4, background = "#FFFFFF", color = "#FFFFFF") |> 
   row_spec(3, background = "#FFFFFF", color = "#FFFFFF")
 ```
 
@@ -668,13 +668,13 @@ dd <- tribble(
   "∆<br><span class='smaller'>(treatment − control)</span>", "<b>A − C</b>", "<b>B − D</b>", "<span class=''><b>(B − A) − (D − C)</b></span> <i>or</i><br><span class=''><b>(B − D) − (A − C)</b></span>"
 )
 
-dd %>% 
-  kbl(escape = FALSE, align = "cccc") %>% 
-  kable_styling(bootstrap_options = "none") %>% 
-  row_spec(1:2, background = "#FFFFFF") %>% 
-  column_spec(4, background = "#DDDDDD") %>% 
-  row_spec(0, bold = TRUE, background = "#FFC6C6", color = "#CF4446") %>% 
-  column_spec(1, bold = TRUE, background = "#FFC6C6", color = "#CF4446") %>% 
+dd |> 
+  kbl(escape = FALSE, align = "cccc") |> 
+  kable_styling(bootstrap_options = "none") |> 
+  row_spec(1:2, background = "#FFFFFF") |> 
+  column_spec(4, background = "#DDDDDD") |> 
+  row_spec(0, bold = TRUE, background = "#FFC6C6", color = "#CF4446") |> 
+  column_spec(1, bold = TRUE, background = "#FFC6C6", color = "#CF4446") |> 
   row_spec(3, background = "#FFFFFF", color = "#FFFFFF")
 ```
 
@@ -690,13 +690,13 @@ dd <- tribble(
   "∆<br><span class='smaller'>(treatment − control)</span>", "<b>C − A</b>", "<b>D − B</b>", "<span class=''><b>(B − A) − (D − C)</b></span> <i>or</i><br><span class=''><b>(B − D) − (A − C)</b></span>"
 )
 
-dd %>% 
-  kbl(escape = FALSE, align = "cccc") %>% 
-  kable_styling(bootstrap_options = "none") %>% 
-  row_spec(1:2, background = "#FFFFFF") %>% 
-  row_spec(3, background = "#DDDDDD") %>% 
-  row_spec(0, bold = TRUE, background = "#FFC6C6", color = "#CF4446") %>% 
-  column_spec(1, bold = TRUE, background = "#FFC6C6", color = "#CF4446") %>% 
+dd |> 
+  kbl(escape = FALSE, align = "cccc") |> 
+  kable_styling(bootstrap_options = "none") |> 
+  row_spec(1:2, background = "#FFFFFF") |> 
+  row_spec(3, background = "#DDDDDD") |> 
+  row_spec(0, bold = TRUE, background = "#FFC6C6", color = "#CF4446") |> 
+  column_spec(1, bold = TRUE, background = "#FFC6C6", color = "#CF4446") |> 
   column_spec(4, background = "#FFFFFF", color = "#FFFFFF")
 ```
 
@@ -712,13 +712,13 @@ dd <- tribble(
   "∆<br><span class='smaller'>(treatment − control)</span>", "<b>C − A</b>", "<b>D − B</b>", "<span class='color-5'><b>(D − C) − (B − A)</b></span> <i>or</i><br><span class='color-5'><b>(D − B) − (C − A)</b></span>"
 )
 
-dd %>% 
-  kbl(escape = FALSE, align = "cccc") %>% 
-  kable_styling(bootstrap_options = "none") %>% 
-  row_spec(1:2, background = "#FFFFFF") %>% 
-  row_spec(3, background = "#DDDDDD") %>% 
-  column_spec(4, background = "#DDDDDD") %>% 
-  row_spec(0, bold = TRUE, background = "#FFC6C6", color = "#CF4446") %>% 
+dd |> 
+  kbl(escape = FALSE, align = "cccc") |> 
+  kable_styling(bootstrap_options = "none") |> 
+  row_spec(1:2, background = "#FFFFFF") |> 
+  row_spec(3, background = "#DDDDDD") |> 
+  column_spec(4, background = "#DDDDDD") |> 
+  row_spec(0, bold = TRUE, background = "#FFC6C6", color = "#CF4446") |> 
   column_spec(1, bold = TRUE, background = "#FFC6C6", color = "#CF4446")
 ```
 
@@ -745,13 +745,13 @@ dd <- tribble(
   "∆<br><span class='smaller'>(NJ − PA)</span>", "<b>-2.89</b><br><span class='small'>C − A</small>", "<b>-0.14</b><br><span class='small'>D − B</small>", "<b>(0.59) − (−2.16) = <br><span class='color-5'>2.76</span></b>"
 )
 
-dd %>% 
-  kbl(escape = FALSE, align = "cccc") %>% 
-  kable_styling(bootstrap_options = "none") %>% 
-  row_spec(1:2, background = "#FFFFFF") %>% 
-  row_spec(3, background = "#DDDDDD") %>% 
-  column_spec(4, background = "#DDDDDD") %>% 
-  row_spec(0, bold = TRUE, background = "#FFC6C6", color = "#CF4446") %>% 
+dd |> 
+  kbl(escape = FALSE, align = "cccc") |> 
+  kable_styling(bootstrap_options = "none") |> 
+  row_spec(1:2, background = "#FFFFFF") |> 
+  row_spec(3, background = "#DDDDDD") |> 
+  column_spec(4, background = "#DDDDDD") |> 
+  row_spec(0, bold = TRUE, background = "#FFC6C6", color = "#CF4446") |> 
   column_spec(1, bold = TRUE, background = "#FFC6C6", color = "#CF4446")
 ```
 
@@ -770,9 +770,9 @@ dd_data <- tribble(
   ~Group, ~Before, ~Intervention, ~After,
   "Treatment", 30, 35, 50,
   "Control",   20, 25, 30
-) %>% 
-  pivot_longer(cols = !Group, names_to = "Time", values_to = "avg") %>% 
-  left_join(dd_labels, by = c("Group", "Time")) %>% 
+) |> 
+  pivot_longer(cols = !Group, names_to = "Time", values_to = "avg") |> 
+  left_join(dd_labels, by = c("Group", "Time")) |> 
   mutate(across(c(Group, Time), ~fct_inorder(.)))
 
 ggplot(dd_data, aes(x = Time, y = avg, color = Group, group = Group)) +
@@ -830,10 +830,10 @@ $$\begin{aligned}
 ```{r dd-example-code, echo=FALSE, tidy=FALSE}
 decorate('
 model <- lm(outcome ~ group + time + (group * time))
-', eval = FALSE) %>% 
-  flair("outcome", color = "#2ECC40", before = "<b>", after = "</b>") %>% 
-  flair(" group ", color = "#0074D9", before = "<b>", after = "</b>") %>% 
-  flair(" time ", color = "#39CCCC", before = "<b>", after = "</b>") %>% 
+', eval = FALSE) |> 
+  flair("outcome", color = "#2ECC40", before = "<b>", after = "</b>") |> 
+  flair(" group ", color = "#0074D9", before = "<b>", after = "</b>") |> 
+  flair(" time ", color = "#39CCCC", before = "<b>", after = "</b>") |> 
   flair("(group * time)", color = "#FF4136", before = "<b>", after = "</b>")
 ```
 ]
@@ -859,10 +859,10 @@ $$\begin{aligned}
 ```{r dd-example-code-again, echo=FALSE, tidy=FALSE}
 decorate('
 model <- lm(outcome ~ group + time + (group * time))
-', eval = FALSE) %>% 
-  flair("outcome", color = "#2ECC40", before = "<b>", after = "</b>") %>% 
-  flair(" group ", color = "#0074D9", before = "<b>", after = "</b>") %>% 
-  flair(" time ", color = "#39CCCC", before = "<b>", after = "</b>") %>% 
+', eval = FALSE) |> 
+  flair("outcome", color = "#2ECC40", before = "<b>", after = "</b>") |> 
+  flair(" group ", color = "#0074D9", before = "<b>", after = "</b>") |> 
+  flair(" time ", color = "#39CCCC", before = "<b>", after = "</b>") |> 
   flair("(group * time)", color = "#FF4136", before = "<b>", after = "</b>")
 ```
 ]
@@ -898,13 +898,13 @@ dd <- tribble(
   "&ensp;∆ <span class='smaller'>(trtmt − ctrl)</span>&ensp;", "<b><span style='color: #0074D9;'>β</span></b>", "<b><span style='color: #0074D9;'>β</span> + <span style='color: #FF4136'>δ</span></b>", "<b><span style='color: #FF4136'>δ</span></b>"
 )
 
-dd %>% 
-  kbl(escape = FALSE, align = "cccc") %>% 
-  kable_styling(bootstrap_options = "none") %>% 
-  row_spec(1:2, background = "#FFFFFF") %>% 
-  row_spec(3, background = "#EEEEEE") %>% 
-  column_spec(4, background = "#EEEEEE") %>% 
-  row_spec(0, bold = TRUE, background = "#FFC6C6", color = "#CF4446") %>% 
+dd |> 
+  kbl(escape = FALSE, align = "cccc") |> 
+  kable_styling(bootstrap_options = "none") |> 
+  row_spec(1:2, background = "#FFFFFF") |> 
+  row_spec(3, background = "#EEEEEE") |> 
+  column_spec(4, background = "#EEEEEE") |> 
+  row_spec(0, bold = TRUE, background = "#FFC6C6", color = "#CF4446") |> 
   column_spec(1, bold = TRUE, background = "#FFC6C6", color = "#CF4446")
 ```
 
@@ -950,8 +950,8 @@ tidy(model_hotdogs)
 ```
 
 ```{r show-hotdogs-diff-diff, echo=FALSE}
-tidy(model_hotdogs) %>% 
-  select(term, estimate) %>% 
+tidy(model_hotdogs) |> 
+  select(term, estimate) |> 
   mutate(estimate = round(estimate, 2))
 ```
 ]
@@ -1006,30 +1006,30 @@ class: title title-3
 ---
 
 ```{r plot-trends-1, echo=FALSE, fig.width=12, fig.height=6, out.width="100%"}
-trends <- expand_grid(state = c("A", "B"), month = 1:6) %>% 
+trends <- expand_grid(state = c("A", "B"), month = 1:6) |> 
   mutate(income_parallel = case_when(
     state == "A" ~ 100 + 125 * month,
     state == "B" & month <= 3 ~ 100 + 125 * month + 200,
     state == "B" & month > 3 ~ 100 + 125 * month + 400
-  )) %>% 
+  )) |> 
   mutate(income_flat = case_when(
     state == "A" ~ 100 + 125 * month,
     state == "B" & month <= 3 ~ 675,
     state == "B" & month > 3 ~ 100 + 125 * month + 400
-  )) %>% 
+  )) |> 
   mutate(income_down = case_when(
     state == "A" ~ 100 + 125 * month,
     state == "B" & month <= 3 ~ 800 - 100 * month + 200,
     state == "B" & month > 3 ~ 100 + 125 * month + 400
-  )) %>% 
+  )) |> 
   mutate(state = paste0("State ", state))
 
 hypothetical_end <- lm(income_parallel ~ month, 
-                       data = filter(trends, state == "State B", month <= 3)) %>% 
-  augment(newdata = tibble(month = 6)) %>% 
+                       data = filter(trends, state == "State B", month <= 3)) |> 
+  augment(newdata = tibble(month = 6)) |> 
   pull(.fitted)
 
-actual_end <- filter(trends, state == "State B", month == 6) %>% 
+actual_end <- filter(trends, state == "State B", month == 6) |> 
   pull(income_parallel)
 
 dd_trends_1 <- ggplot(trends, aes(x = as.factor(month), y = income_parallel, color = state, group = state)) +
@@ -1052,11 +1052,11 @@ dd_trends_1
 
 ```{r plot-trends-2, echo=FALSE, fig.width=12, fig.height=6, out.width="100%"}
 hypothetical_end <- lm(income_flat ~ month, 
-                       data = filter(trends, state == "State B", month <= 3)) %>% 
-  augment(newdata = tibble(month = 6)) %>% 
+                       data = filter(trends, state == "State B", month <= 3)) |> 
+  augment(newdata = tibble(month = 6)) |> 
   pull(.fitted)
 
-actual_end <- filter(trends, state == "State B", month == 6) %>% 
+actual_end <- filter(trends, state == "State B", month == 6) |> 
   pull(income_flat)
 
 dd_trends_2 <- ggplot(trends, aes(x = as.factor(month), y = income_flat, color = state, group = state)) +
@@ -1079,11 +1079,11 @@ dd_trends_2
 
 ```{r plot-trends-3, echo=FALSE, fig.width=12, fig.height=6, out.width="100%"}
 hypothetical_end <- lm(income_down ~ month, 
-                       data = filter(trends, state == "State B", month <= 3)) %>% 
-  augment(newdata = tibble(month = 6)) %>% 
+                       data = filter(trends, state == "State B", month <= 3)) |> 
+  augment(newdata = tibble(month = 6)) |> 
   pull(.fitted)
 
-actual_end <- filter(trends, state == "State B", month == 6) %>% 
+actual_end <- filter(trends, state == "State B", month == 6) |> 
   pull(income_down)
 
 dd_trends_3 <- ggplot(trends, aes(x = as.factor(month), y = income_down, color = state, group = state)) +
@@ -1210,13 +1210,13 @@ class: title title-3
 ---
 
 ```{r gb-trends-1, echo=FALSE, fig.width=12, fig.height=6, out.width="100%"}
-gb_trends <- expand_grid(type = c("Early", "Late"), month = 1:12) %>% 
+gb_trends <- expand_grid(type = c("Early", "Late"), month = 1:12) |> 
   mutate(income = case_when(
     type == "Late" & month <= 8 ~ 100 + 75 * month,
     type == "Late" & month > 8 ~ 100 + 75 * month + 200,
     type == "Early" & month <= 4 ~ 100 + 75 * month + 200,
     type == "Early" & month > 4 ~ 100 + 75 * month + 400
-  )) %>% 
+  )) |> 
   mutate(month_f = fct_inorder(factor(month)))
 
 ggplot(gb_trends, aes(x = month, y = income, color = type)) +

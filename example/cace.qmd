@@ -45,25 +45,25 @@ library(broom)
 library(estimatr)
 
 bed_nets <- read_csv(here::here("files", "data", "generated_data", 
-                                "bed_nets_observed.csv")) %>%
+                                "bed_nets_observed.csv")) |>
   mutate(bed_net = fct_relevel(bed_net, "No bed net"))
 
 bed_nets_time_machine <- read_csv(here::here("files", "data", "generated_data", 
-                                             "bed_nets_time_machine.csv")) %>%
+                                             "bed_nets_time_machine.csv")) |>
   mutate(bed_net = fct_relevel(bed_net, "No bed net"),
          status = fct_relevel(status, "Complier"))
 ```
 
 ```{r eval=FALSE}
-library(tidyverse)  # ggplot(), %>%, mutate(), and friends
+library(tidyverse)  # ggplot(), mutate(), and friends
 library(broom)  # Convert models to data frames
 library(estimatr)  # Run 2SLS models in one step with iv_robust()
 
-bed_nets <- read_csv("data/bed_nets_observed.csv") %>%
+bed_nets <- read_csv("data/bed_nets_observed.csv") |>
   # Make "No bed net" (control) come first
   mutate(bed_net = fct_relevel(bed_net, "No bed net"))
 
-bed_nets_time_machine <- read_csv("data/bed_nets_time_machine.csv") %>%
+bed_nets_time_machine <- read_csv("data/bed_nets_time_machine.csv") |>
   # Make "No bed net" come first and "Complier" come first
   mutate(bed_net = fct_relevel(bed_net, "No bed net"),
          status = fct_relevel(status, "Complier"))
@@ -150,8 +150,8 @@ itt_model <- lm(health ~ treatment, data = bed_nets)
 
 tidy(itt_model)
 
-ITT <- tidy(itt_model) %>%
-  filter(term == "treatmentTreatment") %>%
+ITT <- tidy(itt_model) |>
+  filter(term == "treatmentTreatment") |>
   pull(estimate)
 ```
 
@@ -181,9 +181,9 @@ $$
 So, if we can find the percent of people assigned to treatment who used bed nets, find the percent of people assigned to control and used bed nets, and subtract the two percentages, we'll have the proportion of compliers, or $\pi_\text{C}$. We can do that with the data we have (61% - 19.5% = 41.5% compliers):
 
 ```{r}
-bed_nets %>%
-  group_by(treatment, bed_net) %>%
-  summarize(n = n()) %>%
+bed_nets |>
+  group_by(treatment, bed_net) |>
+  summarize(n = n()) |>
   mutate(prop = n / sum(n))
 
 # pi_c = prop yes in treatment - prop yes in control

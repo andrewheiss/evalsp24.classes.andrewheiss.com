@@ -59,12 +59,12 @@ points <- tribble(
   "Special rolls", paste("5-die straight<br>", paste(dice_1, dice_2, dice_3, dice_4, dice_5, collapse = " "), " or<br>", paste(dice_2, dice_3, dice_4, dice_5, dice_6, collapse = " ")), 1750
 ) 
 
-points %>% 
-  mutate(Points = comma(Points)) %>% 
-  select(-Group) %>% 
+points |> 
+  mutate(Points = comma(Points)) |> 
+  select(-Group) |> 
   kbl(escape = FALSE, align = c("l", "r"),
-      table.attr = "style='width:100%;'") %>% 
-  pack_rows(index = table(fct_inorder(points$Group))) %>% 
+      table.attr = "style='width:100%;'") |> 
+  pack_rows(index = table(fct_inorder(points$Group))) |> 
   kable_styling(bootstrap_options = "none", position = "center")
 ```
 
@@ -263,7 +263,7 @@ For fun, let's look at how that probability changes as the number of dice you ro
 library(tidyverse)
 
 # hoooo boy this is slow
-number_of_dice <- tibble(n_dice = 6:1) %>% 
+number_of_dice <- tibble(n_dice = 6:1) |> 
   mutate(prob = map_dbl(n_dice, ~simulate_zilch_full(., 50000)))
 ```
 

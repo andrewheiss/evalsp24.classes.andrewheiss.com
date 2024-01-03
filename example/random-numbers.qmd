@@ -150,7 +150,7 @@ set.seed(1234)
 die <- tibble(value = sample(possible_answers,
                              size = 1000,
                              replace = TRUE))
-die %>%
+die |>
   count(value)
 
 ggplot(die, aes(x = value)) +
@@ -363,7 +363,7 @@ In a Beta distribution, the $\alpha$ and $\beta$ in that equation correspond to 
 ```{r beta-example1}
 set.seed(1234)
 
-plot_data <- tibble(exam_score = rbeta(1000, shape1 = 6, shape2 = 4)) %>%
+plot_data <- tibble(exam_score = rbeta(1000, shape1 = 6, shape2 = 4)) |>
   # rbeta() generates numbers between 0 and 1, so multiply everything by 10 to
   # scale up the exam scores
   mutate(exam_score = exam_score * 10)
@@ -418,7 +418,7 @@ In real life, if I don't want to figure out the math behind the $\frac{\alpha}{\
 ```{r beta-2-5}
 set.seed(1234)
 
-plot_data <- tibble(thing = rbeta(1000, shape1 = 2, shape2 = 5)) %>%
+plot_data <- tibble(thing = rbeta(1000, shape1 = 2, shape2 = 5)) |>
   mutate(thing = thing * 100)
 head(plot_data)
 
@@ -463,7 +463,7 @@ fake_elections <- tibble(winner = sample(candidates,
                                          size = 1000,
                                          prob = c(0.8, 0.2),
                                          replace = TRUE))
-fake_elections %>%
+fake_elections |>
   count(winner)
 
 ggplot(fake_elections, aes(x = winner)) +
@@ -506,12 +506,12 @@ Here, only 1 of the 5 people were 1/TRUE/yes, which is hardly close to a 60% cha
 ```{r plot-binomial}
 set.seed(12345)
 
-plot_data <- tibble(thing = rbinom(2000, 1, prob = 0.6)) %>%
+plot_data <- tibble(thing = rbinom(2000, 1, prob = 0.6)) |>
   # Make this a factor since it's basically a yes/no categorical variable
   mutate(thing = factor(thing))
 
-plot_data %>%
-  count(thing) %>%
+plot_data |>
+  count(thing) |>
   mutate(proportion = n / sum(n))
 
 ggplot(plot_data, aes(x = thing)) +
@@ -566,9 +566,9 @@ set.seed(1234)
 plot_data <- tibble(num_kids = rpois(500, lambda = 1))
 head(plot_data)
 
-plot_data %>%
-  group_by(num_kids) %>%
-  summarize(count = n()) %>%
+plot_data |>
+  group_by(num_kids) |>
+  summarize(count = n()) |>
   mutate(proportion = count / sum(count))
 
 ggplot(plot_data, aes(x = num_kids)) +
@@ -585,9 +585,9 @@ set.seed(1234)
 plot_data <- tibble(num_kids = rpois(500, lambda = 2))
 head(plot_data)
 
-plot_data %>%
-  group_by(num_kids) %>%
-  summarize(count = n()) %>%
+plot_data |>
+  group_by(num_kids) |>
+  summarize(count = n()) |>
   mutate(proportion = count / sum(count))
 
 ggplot(plot_data, aes(x = num_kids)) +
@@ -633,7 +633,7 @@ We can take those underling 0–1 values and rescale them to some other range us
 ```{r beta-income-scaled, message=FALSE, warning=FALSE}
 library(scales)
 
-fake_people_scaled <- fake_people %>%
+fake_people_scaled <- fake_people |>
   mutate(income_scaled = rescale(income, to = c(10000, 100000)))
 head(fake_people_scaled)
 
@@ -646,7 +646,7 @@ This works for anything, really. For instance, instead of specifying a mean and 
 ```{r normal-scaled-up, fig.width=8}
 set.seed(1234)
 
-fake_data <- tibble(age_not_scaled = rnorm(1000, mean = 0, sd = 1)) %>%
+fake_data <- tibble(age_not_scaled = rnorm(1000, mean = 0, sd = 1)) |>
   mutate(age = rescale(age_not_scaled, to = c(18, 65)))
 head(fake_data)
 
@@ -679,7 +679,7 @@ tribble(
   "Beta", "Numbers constrained between 0 and 1", "Anything with percents; anything on a 0–1(00) scale; anything, really, if you use <code>rescale()</code> to rescale it", "<code>shape1</code> ($\\alpha$), <code>shape2</code> ($\\beta$) ($\\frac{\\alpha}{\\alpha + \\beta}$)", "<code>rbeta()</code>",
   "Binomial", "Binary variables", "Treatment/control, yes/no, true/false, 0/1", "<code>size</code>, <code>prob</code>", "<code>sample(..., prob = 0.5)</code> or <code>rbinom()</code>",
   "Poisson", "Whole numbers that represent counts of things", "Number of kids, number of cities lived in, arrival times", "<code>lambda</code>", "<code>rpois()</code>"
-) %>%
+) |>
   kbl(escape = FALSE, align = "l")
 ```
 
@@ -704,12 +704,12 @@ example_fake_people <- tibble(
   treatment = sample(c(TRUE, FALSE), n_people, replace = TRUE, prob = c(0.3, 0.7)),
   size = rbinom(n_people, size = 1, prob = 0.5),
   family_size = rpois(n_people, lambda = 1) + 1  # Add one so there are no 0s
-) %>%
+) |>
   # Adjust some of these columns
   mutate(opinion = recode(opinion, "1" = "Strongly disagree",
                           "2" = "Disagree", "3" = "Neutral",
-                          "4" = "Agree", "5" = "Strongly agree")) %>%
-  mutate(size = recode(size, "0" = "Small", "1" = "Large")) %>%
+                          "4" = "Agree", "5" = "Strongly agree")) |>
+  mutate(size = recode(size, "0" = "Small", "1" = "Large")) |>
   mutate(happiness = rescale(happiness, to = c(1, 8)))
 
 head(example_fake_people)

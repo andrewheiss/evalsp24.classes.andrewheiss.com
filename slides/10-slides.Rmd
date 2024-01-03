@@ -43,17 +43,17 @@ tutoring <- tibble(
   id = 1:num_students,
   entrance_exam = rbeta(num_students, shape1 = 7, shape2 = 2),
   exit_exam = rbeta(num_students, shape1 = 5, shape2 = 3)
-) %>% 
+) |> 
   mutate(entrance_exam = entrance_exam * 100,
-         tutoring = entrance_exam <= 70) %>% 
-  mutate(exit_exam = exit_exam * 40 + 10 * tutoring + entrance_exam / 2) %>% 
+         tutoring = entrance_exam <= 70) |> 
+  mutate(exit_exam = exit_exam * 40 + 10 * tutoring + entrance_exam / 2) |> 
   mutate(tutoring_fuzzy = ifelse(entrance_exam > 60 & entrance_exam < 80,
                                  sample(c(TRUE, FALSE), n(), replace = TRUE),
-                                 tutoring)) %>% 
+                                 tutoring)) |> 
   mutate(tutoring_text = factor(tutoring, levels = c(FALSE, TRUE),
                                 labels = c("No tutor", "Tutor")),
          tutoring_fuzzy_text = factor(tutoring_fuzzy, levels = c(FALSE, TRUE),
-                                      labels = c("No tutor", "Tutor"))) %>% 
+                                      labels = c("No tutor", "Tutor"))) |> 
   mutate(entrance_centered = entrance_exam - 70)
 ```
 
@@ -174,8 +174,8 @@ rdd_dag <- dagify(outcome ~ treatment + running,
                   exposure = c("treatment", "cutoff"),
                   outcome = "outcome",
                   coords = node_details,
-                  labels = node_labels) %>% 
-  tidy_dagitty() %>%
+                  labels = node_labels) |> 
+  tidy_dagitty() |>
   node_status()
 
 status_colors <- c(exposure = "#0074D9", outcome = "#FF851B", latent = "grey50")
@@ -221,8 +221,8 @@ poverty_line <- tibble::tribble(
   8,     44120,   3677,     60886,   66180,   88240
 )
 
-poverty_line %>% 
-  mutate(across(-Size, dollar)) %>% 
+poverty_line |> 
+  mutate(across(-Size, dollar)) |> 
   kbl(align = "c")
 ```
 ]
@@ -364,7 +364,7 @@ ggplot(tutoring, aes(x = entrance_exam, y = exit_exam, fill = tutoring_text, col
 ---
 
 ```{r tutoring-outcome-delta, echo=FALSE, fig.width=12, fig.height=6.5, out.width="100%"}
-rdd_tutoring <- lm(exit_exam ~ entrance_centered + tutoring, data = tutoring) %>% 
+rdd_tutoring <- lm(exit_exam ~ entrance_centered + tutoring, data = tutoring) |> 
   tidy()
 
 effect_control <- filter(rdd_tutoring, term == "(Intercept)")$estimate
@@ -643,7 +643,7 @@ line_colors_df <- tribble(
   "Loess", "#B10DC9", "Loess"
 )
 
-line_colors <- line_colors_df$color %>% 
+line_colors <- line_colors_df$color |> 
   set_names(line_colors_df$name)
 
 fun_linear <- function(x) 10 + 4 * x
@@ -654,13 +654,13 @@ fun_trig_effect <- function(x) ifelse(x >= 75, fun_trig(x) + 200, fun_trig(x))
 fun_loess <- function(x) 100 + 30 * sin(5 * x) + 0.2 * x^2 - 0.002 * x^3
 
 set.seed(1234)
-df_params <- tibble(id = 1:400) %>% 
-  mutate(x_uniform = runif(n(), min = 0, max = 100)) %>% 
-  mutate(y_linear = fun_linear(x_uniform) + rnorm(n(), 0, 50)) %>% 
-  mutate(y_squared = fun_squared(x_uniform) + rnorm(n(), 0, 50)) %>% 
-  mutate(y_cubed = fun_cubic(x_uniform) + rnorm(n(), 0, 50)) %>% 
-  mutate(y_trig = fun_trig(x_uniform) + rnorm(n(), 0, 50)) %>% 
-  mutate(y_loess = fun_loess(x_uniform) + rnorm(n(), 0, 50)) %>% 
+df_params <- tibble(id = 1:400) |> 
+  mutate(x_uniform = runif(n(), min = 0, max = 100)) |> 
+  mutate(y_linear = fun_linear(x_uniform) + rnorm(n(), 0, 50)) |> 
+  mutate(y_squared = fun_squared(x_uniform) + rnorm(n(), 0, 50)) |> 
+  mutate(y_cubed = fun_cubic(x_uniform) + rnorm(n(), 0, 50)) |> 
+  mutate(y_trig = fun_trig(x_uniform) + rnorm(n(), 0, 50)) |> 
+  mutate(y_loess = fun_loess(x_uniform) + rnorm(n(), 0, 50)) |> 
   mutate_at(vars(starts_with("y_")),
             list(effect = ~ifelse(x_uniform >= 75, . + 200, .)))
 ```
@@ -901,10 +901,10 @@ class: title title-4
 
 .small[
 ```{r center-running-var, echo=FALSE}
-tutoring %>% 
-  select(id, exit_exam, entrance_exam, entrance_centered, tutoring) %>% 
-  mutate(across(c(exit_exam, entrance_exam, entrance_centered), ~round(., 0))) %>% 
-  head(5) %>% 
+tutoring |> 
+  select(id, exit_exam, entrance_exam, entrance_centered, tutoring) |> 
+  mutate(across(c(exit_exam, entrance_exam, entrance_centered), ~round(., 0))) |> 
+  head(5) |> 
   kbl(align = "c")
 ```
 ]
@@ -925,7 +925,7 @@ $$y = \beta_0 + \beta_1 \text{Running variable (centered)} + \beta_2 \text{Indic
 
 .left-code[
 ```{r simple-model}
-program_data <- tutoring %>% 
+program_data <- tutoring |> 
   mutate(entrance_centered = 
            entrance_exam - 70)
 
@@ -941,7 +941,7 @@ tidy(model1)
 ```
 
 ```{r show-simple-model-real, echo=FALSE}
-tidy(model1) %>% select(term, estimate, std.error)
+tidy(model1) |> select(term, estimate, std.error)
 ```
 ]
 
@@ -1025,14 +1025,14 @@ bw_line_colors_df <- tribble(
   "Loess", "#B10DC9"
 )
 
-bw_line_colors <- bw_line_colors_df$color %>% 
+bw_line_colors <- bw_line_colors_df$color |> 
   set_names(bw_line_colors_df$name)
 
 set.seed(1234)
 df_bandwidths <- tibble(x = seq(0, 20, by = 0.01),
-                        y_squiggly = 500 + 0.4 * (x - 10)^3) %>%
-  mutate(y_squiggly = y_squiggly + rnorm(n(), 10, 80)) %>% 
-  mutate(y_shifted = ifelse(x >= 10, y_squiggly + 300, y_squiggly)) %>% 
+                        y_squiggly = 500 + 0.4 * (x - 10)^3) |>
+  mutate(y_squiggly = y_squiggly + rnorm(n(), 10, 80)) |> 
+  mutate(y_shifted = ifelse(x >= 10, y_squiggly + 300, y_squiggly)) |> 
   mutate(bw5 = x < 10 + 5 & x > 10 - 5,
          bw2_5 = x < 10 + 2.5 & x > 10 - 2.5)
 ```
@@ -1130,17 +1130,17 @@ ggplot(data = tibble(x = seq(-1.25, 1.25, 0.1)), aes(x = x)) +
 ```{r kernel-weighted-points, echo=FALSE, fig.width=12, fig.height=6.5, out.width="100%"}
 set.seed(1234)
 df_kernels <- tibble(x = runif(100, -1, 1),
-                     y = runif(100, 0, 100)) %>% 
-  mutate(y = ifelse(x > 0, y + 50, y)) %>% 
+                     y = runif(100, 0, 100)) |> 
+  mutate(y = ifelse(x > 0, y + 50, y)) |> 
   mutate(wt_rec = rec(x),
          wt_tri = tri(x),
          wt_epan = epan(x))
 
-df_kernels_long <- df_kernels %>% 
-  pivot_longer(cols = starts_with("wt_"), values_to = "weight") %>% 
+df_kernels_long <- df_kernels |> 
+  pivot_longer(cols = starts_with("wt_"), values_to = "weight") |> 
   mutate(name = recode(name, wt_epan = "Epanechnikov", 
                        wt_tri = "Triangular", 
-                       wt_rec = "Rectangular")) %>% 
+                       wt_rec = "Rectangular")) |> 
   mutate(name = fct_inorder(name))
 
 ggplot(df_kernels_long, aes(x = x, y = y)) + 
@@ -1303,15 +1303,15 @@ class: title title-6
 
 ```{r too-graphical-data, echo=FALSE, include=FALSE, cache=TRUE}
 set.seed(1234)
-too_graphical <- tibble(id = 1:2000) %>% 
-  mutate(score = runif(n(), -100, 100)) %>% 
-  mutate(treatment_big = ifelse(score < 0, 0, 0.6)) %>% 
-  mutate(outcome_big = treatment_big + rnorm(n())) %>% 
-  mutate(treatment_medium = ifelse(score < 0, 0, 0.3)) %>% 
-  mutate(outcome_medium = treatment_medium + rnorm(n())) %>% 
-  mutate(treatment_small = ifelse(score < 0, 0, 0.155)) %>% 
-  mutate(outcome_small = treatment_small + rnorm(n())) %>% 
-  mutate(above = score >= 0) %>% 
+too_graphical <- tibble(id = 1:2000) |> 
+  mutate(score = runif(n(), -100, 100)) |> 
+  mutate(treatment_big = ifelse(score < 0, 0, 0.6)) |> 
+  mutate(outcome_big = treatment_big + rnorm(n())) |> 
+  mutate(treatment_medium = ifelse(score < 0, 0, 0.3)) |> 
+  mutate(outcome_medium = treatment_medium + rnorm(n())) |> 
+  mutate(treatment_small = ifelse(score < 0, 0, 0.155)) |> 
+  mutate(outcome_small = treatment_small + rnorm(n())) |> 
+  mutate(above = score >= 0) |> 
   mutate_at(vars(starts_with("outcome_")), list(~. * 100))
 
 model_big <- lm(outcome_big ~ above, data = too_graphical)
@@ -1319,7 +1319,7 @@ model_medium <- lm(outcome_medium ~ above, data = too_graphical)
 model_small <- lm(outcome_small ~ above, data = too_graphical)
 
 extract_t_p <- function(x) {
-  tidied <- tidy(x) %>% 
+  tidied <- tidy(x) |> 
     filter(term == "aboveTRUE")
 
   paste0("δ = ", round(tidied$estimate, 2), 
@@ -1339,15 +1339,15 @@ rd_binned_all <- tribble(
   "Big", rd_binned_big$vars_bins, rd_binned_big$vars_poly, model_big,
   "Medium", rd_binned_medium$vars_bins, rd_binned_medium$vars_poly, model_medium,
   "Small", rd_binned_small$vars_bins, rd_binned_small$vars_poly, model_small
-) %>% 
-  mutate(letter = LETTERS[1:n()]) %>% 
-  mutate(stats = map_chr(model, extract_t_p)) %>% 
+) |> 
+  mutate(letter = LETTERS[1:n()]) |> 
+  mutate(stats = map_chr(model, extract_t_p)) |> 
   mutate_at(vars(size, stats, letter), list(fct_inorder))
 
-plot_binned <- rd_binned_all %>% 
+plot_binned <- rd_binned_all |> 
   unnest(binned_data)
 
-plot_poly <- rd_binned_all %>% 
+plot_poly <- rd_binned_all |> 
   unnest(poly_data)
 ```
 

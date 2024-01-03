@@ -57,30 +57,30 @@ First we load the data from this CSV file (typed from the table in *Mastering 'M
 # group variable in the model, where it would be treated as a dummy variable,
 # but the reference category would be A, not B, so this is a little trick to
 # force it to show results for group A.
-schools <- read_csv("data/public_private_earnings.csv") %>%
-  mutate(private = ifelse(str_detect(enrolled, "ivy"), TRUE, FALSE)) %>%
+schools <- read_csv("data/public_private_earnings.csv") |>
+  mutate(private = ifelse(str_detect(enrolled, "ivy"), TRUE, FALSE)) |>
   mutate(group_A = ifelse(group == "A", TRUE, FALSE))
 
 # Only look at groups A and B, since C and D don't have people in both public
 # and private schools. | means "or"
-schools_small <- schools %>%
+schools_small <- schools |>
   filter(group == "A" | group == "B")
 ```
 
 ```{r load-data-real, echo=FALSE, warning=FALSE, message=FALSE}
-schools <- read_csv(here::here("files", "data", "external_data", "public_private_earnings.csv")) %>%
-  mutate(private = ifelse(str_detect(enrolled, "ivy"), TRUE, FALSE)) %>%
+schools <- read_csv(here::here("files", "data", "external_data", "public_private_earnings.csv")) |>
+  mutate(private = ifelse(str_detect(enrolled, "ivy"), TRUE, FALSE)) |>
   mutate(group_A = ifelse(group == "A", TRUE, FALSE))
 
-schools_small <- schools %>%
+schools_small <- schools |>
   filter(group == "A" | group == "B")
 ```
 
 It's really tempting to just find the average income for private school and subtract it from public school, like so:
 
 ```{r}
-schools_small %>%
-  group_by(private) %>%
+schools_small |>
+  group_by(private) |>
   summarize(avg_earnings = mean(earnings))
 ```
 
@@ -91,8 +91,8 @@ Following the potential outcomes framework, we can find the ATE by combining the
 First we can look at the average income for people in each group, divided by whether they went to a private or public school:
 
 ```{r avg-income-groups-private}
-avg_earnings <- schools_small %>%
-  group_by(group, private) %>%
+avg_earnings <- schools_small |>
+  group_by(group, private) |>
   summarize(avg_earnings = mean(earnings))
 
 avg_earnings
@@ -110,24 +110,24 @@ We can find the exact differences in earnings for public vs. private within each
 # only have one row, pull() will extract a single number.
 
 # Group A
-income_private_A <- avg_earnings %>%
-  filter(group == "A" & private == TRUE) %>%
+income_private_A <- avg_earnings |>
+  filter(group == "A" & private == TRUE) |>
   pull(avg_earnings)
 
-income_public_A <- avg_earnings %>%
-  filter(group == "A" & private == FALSE) %>%
+income_public_A <- avg_earnings |>
+  filter(group == "A" & private == FALSE) |>
   pull(avg_earnings)
 
 cate_a <- income_private_A - income_public_A
 cate_a
 
 # Group B
-income_private_B <- avg_earnings %>%
-  filter(group == "B" & private == TRUE) %>%
+income_private_B <- avg_earnings |>
+  filter(group == "B" & private == TRUE) |>
   pull(avg_earnings)
 
-income_public_B <- avg_earnings %>%
-  filter(group == "B" & private == FALSE) %>%
+income_public_B <- avg_earnings |>
+  filter(group == "B" & private == FALSE) |>
   pull(avg_earnings)
 
 cate_b <- income_private_B - income_public_B
@@ -144,14 +144,14 @@ $$
 
 ```{r weighted-differences}
 # We need to find the proportion of people in each group
-prop_in_groups <- schools_small %>%
-  group_by(group) %>%
-  summarize(n = n()) %>%
+prop_in_groups <- schools_small |>
+  group_by(group) |>
+  summarize(n = n()) |>
   mutate(prop = n / nrow(schools_small))
 prop_in_groups
 
-prop_A <- prop_in_groups %>% filter(group == "A") %>% pull(prop)
-prop_B <- prop_in_groups %>% filter(group == "B") %>% pull(prop)
+prop_A <- prop_in_groups |> filter(group == "A") |> pull(prop)
+prop_B <- prop_in_groups |> filter(group == "B") |> pull(prop)
 
 # With those proportions, we can weight the differences in groups correctly
 weighted_effect <- (cate_a * prop_A) + (cate_b * prop_B)

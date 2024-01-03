@@ -185,41 +185,41 @@ fake_income_c <- tibble(Person = 201:400,
                         Before = rnorm(200, mean = 200, sd = 70),
                         After = rnorm(200, mean = 220, sd = 70))
 
-fake_income <- bind_rows(fake_income_t, fake_income_c) %>% 
-  mutate(Difference = After - Before) %>% 
+fake_income <- bind_rows(fake_income_t, fake_income_c) |> 
+  mutate(Difference = After - Before) |> 
   sample_frac(1)
 
-fake_income_small <- fake_income %>% 
-  group_by(Group) %>% 
-  sample_n(5) %>% 
+fake_income_small <- fake_income |> 
+  group_by(Group) |> 
+  sample_n(5) |> 
   ungroup()
 
-diff_small <- fake_income_small %>% 
-  specify(Difference ~ Group) %>% 
+diff_small <- fake_income_small |> 
+  specify(Difference ~ Group) |> 
   calculate("diff in means", order = c("Treatment", "Control"))
 
-boot_small <- fake_income_small %>% 
-  specify(Difference ~ Group) %>% 
-  hypothesize(null = "independence") %>% 
-  generate(reps = 1000, type = "permute") %>% 
+boot_small <- fake_income_small |> 
+  specify(Difference ~ Group) |> 
+  hypothesize(null = "independence") |> 
+  generate(reps = 1000, type = "permute") |> 
   calculate("diff in means", order = c("Treatment", "Control"))
 
-p_small <- boot_small %>% 
-  get_p_value(obs_stat = diff_small$stat, direction = "both") %>% 
+p_small <- boot_small |> 
+  get_p_value(obs_stat = diff_small$stat, direction = "both") |> 
   mutate(p_value_clean = scales::pvalue(p_value))
 
-diff_big <- fake_income %>% 
-  specify(Difference ~ Group) %>% 
+diff_big <- fake_income |> 
+  specify(Difference ~ Group) |> 
   calculate("diff in means", order = c("Treatment", "Control"))
 
-boot_big <- fake_income %>% 
-  specify(Difference ~ Group) %>% 
-  hypothesize(null = "independence") %>% 
-  generate(reps = 1000, type = "permute") %>% 
+boot_big <- fake_income |> 
+  specify(Difference ~ Group) |> 
+  hypothesize(null = "independence") |> 
+  generate(reps = 1000, type = "permute") |> 
   calculate("diff in means", order = c("Treatment", "Control"))
 
-p_big <- boot_big %>% 
-  get_p_value(obs_stat = diff_big$stat, direction = "both") %>% 
+p_big <- boot_big |> 
+  get_p_value(obs_stat = diff_big$stat, direction = "both") |> 
   mutate(p_value_clean = scales::pvalue(p_value))
 ```
 
@@ -228,9 +228,9 @@ p_big <- boot_big %>%
 
 .center.small[
 ```{r fake-income-example, echo=FALSE}
-fake_income %>% 
-  head(6) %>% 
-  mutate(across(where(is.numeric), ~round(., 2))) %>% 
+fake_income |> 
+  head(6) |> 
+  mutate(across(where(is.numeric), ~round(., 2))) |> 
   knitr::kable(align = "llccc")
 ```
 ]
@@ -243,7 +243,7 @@ fake_income %>%
 .box-1.small[Survey 10 participants]
 
 ```{r power-small, echo=FALSE, fig.width=6, fig.height=4.5, out.width="100%"}
-boot_small %>% 
+boot_small |> 
   visualize() +
   geom_vline(xintercept = diff_big$stat, color = "#FF4136", size = 1) +
   labs(x = "Average treatment − Average control",
@@ -261,7 +261,7 @@ boot_small %>%
 .box-1.small[Survey 200 participants]
 
 ```{r power-big, echo=FALSE, fig.width=6, fig.height=4.5, out.width="100%"}
-boot_big %>% 
+boot_big |> 
   visualize() +
   geom_vline(xintercept = diff_big$stat, color = "#FF4136", size = 1) +
   labs(x = "Average treatment − Average control",
@@ -488,8 +488,8 @@ microfinance <- tribble(
 ate_with <- scales::dollar(mean(microfinance$`Increase in income`))
 ate_without <- scales::dollar(mean(filter(microfinance, `Remained in program` == "Yes")$`Increase in income`))
 
-microfinance %>% 
-  mutate(`Increase in income` = scales::dollar(`Increase in income`)) %>% 
+microfinance |> 
+  mutate(`Increase in income` = scales::dollar(`Increase in income`)) |> 
   knitr::kable(align = "ccc")
 ```
 ]
@@ -571,7 +571,7 @@ layout: false
 ```{r giving-2017, echo=FALSE, fig.width=7, fig.asp=0.618, out.width="80%"}
 giving_2017 <- tibble(Month = month.name,
                       Percent = c(0.072, 0.059, 0.076, 0.063, 0.076, 0.089, 
-                                  0.068, 0.071, 0.083, 0.082, 0.079, 0.182)) %>% 
+                                  0.068, 0.071, 0.083, 0.082, 0.079, 0.182)) |> 
   mutate(Month = fct_inorder(Month))
 
 ggplot(giving_2017, aes(x = Month, y = Percent)) +

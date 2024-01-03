@@ -108,12 +108,12 @@ ggplot(sat_gpa, aes(x = gpa_hs, y = gpa_fy)) +
 
 ```{r sat-gpa-correlation-sex}
 # We can calculate the correlation for subgroups within the data with slightly
-# different syntax. Notice how this uses the pipe (%>%), which makes it read
+# different syntax. Notice how this uses the pipe (|>), which makes it read
 # like English. We can say "Take the sat_gpa data set, split it into groups
 # based on sex, and calculate the correlation between sat_total and gpa_fy in
 # each of the groups
-sat_gpa %>%
-  group_by(sex) %>%
+sat_gpa |>
+  group_by(sex) |>
   summarize(correlation = cor(sat_total, gpa_fy))
 ```
 
@@ -133,8 +133,8 @@ ggplot(sat_gpa, aes(x = gpa_hs, y = gpa_fy, color = sex)) +
 #### Is the correlation between high school GPA and freshman GPA stronger for men or for women?
 
 ```{r hs-gpa-correlation-sex}
-sat_gpa %>%
-  group_by(sex) %>%
+sat_gpa |>
+  group_by(sex) |>
   summarize(correlation = cor(gpa_hs, gpa_fy))
 ```
 

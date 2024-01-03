@@ -7,20 +7,20 @@ title: R style suggestions
 R is fairly forgiving about how you type code (unlike other languages like Python, where miscounting spaces can ruin your code!). All of these things will do exactly the same thing:
 
 ```{r eval=FALSE, tidy=FALSE}
-mpg %>% 
+mpg |> 
   filter(cty > 10, class == "compact")
 
-mpg %>% filter(cty > 10, class == "compact")
+mpg |> filter(cty > 10, class == "compact")
 
-mpg %>% 
+mpg |> 
   filter(cty > 10, 
          class == "compact")
 
-mpg %>% filter(cty>10, class=="compact")
+mpg |> filter(cty>10, class=="compact")
 
 filter(mpg,cty>10,class=="compact")
 
-mpg %>% 
+mpg |> 
 filter(cty > 10, 
                         class == "compact")
 
@@ -108,7 +108,7 @@ filter(mpg,
                     "suv", "2seater", "minivan"))
 ```
 
-### Pipes (`%>%`) and ggplot layers (`+`)
+### Pipes (`|>`) and ggplot layers (`+`)
 
 Put each layer of a ggplot plot on separate lines, with the `+` at the end of the line, indented with two spaces:
 
@@ -134,27 +134,27 @@ ggplot(mpg, aes(x = cty, y = hwy, color = class))
   + theme_bw()
 ```
 
-Put each step in a dplyr pipeline on separate lines, with the `%>%` at the end of the line, indented with two spaces:
+Put each step in a dplyr pipeline on separate lines, with the `|>` at the end of the line, indented with two spaces:
 
 ```{r eval=FALSE}
 # Good
-mpg %>% 
-  filter(cty > 10) %>% 
-  group_by(class) %>% 
+mpg |> 
+  filter(cty > 10) |> 
+  group_by(class) |> 
   summarize(avg_hwy = mean(hwy))
 
 # Bad
-mpg %>% filter(cty > 10) %>% group_by(class) %>% 
+mpg |> filter(cty > 10) |> group_by(class) |> 
   summarize(avg_hwy = mean(hwy))
 
 # Super bad
-mpg %>% filter(cty > 10) %>% group_by(class) %>% summarize(avg_hwy = mean(hwy))
+mpg |> filter(cty > 10) |> group_by(class) |> summarize(avg_hwy = mean(hwy))
 
 # Super bad and won't even work
-mpg %>% 
+mpg |> 
   filter(cty > 10)
-  %>% group_by(class)
-  %>% summarize(avg_hwy = mean(hwy))
+  |> group_by(class)
+  |> summarize(avg_hwy = mean(hwy))
 ```
 
 ### Comments
@@ -174,18 +174,18 @@ Comments should start with a comment symbol and a single space: `# `
 If the comment is really short (and won't cause you to go over 80 characters in the line), you can include it in the same line as the code, separated by at least two spaces (it works with one space, but using a couple can enhance readability):
 
 ```{r eval=FALSE}
-mpg %>% 
-  filter(cty > 10) %>%  # Only rows where cty is 10 +
-  group_by(class) %>%  # Divide into class groups
+mpg |> 
+  filter(cty > 10) |>  # Only rows where cty is 10 +
+  group_by(class) |>  # Divide into class groups
   summarize(avg_hwy = mean(hwy))  # Find the average hwy in each group
 ```
 
 You can add extra spaces to get inline comments to align, if you want:
 
 ```{r eval=FALSE}
-mpg %>% 
-  filter(cty > 10) %>%            # Only rows where cty is 10 +
-  group_by(class) %>%             # Divide into class groups
+mpg |> 
+  filter(cty > 10) |>            # Only rows where cty is 10 +
+  group_by(class) |>             # Divide into class groups
   summarize(avg_hwy = mean(hwy))  # Find the average hwy in each group
 ```
 

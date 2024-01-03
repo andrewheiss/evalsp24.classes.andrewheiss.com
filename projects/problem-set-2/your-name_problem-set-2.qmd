@@ -299,7 +299,7 @@ model_with_state <- lm(mortality_rate ~ pct_low_access_pop + state,
 # really need to see all those coefficients. To remove them from this table of
 # results, filter them out. The "!" in R means "not", so here we're only looking
 # at rows that don't start with "state"
-tidy(model_with_state, conf.int = TRUE) %>% 
+tidy(model_with_state, conf.int = TRUE) |> 
   filter(!str_starts(term, "state"))
 ```
 
