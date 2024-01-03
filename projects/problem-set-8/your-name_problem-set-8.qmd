@@ -1,15 +1,15 @@
 ---
-title: "Problem set 8: The Health Insurance Subsidy Program"
+title: "The Health Insurance Subsidy Program"
+subtitle: "Problem set 8 --- PMAP 8521, Spring 2024"
 author: "YOUR NAME HERE"
 date: "DATE GOES HERE"
-output: 
-  html_document: 
-    toc: yes
-  pdf_document: 
-    latex_engine: xelatex
-    toc: yes
-  word_document: 
-    toc: yes
+format:
+  html:
+    toc: true
+  pdf:
+    toc: true
+  docx:
+    toc: true
 ---
 
 ---
@@ -167,7 +167,7 @@ matched <- matchit(enrolled_num ~ COUNFOUNDER1 + COUNFOUNDER2 + ...,
                    method = "nearest", distance = "mahalanobis", replace = TRUE)
 ```
 
-    It might take a minute to run the matching. If you include `cache=TRUE` in the chunk options, R will keep track of when the chunk changes; if you knit and there's been a change to the chunk, R will run the chunk, but if you knit and there's been no changes, R will use the previous output of the chunk and not actually run it. 
+    It might take a minute to run the matching. If you include `cache=TRUE` in the chunk options, R will keep track of when the chunk changes; if you render and there's been a change to the chunk, R will run the chunk, but if you render and there's been no changes, R will use the previous output of the chunk and not actually run it. 
 
 - Run `summary(matched)` and see how many rows were matched and how many will be discarded.
 - Use `match.data()` to store the results of the match as a new dataset.

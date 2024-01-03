@@ -1,15 +1,15 @@
 ---
-title: "Problem set 3: RCTs, matching, and inverse probability weighting"
+title: "RCTs, matching, and inverse probability weighting"
+subtitle: "Problem set 3 --- PMAP 8521, Spring 2024"
 author: "YOUR NAME HERE"
 date: "DATE GOES HERE"
-output: 
-  html_document: 
-    toc: yes
-  pdf_document: 
-    latex_engine: xelatex
-    toc: yes
-  word_document: 
-    toc: yes
+format:
+  html:
+    toc: true
+  pdf:
+    toc: true
+  docx:
+    toc: true
 ---
 
 ---

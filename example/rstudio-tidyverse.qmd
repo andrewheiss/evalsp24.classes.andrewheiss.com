@@ -70,9 +70,9 @@ The best way to deal with working directories with RStudio is to use RStudio Pro
 In general, you can create a new project by going to File > New Project > New Directory > Empty Project, which will create a new folder on your computer that is empty except for a single `.Rproj` file. Double click on that file to open an RStudio instance that is pointed at the correct folder.
 
 
-## Part 4: Getting familiar with R Markdown
+## Part 4: Getting familiar with Quarto
 
-To ensure that the analysis and graphics you make are reproducible, you'll do the majority of your work in this class using **R Markdown** files.
+To ensure that the analysis and graphics you make are reproducible, you'll do the majority of your work in this class using **Quarto** files.
 
 Do the following things: 
 
@@ -87,7 +87,7 @@ Do the following things:
 2. Skim through the content at these pages:
 
     - [Using Markdown](/resource/markdown.qmd)
-    - [Using R Markdown](/resource/rmarkdown.qmd)
+    - [Using Quarto](/resource/quarto.qmd)
     - [How it Works](http://rmarkdown.rstudio.com/lesson-2.html)
     - [Code Chunks](http://rmarkdown.rstudio.com/lesson-3.html)
     - [Inline Code](http://rmarkdown.rstudio.com/lesson-4.html)

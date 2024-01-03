@@ -11,7 +11,7 @@ This assignment is a review of all the causal inference methods we've learned th
 - **RDD**: [Example](/example/rdd.qmd) + Problem Set 6
 - **Instrumental variables**: [Example](/example/iv.qmd) + Problem Set 7
 
-You'll be doing all your R work in R Markdown. You can download a zipped file of a pre-made project here:
+You'll be doing all your R work in a Quarto file. You can download a zipped file of a pre-made project here:
 
 - [{{< fa file-archive >}} `problem-set-8.zip`](/projects/problem-set-8.zip)
 
@@ -26,9 +26,9 @@ And as always, if you're struggling, *please* talk to me. Work with classmates t
 
    (Alternatively, you can open the project named "Problem Set 8" on RStudio.cloud and complete the assignment in your browser without needing to install anything. [This link should take you to the project](https://rstudio.cloud/spaces/269500/content/4357655)—if it doesn't, log in and look for the project named "Problem Set 8.")
 
-2. Rename the R Markdown file named `your-name_problem-set-8.Rmd` to something that matches your name and open it in RStudio.
+2. Rename the Quarto file named `your-name_problem-set-8.Rmd` to something that matches your name and open it in RStudio.
 
-3. Complete the tasks given in the R Markdown file. You can remove any of the question text if you want.
+3. Complete the tasks given in the Quarto file. You can remove any of the question text if you want.
 
    You can definitely copy, paste, and adapt from other code in the document or [the different example pages](/example/index.qmd)—don't try to write everything from scratch!.
 
@@ -42,8 +42,8 @@ knitr::include_graphics("/files/img/assignments/insert-chunk-button.png", error 
 
    Make sure you run each chunk sequentially. If you run a chunk in the middle of the document without running previous ones, it might not work, since previous chunks might do things that later chunks depend on.
 
-4. When you're all done, click on the "Knit" button at the top of the editing window and create a Word or PDF version (if you've [installed **tinytex**](/resource/install.qmd#install-tinytex)) of your document. Upload that file to iCollege. **Do not upload a knitted HTML file** (they don't on iCollege).
+4. When you're all done, render the document to a PDF or Word file and upload that file to iCollege. **Do not upload a rendered HTML file** (they don't work on iCollege).
 
-```{r knit-button, echo=FALSE, out.width="30%", indent="   ", , fig.align="center"}
-knitr::include_graphics("/files/img/assignments/knit-button.png", error = FALSE)
+```{r render-button, echo=FALSE, out.width="50%", indent="   ", , fig.align="center"}
+knitr::include_graphics("/files/img/assignments/render-button.png", error = FALSE)
 ```

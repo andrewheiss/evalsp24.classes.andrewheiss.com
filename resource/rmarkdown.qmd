@@ -1,16 +1,16 @@
 ---
-title: "Using R Markdown"
+title: "Using Quarto"
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(fig.align = "center")
 ```
 
-[R Markdown](https://rmarkdown.rstudio.com/) is [regular Markdown](/resource/markdown.qmd) with R code and output sprinkled in. You can do everything you can with [regular Markdown](/resource/markdown.qmd), but you can incorporate graphs, tables, and other R output directly in your document. You can create HTML, PDF, and Word documents, PowerPoint and HTML presentations, websites, books, and even [interactive dashboards](https://rmarkdown.rstudio.com/flexdashboard/index.html) with R Markdown. This whole course website is created with R Markdown (and [a package named **blogdown**](https://bookdown.org/yihui/blogdown/)).
+[Quarto Markdown](https://rmarkdown.rstudio.com/) is [regular Markdown](/resource/markdown.qmd) with R code and output sprinkled in. You can do everything you can with [regular Markdown](/resource/markdown.qmd), but you can incorporate graphs, tables, and other R output directly in your document. You can create HTML, PDF, and Word documents, PowerPoint and HTML presentations, websites, books, and even interactive dashboards with Quarto. This whole course website is created with Quarto.
 
-The [documentation for R Markdown](https://rmarkdown.rstudio.com/) is extremely comprehensive, and their [tutorials](https://rmarkdown.rstudio.com/lesson-1.html) and [cheatsheets](https://rmarkdown.rstudio.com/lesson-15.html) are excellent—rely on those.
+The [documentation for Quarto](https://quarto.org/) is extremely comprehensive, and their [tutorials](https://rmarkdown.rstudio.com/lesson-1.html) and [cheatsheets](https://rmarkdown.rstudio.com/lesson-15.html) are excellent—rely on those.
 
-Here are the most important things you'll need to know about R Markdown in this class:
+Here are the most important things you'll need to know about Quarto in this class:
 
 ## Key terms
 
@@ -24,14 +24,14 @@ Here are the most important things you'll need to know about R Markdown in this 
 ```
 ````
 
-    There must be an empty line before and after the chunk. The final three backticks must be the only thing on the line—if you add more text, or if you forget to add the backticks, or accidentally delete the backticks, your document will not knit correctly.
+    There must be an empty line before and after the chunk. The final three backticks must be the only thing on the line—if you add more text, or if you forget to add the backticks, or accidentally delete the backticks, your document will not render correctly.
 
-- **Knit**: When you "knit" a document, R runs each of the chunks sequentially and converts the output of each chunk into Markdown. R then runs the knitted document through [pandoc](https://pandoc.org/) to convert it to HTML or PDF or Word (or whatever output you've selected).
+- **Render**: When you render a document, R runs each of the chunks sequentially and converts the output of each chunk into Markdown. R then runs the document through [pandoc](https://pandoc.org/) to convert it to HTML or PDF or Word (or whatever output you've selected).
 
-    You can knit by clicking on the "Knit" button at the top of the editor window, or by pressing `⌘⇧K` on macOS or `control + shift + K` on Windows.
+    You can render by clicking on the "Render" button at the top of the editor window, or by pressing `⌘⇧K` on macOS or `control + shift + K` on Windows.
 
-```{r knit-button, echo=FALSE, out.width="30%"}
-knitr::include_graphics("/files/img/assignments/knit-button.png", error = FALSE)
+```{r render-button, echo=FALSE, out.width="50%"}
+knitr::include_graphics("/files/img/assignments/render-button.png", error = FALSE)
 ```
 
 
@@ -107,50 +107,35 @@ avg_mpg <- mean(mtcars$mpg)
 The average fuel efficiency for cars from 1974 was `r round(avg_mpg, 1)` miles per gallon.
 ````
 
-… would knit into this:
+… would render this:
 
 > The average fuel efficiency for cars from 1974 was `r round(mean(mtcars$mpg), 1)` miles per gallon.
 
 ## Output formats
 
-You can specify what kind of document you create when you knit in the [YAML front matter](/resource/markdown.qmd#front-matter). 
+You can specify what kind of document you create when you render in the [YAML front matter](/resource/markdown.qmd#front-matter). 
 
 ```yaml
 title: "My document"
-output:
-  html_document: default
-  pdf_document: default
-  word_document: default
+format:
+  html: default
+  pdf: default
+  docx: default
 ```
 
-You can also click on the down arrow on the "Knit" button to choose the output *and* generate the appropriate YAML. If you click on the gear icon next to the "Knit" button and choose "Output options", you change settings for each specific output type, like default figure dimensions or whether or not a table of contents is included.
-
-```{r output-options, echo=FALSE, out.width="35%"}
-knitr::include_graphics("/files/img/reference/output-options.png", error = FALSE)
-```
-
-The first output type listed under `output:` will be what is generated when you click on the "Knit" button or press the keyboard shortcut (`⌘⇧K` on macOS; `control + shift + K` on Windows). If you choose a different output with the "Knit" button menu, that output will be moved to the top of the `output` section.
-
-The indentation of the YAML section matters, especially when you have settings nested under each output type. Here's what a typical `output` section might look like:
+The indentation of the YAML section matters, especially when you have settings nested under each output type. Here's what a typical `format` section might look like:
 
 ```yaml
 ---
 title: "My document"
 author: "My name"
-date: "January 13, 2020"
-output: 
+date: "January 3, 2024"
+format: 
   html_document: 
     toc: yes
-    fig_caption: yes
-    fig_height: 8
-    fig_width: 10
   pdf_document: 
-    latex_engine: xelatex  # More modern PDF typesetting engine
     toc: yes
   word_document: 
     toc: yes
-    fig_caption: yes
-    fig_height: 4
-    fig_width: 5
 ---
 ```

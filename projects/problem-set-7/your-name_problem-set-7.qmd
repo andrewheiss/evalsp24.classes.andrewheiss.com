@@ -1,15 +1,15 @@
 ---
-title: "Problem set 7: Education and wages + public housing and health"
+title: "Education and wages + public housing and health"
+subtitle: "Problem set 7 --- PMAP 8521, Spring 2024"
 author: "YOUR NAME HERE"
 date: "DATE GOES HERE"
-output: 
-  html_document: 
-    toc: yes
-  pdf_document: 
-    latex_engine: xelatex
-    toc: yes
-  word_document: 
-    toc: yes
+format:
+  html:
+    toc: true
+  pdf:
+    toc: true
+  docx:
+    toc: true
 ---
 
 ---

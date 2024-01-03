@@ -209,7 +209,7 @@ class: title title-1
 
 .box-inv-1.medium[Use self-documenting, reproducible code]
 
-.box-1[R Markdown!]
+.box-1[Quarto / R Markdown!]
 
 --
 
@@ -219,7 +219,7 @@ class: title title-1
 
 ---
 
-# R Markdown in real life
+# R Markdown/Quarto in real life
 
 .pull-left.center[
 

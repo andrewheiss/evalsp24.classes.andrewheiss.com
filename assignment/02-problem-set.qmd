@@ -11,14 +11,14 @@ date: "2024-02-01"
 
 For this problem set, you'll practice running and interpreting regression models using data about [penguins in Antarctica](https://github.com/allisonhorst/palmerpenguins) and data on food access and mortality in the US.
 
-You'll be doing all your R work in R Markdown this time (and from now on). You should use an RStudio Project to keep your files well organized (either on your computer or on RStudio.cloud). Either create a new project for this exercise only, or make a project for all your work in this class.
+You'll be doing all your R work in Quarto this time (and from now on). You should use an RStudio Project to keep your files well organized (either on your computer or on RStudio.cloud). Either create a new project for this exercise only, or make a project for all your work in this class.
 
 You'll need to download these two CSV files and put them somewhere on your computer or upload them to RStudio.cloud—preferably in a folder named `data` in your project folder:
 
 - [{{< fa file-csv >}} `penguins.csv`](/files/data/package_data/penguins.csv)
 - [{{< fa file-csv >}} `food_health_politics.csv`](/files/data/external_data/food_health_politics.csv)
 
-You'll also need to download this R Markdown file with a template for this problem set. Download that here and include it in your project:
+You'll also need to download this Quarto file with a template for this problem set. Download that here and include it in your project:
 
 - [{{< fa brands r-project >}} `problem-set-2.Rmd`](/projects/problem-set-2/your-name_problem-set-2.Rmd)
 
@@ -54,15 +54,15 @@ For this problem set, we're less interested in causal relationships and more int
 
 [The example for week 2 on regression](/example/regression.qmd) will be ***incredibly*** helpful for this exercise. Reference it. Copy and paste from it liberally.
 
-1. Rename the R Markdown file named `your-name_problem-set-2.Rmd` to something that matches your name and open it in RStudio.
+1. Rename the Quarto file named `your-name_problem-set-2.qmd` to something that matches your name and open it in RStudio.
 
-2. Complete the tasks given in the R Markdown file. Fill out code in the empty chunks provided (you can definitely copy, paste, and adapt from other code in the document or [from the regression example](/example/regression.qmd)—*don't try to write everything from scratch!*), and replace text in ALL CAPS with your own. (i.e. You'll see a bunch of `TYPE YOUR ANSWER HERE`s. Type your answers there.). Again, you don't need to type your answers in all caps.
+2. Complete the tasks given in the Quarto file. Fill out code in the empty chunks provided (you can definitely copy, paste, and adapt from other code in the document or [from the regression example](/example/regression.qmd)—*don't try to write everything from scratch!*), and replace text in ALL CAPS with your own. (i.e. You'll see a bunch of `TYPE YOUR ANSWER HERE`s. Type your answers there.). Again, you don't need to type your answers in all caps.
 
 
 ## Turning everything in
 
-When you're all done, click on the "Knit" button at the top of the editing window and create a Word or PDF version (if you've [installed **tinytex**](/resource/install.qmd#install-tinytex)) of your document. Upload that file to iCollege. **Do not upload a knitted HTML file** (they don't on iCollege).
+When you're all done, render the document to a PDF or Word file and upload that file to iCollege. **Do not upload a rendered HTML file** (they don't work on iCollege).
 
-```{r knit-button, echo=FALSE, out.width="30%", fig.align="center"}
-knitr::include_graphics("/files/img/assignments/knit-button.png", error = FALSE)
+```{r render-button, echo=FALSE, out.width="50%", fig.align="center"}
+knitr::include_graphics("/files/img/assignments/render-button.png", error = FALSE)
 ```

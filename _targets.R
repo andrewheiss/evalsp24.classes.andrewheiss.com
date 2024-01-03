@@ -84,7 +84,7 @@ list(
   ),
 
 
-  ## Knit the README ----
+  ## Render the README ----
   tar_quarto(readme, here_rel("README.qmd")),
 
 

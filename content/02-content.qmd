@@ -64,14 +64,14 @@ Here are all the materials we'll use in class:
 
 - [**Session 2 FAQ slides**](/slides/02-class.html) ([PDF](/slides/02-class.pdf))
 - [Errors vs. warnings vs. messages](https://moderndive.com/1-getting-started.html#messages) (i.e. what to do when R shows you red text)
-- R Markdown examples:
+- Quarto examples:
     - [Quarto!](https://quarto.org/)
-    - Example R Markdown file used as a code-through or step-by-step teaching document:
+    - Example Quarto file used as a code-through or step-by-step teaching document:
         - Lots of [blog posts here](https://www.andrewheiss.com/blog/)
         - Julia Silge, ["Modeling human/computer interactions on Star Trek from #TidyTuesday with workflowsets"](https://juliasilge.com/blog/star-trek/)
         - Bob Rudis, ["Some Covid Donuts To End The Week"](https://rud.is/b/2021/08/13/some-covid-donuts-to-end-the-week/)
         - Holger K. von Jouanne-Diedrich, ["The “Youth Bulge” of Afghanistan: The Hidden Force behind Political Instability"](https://blog.ephorie.de/the-youth-bulge-of-afghanistan-the-hidden-force-behind-political-instability)
-    - Example R Markdown file used as a publicly-consumable document: 
+    - Example Quarto file used as a publicly-consumable document: 
         - Click on the "Manuscript" menu item [at this site](https://stats.andrewheiss.com/cautioning-canary/)
         - See [the Rmd file here](https://github.com/andrewheiss/cautioning-canary/blob/master/manuscript/manuscript.Rmd)
 

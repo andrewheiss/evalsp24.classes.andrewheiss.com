@@ -1,15 +1,15 @@
 ---
-title: "Problem set 6: Mandatory school attendance program"
+title: "Mandatory school attendance program"
+subtitle: "Problem set 6 --- PMAP 8521, Spring 2024"
 author: "YOUR NAME HERE"
 date: "DATE GOES HERE"
-output: 
-  html_document: 
-    toc: yes
-  pdf_document: 
-    latex_engine: xelatex
-    toc: yes
-  word_document: 
-    toc: yes
+format:
+  html:
+    toc: true
+  pdf:
+    toc: true
+  docx:
+    toc: true
 ---
 
 ---
@@ -73,7 +73,7 @@ First, make a histogram of the running variable and see if there are any big jum
 # Histogram of attendance
 ```
 
-Next, conduct a McCrary density test with `rdplotdensity()` from the `rddensity` library. Refer to the in-class example for the syntax (you'll need to specify `rdd`, `X` (note that it's capitalized), and `type = "both"`). Also, if you don't want two plots to show up when you knit, make sure you assign the output of `rdplotdensity()` to a variable.
+Next, conduct a McCrary density test with `rdplotdensity()` from the `rddensity` library. Refer to the in-class example for the syntax (you'll need to specify `rdd`, `X` (note that it's capitalized), and `type = "both"`). Also, if you don't want two plots to show up when you render, make sure you assign the output of `rdplotdensity()` to a variable.
 
 **Is there a substantial jump at the cutpoint?**
 

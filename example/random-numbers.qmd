@@ -45,7 +45,7 @@ sample(1:10, 3)
 
 They're different both times.
 
-That's ordinarily totally fine, but if you care about reproducibility (like having a synthetic dataset with the same random values, or having jittered points in a plot be in the same position every time you knit), it's a good idea to set your own seed. This ensures that the random numbers you generate are the same every time you generate them.
+That's ordinarily totally fine, but if you care about reproducibility (like having a synthetic dataset with the same random values, or having jittered points in a plot be in the same position every time you render), it's a good idea to set your own seed. This ensures that the random numbers you generate are the same every time you generate them.
 
 Do this by feeding `set.seed()` some numbers. It doesn't matter what number you use—it just has to be a whole number. People have all sorts of favorite seeds:
 

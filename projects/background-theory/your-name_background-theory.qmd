@@ -1,15 +1,15 @@
 ---
 title: "Background and theory"
+subtitle: "Evaluation, part 1 --- PMAP 8521, Spring 2024"
 author: "YOUR NAME HERE"
 date: "DATE GOES HERE"
-output: 
-  html_document: 
-    toc: yes
-  pdf_document: 
-    latex_engine: xelatex
-    toc: yes
-  word_document: 
-    toc: yes
+format:
+  html:
+    toc: true
+  pdf:
+    toc: true
+  docx:
+    toc: true
 ---
 
 # 1: Program background and purpose
@@ -25,9 +25,9 @@ Provide in-depth background about the program. Include details about (1) when it
 
 Explain and explore the program’s underlying theory. Sometimes programs will explain why they exist in a mission statement, but often they don’t and you have to infer the theory from what the program looks like when implemented. What did the program designers plan on occurring? Was this theory based on existing research? If so, cite it.
 
-Include a simple impact theory graph showing the program’s basic activities and outcomes. Recall from class and your reading that this is focused primarily on the theory and mechanisms, not on the implementation of the program.
+Include a simple impact theory graph like @fig-impact-theory showing the program’s basic activities and outcomes. Recall from class and your reading that this is focused primarily on the theory and mechanisms, not on the implementation of the program.
 
-![My neat impact theory](figures/placeholder.png)
+![My neat impact theory](figures/placeholder.png){#fig-impact-theory}
 
 
 # 3: Logic model
@@ -56,9 +56,9 @@ List every possible input, activity, output, and outcome for the program and pro
 
 ## Diagram
 
-Use flowchart software to connect the inputs, activities, outputs, and outcomes and create a complete logic model. Remember that inputs will always feed into activities, and that activities always produce outputs (that's the whole purpose of an activity: convert an input to an output). Include this as a figure.
+Use flowchart software to connect the inputs, activities, outputs, and outcomes and create a complete logic model. Remember that inputs will always feed into activities, and that activities always produce outputs (that's the whole purpose of an activity: convert an input to an output). Include this as a figure like @fig-logic-model.
 
-![My neat logic model](figures/placeholder.png)
+![My neat logic model](figures/placeholder.png){#fig-logic-model}
 
 
 # 4: Analysis

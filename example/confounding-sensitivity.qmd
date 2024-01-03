@@ -928,7 +928,7 @@ net_sensitivity <- sensemakr(model = model_net_controls,
 net_sensitivity
 ```
 
-Printing out the results like this shows us a bunch of different estimates and robustness values, but I like the minimal reporting table that Carlos used in his video, so let's look at that instead (ignore the slashes in front of each %; that's a weird side effect of using this table in a knitted blogdown page)
+Printing out the results like this shows us a bunch of different estimates and robustness values, but I like the minimal reporting table that Carlos used in his video, so let's look at that instead.
 
 ```{r sense-net-table, results="asis"}
 ovb_minimal_reporting(net_sensitivity, format = "pure_html")

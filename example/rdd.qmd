@@ -149,9 +149,9 @@ We can then plot that density test:
 # plot_density_test. In theory, this should make it show nothing---all the
 # output should go to that object. Because of a bug in rdplotdensity, though, it
 # will show a plot automatically even if assigning it to a variable. If we don't
-# assign it to a variable you'll see two identical plots when knitting, which is
-# annoying. So we save it as a variable to hide the output, but get the output
-# for a single plot anyway. Ugh.
+# assign it to a variable you'll see two identical plots when rendering, which 
+# is annoying. So we save it as a variable to hide the output, but get the 
+# output for a single plot anyway. Ugh.
 plot_density_test <- rdplotdensity(rdd = test_density,
                                    X = tutoring$entrance_exam,
                                    type = "both")  # This adds both points and lines

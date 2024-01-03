@@ -313,7 +313,7 @@ Table: Caption goes here
 
 There are two different ways to add footnotes ([see here for complete documentation](https://pandoc.org/MANUAL.html#footnotes)): regular and inline.
 
-Regular notes need (1) an identifier and (2) the actual note. The identifier can be whatever you want. Some people like to use numbers like `[^1]`, but if you ever rearrange paragraphs or add notes before #1, the numbering will be wrong (in your Markdown file, not in the output; everything will be correct in the output). Because of that, I prefer to use some sort of text label:
+Regular notes need (1) an identifier and (2) the actual note. The identifier can be whatever you want. Some people like to use numbers like `[^1]`, but if you ever rearrange paragraphs or add notes before #1, the numbering will be wrong (in your Quarto file, not in the output; everything will be correct in the output). Because of that, I prefer to use some sort of text label:
 
 **Type…**
 

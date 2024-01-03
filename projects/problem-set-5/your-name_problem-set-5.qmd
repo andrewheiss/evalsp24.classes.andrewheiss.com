@@ -1,15 +1,15 @@
 ---
-title: "Problem set 5: Do police reduce car thefts?"
+title: "Do police reduce car thefts?"
+subtitle: "Problem set 5 --- PMAP 8521, Spring 2024"
 author: "YOUR NAME HERE"
 date: "DATE GOES HERE"
-output: 
-  html_document: 
-    toc: yes
-  pdf_document: 
-    latex_engine: xelatex
-    toc: yes
-  word_document: 
-    toc: yes
+format:
+  html:
+    toc: true
+  pdf:
+    toc: true
+  docx:
+    toc: true
 ---
 
 ---
@@ -148,9 +148,9 @@ The diff-in-diff coefficient you found in part 4 is accurate, but the standard e
 
 To fix this, run a diff-in-diff model that includes two additional control variables: `block + month`. 
 
-> ***Warning***: this will be *incredibly* slow! There are `r nrow(distinct(terror, block))` blocks and `nrow(distinct(terror, month))` months, and R is finding estimates for each block and month, and the math to do that is complex. Every time you knit this document, R will rerun the model, which takes 5-10 seconds, and the delay when knitting can be annoying. If you want to speed this up across knitting sessions, add the option `cache=TRUE` to the chunk options for this chunk. R will store the results in a temporary file and won't re-run the model if the data hasn't changed.
+> ***Warning***: this will be *incredibly* slow! There are `r nrow(distinct(terror, block))` blocks and `nrow(distinct(terror, month))` months, and R is finding estimates for each block and month, and the math to do that is complex. Every time you render this document, R will rerun the model, which takes 5-10 seconds, and the delay when rendering can be annoying. If you want to speed this up across Quarto sessions, add the option `cache=TRUE` to the chunk options for this chunk. R will store the results in a temporary file and won't re-run the model if the data hasn't changed.
 
-**Don't use `tidy` to view the results**. You'll get a table with almost 900 rows and it'll take up pages and pages of your knitted document. If you really want to see the results, filter out the block and month rows (like this:).
+**Don't use `tidy` to view the results**. You'll get a table with almost 900 rows and it'll take up pages and pages of your rendered document. If you really want to see the results, filter out the block and month rows (like this:).
 
 ```r
 tidy(name_of_model) %>% 

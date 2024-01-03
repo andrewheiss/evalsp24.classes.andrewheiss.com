@@ -6,7 +6,7 @@ If you want to follow along with this example, you can download the data below:
 
 - [{{< fa table >}} `sat_gpa.csv`](/files/data/external_data/sat_gpa.csv)
 
-You can also download a complete `.zip` file with a finished R Markdown file that you can knit and play with on your own:
+You can also download a complete `.zip` file with a finished Quarto file that you can render and play with on your own:
 
 - [{{< fa file-archive >}} `regression-example.zip`](/projects/regression-example.zip)
 

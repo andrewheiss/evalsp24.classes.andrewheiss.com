@@ -3,6 +3,7 @@ project:
   render:
     - "*.qmd"
     - "!slides/"
+    - "!projects/"
   resources:
     - "files/"
     - "projects/"
@@ -185,7 +186,7 @@ website:
           contents:
             - resource/install.qmd
             - resource/markdown.qmd
-            - resource/rmarkdown.qmd
+            - resource/quarto.qmd
             - resource/unzipping.qmd
 
   page-footer:

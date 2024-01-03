@@ -1,15 +1,15 @@
 ---
 title: "Causal models"
+subtitle: "Evaluation, part 3 --- PMAP 8521, Spring 2024"
 author: "YOUR NAME HERE"
 date: "DATE GOES HERE"
-output: 
-  html_document: 
-    toc: yes
-  pdf_document: 
-    latex_engine: xelatex
-    toc: yes
-  word_document: 
-    toc: yes
+format:
+  html:
+    toc: true
+  pdf:
+    toc: true
+  docx:
+    toc: true
 ---
 
 **Feel free to remove any/all of the placeholder text and instructions here!**

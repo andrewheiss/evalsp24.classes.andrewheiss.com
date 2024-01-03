@@ -23,8 +23,8 @@ For your final project in this class, you will write a pre-registered analysis o
 
 You will submit **three things** via iCollege:
 
-1. A PDF of your preregistered report (see the outline below for details of what this needs to contain). You should compile this with R Markdown. You might want to write the prose-heavy sections in a word processor like Word or Google Docs and copy/paste the text into your R Markdown document, since RStudio doesn't have a nice spell checker or grammar checker. This should have *no visible R code, warnings, or messages in it* (set `echo = FALSE` at the beginning of your document before you knit).
-2. The same PDF as above, but with all the R code in it (set `echo = TRUE` at the beginning of your document and reknit the file).
+1. A PDF of your preregistered report (see the outline below for details of what this needs to contain). You should compile this with Quarto. You might want to write the prose-heavy sections in a word processor like Word or Google Docs and copy/paste the text into your Quarto document, since RStudio doesn't have a nice spell checker or grammar checker. This should have *no visible R code, warnings, or messages in it* (set `echo = FALSE` at the beginning of your document before you render).
+2. The same PDF as above, but with all the R code in it (set `echo = TRUE` at the beginning of your document and re-render the file).
 3. A CSV file of [your fake data.](/example/synthetic-data.qmd)
 
 This project is due by **11:59 PM on Monday, April 29, 2024.** <span style="color: #81056F; font-weight: bold"> No late work will be accepted.</span>
