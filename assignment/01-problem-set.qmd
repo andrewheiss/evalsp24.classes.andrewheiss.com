@@ -16,7 +16,7 @@ knitr::opts_chunk$set(fig.align = "center")
 
 ## Task 2: Make an RStudio Project
 
-1. Use either Posit.cloud or RStudio on your computer (preferably RStudio on your computer! [Follow these instructions to get started!](/resource/install.qmd)) to create a new RStudio Project. Refer to the [example page you read in Task 1 for instructions](/example/rstudio-tidyverse.qmd#part-3-rstudio-projects)
+1. Use either Posit.cloud ([empty project here](https://posit.cloud/spaces/462899/content/7314588)) or RStudio on your computer (preferably RStudio on your computer! [Follow these instructions to get started!](/resource/install.qmd)) to create a new RStudio Project. Refer to the [example page you read in Task 1 for instructions](/example/rstudio-tidyverse.qmd#part-3-rstudio-projects)
 
 2. Create a folder named "data" in the project folder you just made.
 
