@@ -6,9 +6,9 @@ title: "Using Quarto"
 knitr::opts_chunk$set(fig.align = "center")
 ```
 
-[Quarto Markdown](https://rmarkdown.rstudio.com/) is [regular Markdown](/resource/markdown.qmd) with R code and output sprinkled in. You can do everything you can with [regular Markdown](/resource/markdown.qmd), but you can incorporate graphs, tables, and other R output directly in your document. You can create HTML, PDF, and Word documents, PowerPoint and HTML presentations, websites, books, and even interactive dashboards with Quarto. This whole course website is created with Quarto.
+[Quarto Markdown](https://quarto.org/) is [regular Markdown](/resource/markdown.qmd) with R code and output sprinkled in. You can do everything you can with [regular Markdown](/resource/markdown.qmd), but you can incorporate graphs, tables, and other R output directly in your document. You can create HTML, PDF, and Word documents, PowerPoint and HTML presentations, websites, books, and even interactive dashboards with Quarto. This whole course website is created with Quarto.
 
-The [documentation for Quarto](https://quarto.org/) is extremely comprehensive, and their [tutorials](https://rmarkdown.rstudio.com/lesson-1.html) and [cheatsheets](https://rmarkdown.rstudio.com/lesson-15.html) are excellent—rely on those.
+The [documentation for Quarto](https://quarto.org/) is extremely comprehensive—rely on it!
 
 Here are the most important things you'll need to know about Quarto in this class:
 
@@ -24,11 +24,11 @@ Here are the most important things you'll need to know about Quarto in this clas
 ```
 ````
 
-    There must be an empty line before and after the chunk. The final three backticks must be the only thing on the line—if you add more text, or if you forget to add the backticks, or accidentally delete the backticks, your document will not render correctly.
+  There must be an empty line before and after the chunk. The final three backticks must be the only thing on the line—if you add more text, or if you forget to add the backticks, or accidentally delete the backticks, your document will not render correctly.
 
 - **Render**: When you render a document, R runs each of the chunks sequentially and converts the output of each chunk into Markdown. R then runs the document through [pandoc](https://pandoc.org/) to convert it to HTML or PDF or Word (or whatever output you've selected).
 
-    You can render by clicking on the "Render" button at the top of the editor window, or by pressing `⌘⇧K` on macOS or `control + shift + K` on Windows.
+  You can render by clicking on the "Render" button at the top of the editor window, or by pressing `⌘⇧K` on macOS or `control + shift + K` on Windows.
 
 ```{r render-button, echo=FALSE, out.width="50%"}
 knitr::include_graphics("/files/img/assignments/render-button.png", error = FALSE)
@@ -69,7 +69,7 @@ To add a name, include it immediately after the `{r` in the first line of the ch
 
 ## Chunk options
 
-There are a bunch of different options you can set for each chunk. You can see a complete list in the [RMarkdown Reference Guide](https://rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf) or at [**knitr**'s website](https://yihui.org/knitr/options/).
+There are a bunch of different options you can set for each chunk. You can see a complete list in the [R Markdown Reference Guide](https://rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf) or at [**knitr**'s website](https://yihui.org/knitr/options/).
 
 Options go inside the `{r}` section of the chunk:
 
