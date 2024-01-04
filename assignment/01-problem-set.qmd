@@ -28,49 +28,49 @@ knitr::opts_chunk$set(fig.align = "center")
 
 5. Delete all the placeholder text in that new file and replace it with this:
 
-````{verbatim, indent="    "}
----
-title: "Problem set 1"
-author: "Put your name here"
-format: 
-  html:
-    toc: true
-  pdf:
-    toc: true
-  docx:
-    toc: true
----
-
-```{r load-libraries-data, warning=FALSE, message=FALSE}
-library(tidyverse)
-
-cars <- read_csv("data/cars.csv")
-```
-
-# Learning R
-
-Tell me that you worked through the primers and videos and examples at the example page for this week:
-
-WRITE SOMETHING HERE LIKE "I did all the primers and had the time of my life!" or whatever.
-
-
-# My first plots
-
-Insert a chunk below and use it to create a scatterplot (hint: `geom_point()`) with diplacement (`displ`) on the x-axis, city MPG (`cty`) on the y-axis, and with the points colored by drive (`drv`).
-
-PUT CHUNK HERE
-
-Insert a chunk below and use it to create a histogram (hint: `geom_histogram()`) with highway MPG (`hwy`) on the x-axis. Do not include anything on the y-axis (`geom_histogram()` will do that automatically for you). Choose an appropriate bin width. If you're brave, facet by drive (`drv`).
-
-PUT CHUNK HERE
-
-
-# My first data manipulation
-
-Insert a chunk below and use it to calculate the average city MPG (`cty`) by class of car (`class`). This won't be a plot---it'll be a table. Hint: use a combination of `group_by()` and `summarize()`.
-
-PUT CHUNK HERE
-````
+   ````
+   ---
+   title: "Problem set 1"
+   author: "Put your name here"
+   format: 
+     html:
+       toc: true
+     pdf:
+       toc: true
+     docx:
+       toc: true
+   ---
+   
+   ```{{r load-libraries-data, warning=FALSE, message=FALSE}}
+   library(tidyverse)
+   
+   cars <- read_csv("data/cars.csv")
+   ```
+   
+   # Learning R
+   
+   Tell me that you worked through the primers and videos and examples at the example page for this week:
+   
+   WRITE SOMETHING HERE LIKE "I did all the primers and had the time of my life!" or whatever.
+   
+   
+   # My first plots
+   
+   Insert a chunk below and use it to create a scatterplot (hint: `geom_point()`) with diplacement (`displ`) on the x-axis, city MPG (`cty`) on the y-axis, and with the points colored by drive (`drv`).
+   
+   PUT CHUNK HERE
+   
+   Insert a chunk below and use it to create a histogram (hint: `geom_histogram()`) with highway MPG (`hwy`) on the x-axis. Do not include anything on the y-axis (`geom_histogram()` will do that automatically for you). Choose an appropriate bin width. If you're brave, facet by drive (`drv`).
+   
+   PUT CHUNK HERE
+   
+   
+   # My first data manipulation
+   
+   Insert a chunk below and use it to calculate the average city MPG (`cty`) by class of car (`class`). This won't be a plot---it'll be a table. Hint: use a combination of `group_by()` and `summarize()`.
+   
+   PUT CHUNK HERE
+   ````
 
 6. Save the Quarto file with some sort of name (**without any spaces!**)
 

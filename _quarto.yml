@@ -169,7 +169,7 @@ website:
 
     - title: "Resources"
       contents:
-        - section: "Overview"
+        - section: "Resources"
           contents:
             - resource/index.qmd
             - resource/r.qmd

@@ -1,5 +1,5 @@
 ---
-title: "Installing R, RStudio, tidyverse, and tinytex"
+title: "Installing R, RStudio, {tidyverse}, and TinyTeX"
 ---
 
 ```{r setup, include=FALSE}
@@ -26,7 +26,7 @@ Here's how you install all these things
 
 First you need to install R itself (the engine).
 
-1. Go to the CRAN (Collective R Archive Network)[^cran] website: <https://cran.r-project.org/>
+1. Go to the CRAN (Collective R Archive Network) website: <https://cran.r-project.org/>
 
 2. Click on "Download R for `XXX`", where `XXX` is either Mac or Windows:
 
@@ -34,7 +34,7 @@ First you need to install R itself (the engine).
    include_graphics("/files/img/install/install-r-links.png", error = FALSE)
    ```
 
-   - If you use macOS, scroll down to the first `.pkg` file in the list of files (in this picture, it's `R-4.0.0.pkg`; as of right now, the current version is **4.2.1**) and download it.
+   - If you use macOS, scroll down to the first `.pkg` file in the list of files (in this picture, it's `R-4.0.0.pkg`; as of right now, the current version is **4.3.2**) and download it.
     
      ```{r, echo=FALSE, out.width="80%", fig.align="center"}
      include_graphics("/files/img/install/install-r-mac.png", error = FALSE)
@@ -49,8 +49,6 @@ First you need to install R itself (the engine).
 3. Double click on the downloaded file (check your `Downloads` folder). Click yes through all the prompts to install like any other program.
 
 4. If you use macOS, [download and install XQuartz](https://www.xquartz.org/). You do not need to do this on Windows.
-
-[^cran]: It's a goofy name, but CRAN is where most R packages—and R itself—lives.
 
 
 ### Install RStudio
@@ -76,7 +74,7 @@ Next, you need to install RStudio, the nicer graphical user interface (GUI) for 
 Double click on RStudio to run it (check your applications folder or start menu).
 
 
-### Install `tidyverse`
+### Install {tidyverse}
 
 R packages are easy to install with RStudio. Select the packages panel, click on "Install," type the name of the package you want to install, and press enter.
 
@@ -84,7 +82,7 @@ R packages are easy to install with RStudio. Select the packages panel, click on
 include_graphics("/files/img/install/install-r-package-panel.png", error = FALSE)
 ```
 
-- This can sometimes be tedious when you're installing lots of packages, though. [The tidyverse](https://www.tidyverse.org/), for instance, consists of dozens of packages (including **ggplot2**) that all work together. Rather than install each individually, you can install a single magical package and get them all at the same time.
+- This can sometimes be tedious when you're installing lots of packages, though. [The tidyverse](https://www.tidyverse.org/), for instance, consists of dozens of packages (including {ggplot2}) that all work together. Rather than install each individually, you can install a single magical package and get them all at the same time.
 
 - Go to the packages panel in RStudio, click on "Install," type "tidyverse", and press enter. You'll see a bunch of output in the RStudio console as all the tidyverse packages are installed.
 
@@ -95,15 +93,17 @@ include_graphics("/files/img/install/install-r-package-panel.png", error = FALSE
 Notice also that RStudio will generate a line of code for you and run it: `install.packages("tidyverse")`. You can also just paste and run this instead of using the packages panel.
 
 
-### Install `tinytex`
+### Install TinyTeX
 
 When you render to PDF, R uses a special scientific typesetting program named LaTeX (pronounced "lay-tek" or "lah-tex"; for goofy nerdy reasons, the x is technically the "ch" sound in "Bach", but most people just say it as "k"—saying "layteks" is frowned on for whatever reason).
 
-LaTeX is neat and makes pretty documents, but it's a huge program—[the macOS version, for instance, is nearly 4 GB](https://tug.org/mactex/mactex-download.html)! To make life easier, there's [an R package named **tinytex**](https://yihui.org/tinytex/) that installs a minimal LaTeX program and that automatically deals with differences between macOS and Windows.
+LaTeX is neat and makes pretty documents, but it's a huge program—[the macOS version, for instance, is nearly 4 GB](https://tug.org/mactex/mactex-download.html)! To make life easier, there's a smaller version named [TinyTeX](https://yihui.org/tinytex/) that automatically deals with differences between macOS and Windows *and* automatically installs any missing LaTeX packages as needed.
 
-Here's how to install **tinytex** so you can create pretty PDFs:
+Here's how to install TinyTeX so you can create pretty PDFs:
 
-1. Use the Packages in panel in RStudio to install **tinytex** like you did above with **tidyverse**. Alternatively, run `install.packages("tinytex")` in the console.
-2. Run `tinytex::install_tinytex()` in the console.
-3. Wait for a bit while R downloads and installs everything you need.
-4. The end! You should now be able to render to PDF.
+1. Open the Terminal panel in RStudio (down in the bottom left corner where the Console panel is; there's a tab named "Terminal" there)
+2. Type this:
+
+   ``` bash
+   quarto install tinytex
+   ```

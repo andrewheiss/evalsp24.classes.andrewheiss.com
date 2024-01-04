@@ -70,6 +70,13 @@ ol {
 }
 
 
+// Sidebar and TOC stuff
+
+.sidebar-item {
+  margin-top: 0.7rem;
+  line-height: 1rem;
+}
+
 // Custom active link colors
 .navbar-dark .navbar-nav .show > .nav-link, .navbar-dark .navbar-nav .active > .nav-link, .navbar-dark .navbar-nav .nav-link.active {
   color: #FFC361;
@@ -259,7 +266,7 @@ main {
 // Code stuff
 // Shrink blocks of code
 pre.text, pre.sourceCode, .cell-output pre {
-  font-size: 0.775em;
+  font-size: 0.7em;
 }
 
 // Slight bottom margin to output
