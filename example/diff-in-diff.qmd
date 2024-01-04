@@ -40,7 +40,7 @@ In 1980, Kentucky raised its cap on weekly earnings that were covered by worker'
 
 The main outcome variable we care about is `log_duration` (in the original data as `ldurat`, but we rename it to be more human readable), or the logged duration (in weeks) of worker's compensation benefits. We log it because the variable is fairly skewed---most people are unemployed for a few weeks, with some unemployed for a long time. The policy was designed so that the cap increase did not affect low-earnings workers, but did affect high-earnings workers, so we use low-earnings workers as our control group and high-earnings workers as our treatment group.
 
-The data is included in the **wooldridge** R package as the `injury` dataset, and if you install the package, load it with `library(wooldridge)`, and run `?injury` in the console, you can see complete details about what's in it. To give you more practice with loading data from external files, I exported the injury data as a CSV file (using `write_csv(injury, "injury.csv")`) and included it here.
+The data is included in the {wooldridge} R package as the `injury` dataset, and if you install the package, load it with `library(wooldridge)`, and run `?injury` in the console, you can see complete details about what's in it. To give you more practice with loading data from external files, I exported the injury data as a CSV file (using `write_csv(injury, "injury.csv")`) and included it here.
 
 These are the main columns we'll worry about for now:
 

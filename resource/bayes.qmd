@@ -24,7 +24,7 @@ Bayesian statistics, though, requires a lot of computational power and a differe
 But you can learn it on your own. Because very few stats classes actually teach Bayesian statistics, tons of people who use it are self-taught (like me!), in part because there are a ton of resources online for learning this stuff. Here are some of the best I've found:
 
 - [This new *Bayes Rules* book](https://www.bayesrulesbook.com/) is designed to be an introductory textbook for a stats class teaching Bayesian stuff. It’s really accessible and good (and free!). If I ever get to teach an intro stats class with Bayesian stats, I'll use this.
-- [This post from 2016](https://thinkinator.com/2016/01/12/r-users-will-now-inevitably-become-bayesians/) is a great short introduction and is what made me start using Bayesian methods. [The **brms** package](https://paul-buerkner.github.io/brms/) makes it incredibly easy to do Bayesian stuff, and the syntax is basically the same as `lm()`
+- [This post from 2016](https://thinkinator.com/2016/01/12/r-users-will-now-inevitably-become-bayesians/) is a great short introduction and is what made me start using Bayesian methods. [The {brms} package](https://paul-buerkner.github.io/brms/) makes it incredibly easy to do Bayesian stuff, and the syntax is basically the same as `lm()`
 - [This post shows how to do one simple task](https://www.andrewheiss.com/blog/2019/01/29/diff-means-half-dozen-ways/) (a difference-in-means test) with regular old frequentist methods, bootstrapping, and with Bayesian stats both with brms and raw Stan code
 - [This short post](https://www.tjmahr.com/bayes-theorem-in-three-panels/) gives a helpful overview of the intuition behind Bayesianism
 - The super canonical everyone-has-this-book book is [*Statistical Rethinking* by Richard McElreath](https://xcelab.net/rm/statistical-rethinking/). At that page he also has an entire set of accompanying lectures on YouTube. He doesn’t use brms or ggplot, but someone has translated all his models to [tidyverse-based brms code here](https://bookdown.org/ajkurz/Statistical_Rethinking_recoded/)
@@ -42,7 +42,7 @@ model_ols <- lm(hwy ~ displ + drv, data = mpg)
 tidy(model_ols, conf.int = TRUE)
 ```
 
-Here's that same model using the **brms** package, with default priors. Note how the code is basically the same:
+Here's that same model using the {brms} package, with default priors. Note how the code is basically the same:
 
 ```{r bayes-libraries, message=FALSE, warning=FALSE}
 library(tidyverse)
@@ -117,7 +117,7 @@ library(gghalves)
 inspections <- read_csv("https://vincentarelbundock.github.io/Rdatasets/csv/causaldata/restaurant_inspections.csv")
 ```
 
-First we should look at the data to see if there are any obvious patterns. Let's look at scores separated by weekend status. We'll use [the neat **gghalves** package](https://erocoar.github.io/gghalves/) to plot both the raw points and a density plot. The orange points show the average value:
+First we should look at the data to see if there are any obvious patterns. Let's look at scores separated by weekend status. We'll use [the neat {gghalves} package](https://erocoar.github.io/gghalves/) to plot both the raw points and a density plot. The orange points show the average value:
 
 ```{r inspections-raw-distribution}
 ggplot(inspections, aes(x = Weekend, y = inspection_score)) +
@@ -194,7 +194,7 @@ Put (hopefully!) simply, combine the observed likelihood of the data $P(\text{Da
 
 Actually calculating this with real data, though, can be tricky and computationally intensive—often there's no formal mathematical way to figure out the actual equation. So instead, we can use computers to simulate thousands of guesses and then look at the distribution of those guesses (just like we did with [the Zilch simulation in class](/resource/zilch.qmd#probability-with-computers-only)). One modern method for doing this is called Monte Carlo Markov Chain (MCMC) simulation, which is what most R-based tools for Bayesian stats use nowadays.
 
-Let's look at restaurant inspection scores on the weekend Bayesianly. Here, we're still interested in our population parameter $\theta$, or the average weekend score boost. Only now, we're not assuming that $\theta$ is some single fixed value out in the world that we're trying to capture with confidence intervals—we'll use the data that we have to estimate the variation in $\theta$. The easiest way to do Bayesian analysis with R is with [the **brms** package](https://paul-buerkner.github.io/brms/), which uses the familiar formula syntax you've been using with `lm()`. The syntax is super similar, just with a few additional arguments:
+Let's look at restaurant inspection scores on the weekend Bayesianly. Here, we're still interested in our population parameter $\theta$, or the average weekend score boost. Only now, we're not assuming that $\theta$ is some single fixed value out in the world that we're trying to capture with confidence intervals—we'll use the data that we have to estimate the variation in $\theta$. The easiest way to do Bayesian analysis with R is with [the {brms} package](https://paul-buerkner.github.io/brms/), which uses the familiar formula syntax you've been using with `lm()`. The syntax is super similar, just with a few additional arguments:
 
 **MCMC things**
 
@@ -226,7 +226,7 @@ plot_informative | plot_vague
 
 For the sake of this example, we'll use a vague prior.
 
-Here's how to officially do Bayesian analysis with **brms** and incorporate prior information about $\theta$. Again, the syntax is super similar to `lm()`, just with some extra bits about the prior and the MCMC settings:
+Here's how to officially do Bayesian analysis with {brms} and incorporate prior information about $\theta$. Again, the syntax is super similar to `lm()`, just with some extra bits about the prior and the MCMC settings:
 
 ```{r load-bayes-stuff, warning=FALSE, message=FALSE}
 library(brms)         # For Bayesian regression with brm()

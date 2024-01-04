@@ -162,7 +162,7 @@ Now we can do two-stage least squares (2SLS) regression and use the instrument t
 first_stage <- lm(educ ~ fathereduc, data = ed_fake)
 ```
 
-Now we want to add a column of predicted education to our original dataset. The easiest way to do that is with the `augment_columns()` function from the **broom** library, which plugs values from a dataset into a model to generate predictions:
+Now we want to add a column of predicted education to our original dataset. The easiest way to do that is with the `augment_columns()` function from the {broom} library, which plugs values from a dataset into a model to generate predictions:
 
 ```{r}
 ed_fake_with_prediction <- augment_columns(first_stage, ed_fake)
@@ -195,19 +195,19 @@ Doing all that two-stage work is neat and it helps with the intuition of instrum
 
 There are several functions from different R packages that let you do 2SLS, and they all work a little differently and have different benefits:
 
-- [`iv_robust()` from **estimatr**](https://declaredesign.org/r/estimatr/articles/getting-started.html#iv_robust):
+- [`iv_robust()` from {estimatr}](https://declaredesign.org/r/estimatr/articles/getting-started.html#iv_robust):
     - Syntax: `outcome ~ treatment | instrument`
     - Benefits: Handles robust and clustered standard errors
-- [`ivreg()` from **ivreg**](https://github.com/john-d-fox/ivreg/):
+- [`ivreg()` from {ivreg}](https://github.com/john-d-fox/ivreg/):
     - Syntax: `outcome ~ treatment | instrument`
     - Benefits: Includes a ton of fancy diagnostics
-- [`ivreg()` from **AER**](https://raw.githack.com/uo-ec607/lectures/master/08-regression/08-regression.html#Option_1:_AER::ivreg()):
+- [`ivreg()` from {AER}](https://raw.githack.com/uo-ec607/lectures/master/08-regression/08-regression.html#Option_1:_AER::ivreg()):
     - Syntax: `outcome ~ treatment | instrument`
     - Benefits: Includes special tests for weak instruments (that are better than the standard "check if F > 10"), like Anderson-Rubin confidence intervals
-- [`lfe()` from **felm**](https://raw.githack.com/uo-ec607/lectures/master/08-regression/08-regression.html#Option_3:_felm::lfe()):
+- [`lfe()` from {felm}](https://raw.githack.com/uo-ec607/lectures/master/08-regression/08-regression.html#Option_3:_felm::lfe()):
     - Syntax: `outcome ~ treatment | fixed effects | instrument`
     - Benefits: Handles fixed effects really quickly (kind of like `feols()` that you used in Problem Set 5)
-- [`plm()` from **plm**](https://cran.r-project.org/web/packages/plm/vignettes/plmPackage.html#instrumental-variable-estimators):
+- [`plm()` from {plm}](https://cran.r-project.org/web/packages/plm/vignettes/plmPackage.html#instrumental-variable-estimators):
     - Syntax: `outcome ~ treatment | instrument`
     - Benefits: Handles panel data (country/year, state/year, etc.)
 
@@ -245,7 +245,7 @@ Note how the coefficients for `educ_hat` and `educ` in the 2SLS models are close
 
 ## Education, wages, and parent's education (multiple instruments) (real data)
 
-This data comes from the `wage2` dataset in the **wooldridge** R package (and it's real!). The data was used in this paper:
+This data comes from the `wage2` dataset in the {wooldridge} R package (and it's real!). The data was used in this paper:
 
 > M. Blackburn and D. Neumark (1992), "Unobserved Ability, Efficiency Wages, and Interindustry Wage Differentials," *Quarterly Journal of Economics* 107, 1421-1436. <https://doi.org/10.3386/w3857>
 
@@ -408,11 +408,11 @@ The main diagnostic we care about here is the first one: "Weak instruments". Thi
 
 Another approach for checking for weak instruments is to calculate something called the Anderson-Rubin confidence set, which is essentially a 95% confidence interval for your coefficient that shows the stability of the coefficient based on how weak or strong the instrument is. This test was invented in like 1949 and it's arguably more robust than checking F statistics, but for whatever reason, *nobody really teaches it or uses it!*. It's not in any of the textbooks for this class, and it's really kind of rare. Even if you google "anderson rubin test weak instruments", you'll only find a bunch of lecture notes from fancy econometrics classes (like [p. 10 here](https://economics.yale.edu/sites/default/files/files/Workshops-Seminars/Econometrics/andrews1-051012.pdf), or [p. 4 here](https://www.ssc.wisc.edu/~xshi/econ715/Lecture_11_WeakIV.pdf), or [p. 4 here](https://ocw.mit.edu/courses/economics/14-384-time-series-analysis-fall-2013/lecture-notes/MIT14_384F13_lec7and8.pdf)).
 
-Additionally, most of the automatic 2SLS R packages don't provide an easy way to do this test! The only one I've found is in the **AER** package. Basically, create a 2SLS model with AER's `ivreg()` and then feed that model to the `anderson.rubin.ci()` function from the **ivpack** package. This doesn't work with models you make with `iv_robust()` or any of the other packages that do 2SLS—only with AER's `ivreg()`. It's a hassle.
+Additionally, most of the automatic 2SLS R packages don't provide an easy way to do this test! The only one I've found is in the {AER} package. Basically, create a 2SLS model with AER's `ivreg()` and then feed that model to the `anderson.rubin.ci()` function from the {ivpack} package. This doesn't work with models you make with `iv_robust()` or any of the other packages that do 2SLS—only with AER's `ivreg()`. It's a hassle.
 
-Installing **ivpack** is a little tricky because the maintainers have abandoned it and didn't make necessary updates to keep it on CRAN, so it was removed in June 2022. That means you can't just run `install.packages("ivpack")`. Booo.
+Installing {ivpack} is a little tricky because the maintainers have abandoned it and didn't make necessary updates to keep it on CRAN, so it was removed in June 2022. That means you can't just run `install.packages("ivpack")`. Booo.
 
-Fortunately there's a way around this. Posit keeps copies of every version of CRAN packages and provides them to the public at [Posit Public Package Manager](https://packagemanager.posit.co/client/#/). You can use Posit Package Manager to install a specific version of any package. The [last working version of **ivpack** was 1.2](https://packagemanager.posit.co/client/#/repos/cran/packages/overview?search=ivpack), so we can use the `install_version()` function from the **devtools** package to install that version, like so:
+Fortunately there's a way around this. Posit keeps copies of every version of CRAN packages and provides them to the public at [Posit Public Package Manager](https://packagemanager.posit.co/client/#/). You can use Posit Package Manager to install a specific version of any package. The [last working version of {ivpack} was 1.2](https://packagemanager.posit.co/client/#/repos/cran/packages/overview?search=ivpack), so we can use the `install_version()` function from the {devtools} package to install that version, like so:
 
 ```{r eval=FALSE}
 devtools::install_version("ivpack", "1.2")
@@ -439,7 +439,7 @@ There's no magic threshold to look for in these confidence intervals—you're mo
 
 ## Education, wages, and distance to college (control variables) (real data)
 
-For this last example we'll estimate the effect of education on wages using a different instrument—geographic proximity to colleges. This data comes from David Card's 1995 study where he did the same thing, and it's available in the **wooldridge** library as `card`. You can find a description of all variables [here](http://fmwww.bc.edu/ec-p/data/wooldridge/card.des); we'll use these:
+For this last example we'll estimate the effect of education on wages using a different instrument—geographic proximity to colleges. This data comes from David Card's 1995 study where he did the same thing, and it's available in the {wooldridge} library as `card`. You can find a description of all variables [here](http://fmwww.bc.edu/ec-p/data/wooldridge/card.des); we'll use these:
 
 | Variable name | Description                                           |
 | ------------- | ----------------------------------------------------- |

@@ -461,7 +461,7 @@ glance(model_some_controls)
 
 By controlling for income and health, we now explain 81.5% of the variation in malaria risk. That's a pretty big jump in $R^2$. Where'd it come from? Which of those new variables explained that additional variation?
 
-One way to figure this out is to calculate something called the **partial** $R^2$. To do this, we essentially fit a bunch of variations of the model and leave out individual variables one at a time and note the $R^2$ each time. That's tedious to do manually, but the `rsq.partial()` function from [the **rsq** library](https://cran.r-project.org/web/packages/rsq/) can do it for us:
+One way to figure this out is to calculate something called the **partial** $R^2$. To do this, we essentially fit a bunch of variations of the model and leave out individual variables one at a time and note the $R^2$ each time. That's tedious to do manually, but the `rsq.partial()` function from [the {rsq} library](https://cran.r-project.org/web/packages/rsq/) can do it for us:
 
 ```{r partial-net-r2, warning=FALSE}
 library(rsq)
@@ -622,7 +622,7 @@ school_ate_density | school_ate_z_density
 We can see the difference in means after accounting for confounders with inverse probability weighting, resulting in a standardized mean difference of `r 0.139 - -0.0153` (`0.139 - -0.0153`), or an effect size / Cohen's *d* of 0.11.
 
 
-## Sensitivity analysis with **tipr**
+## Sensitivity analysis with {tipr}
 
 We have average treatment effects, but we're not certain that we've actually dealt with all the confounding. There could be an unmeasured node—or lots of unmeasured nodes!—that would actually explain away the causal effect we've found.
 
@@ -688,15 +688,15 @@ ggplot(data_confounder, aes(x = x, y = y, xend = xend, yend = yend)) +
 
 If we consider both of these arrows (Z → Y and Z → X) we can actually determine how much an unmeasured Z would have to either influence Y or influence X in order to erase, explain away, or "tip" the causal effect. 
 
-To make this easy, we can use the super useful [**tipr** package](https://github.com/LucyMcGowan/tipr) by [Lucy D'Agostino McGowan](https://livefreeordichotomize.com/), which implements an approach to sensitivity analysis first presented by @LinPsatyKronmal:1998. With **tipr**, we can do one of these things:
+To make this easy, we can use the super useful [{tipr} package](https://github.com/LucyMcGowan/tipr) by [Lucy D'Agostino McGowan](https://livefreeordichotomize.com/), which implements an approach to sensitivity analysis first presented by @LinPsatyKronmal:1998. With {tipr}, we can do one of these things:
 
 - Specify a hypothetical outcome association (the β in `lm(Y ~ Z)`) to see how big the scaled mean difference would have to be to tip our results
 - Specify a hypothetical scaled mean difference to see how big the outcome association would have to be to tip our results
 - Specify both a hypothetical scaled mean difference *and* an outcome association to see how many similar confounders would have to exist to tip our results
 
-Our goal with **tipr** is to find what kind of unmeasured Z would change the causal effect enough so that its confidence interval includes 0 (and is thus no longer statistically significant)
+Our goal with {tipr} is to find what kind of unmeasured Z would change the causal effect enough so that its confidence interval includes 0 (and is thus no longer statistically significant)
 
-There are a lot of other ways to use **tipr**, with different combinations of binary and continuous treatments and outcomes, but the most general way I've found (given that we work with regression so much in this class) is to use the `tip()` function. [Check out the README](https://github.com/LucyMcGowan/tipr) for examples of all the other approaches.
+There are a lot of other ways to use {tipr}, with different combinations of binary and continuous treatments and outcomes, but the most general way I've found (given that we work with regression so much in this class) is to use the `tip()` function. [Check out the README](https://github.com/LucyMcGowan/tipr) for examples of all the other approaches.
 
 Let's try it out!
 
@@ -716,7 +716,7 @@ tidy(model_net_ate, conf.int = TRUE) |>
   tip_coef(confounder_outcome_effect = 5)
 ```
 
-The output of **tipr** gives us a bunch of useful information. Our confidence interval ranges from -11.5ish to -9ish. Our causal effect would get tipped (i.e. include 0) if the β in `lm(Y ~ Z)` was 5 *and* the standardized mean difference (`smd`) in Z across treated and untreated groups was 1.77. That's potentially a pretty big difference! 
+The output of {tipr} gives us a bunch of useful information. Our confidence interval ranges from -11.5ish to -9ish. Our causal effect would get tipped (i.e. include 0) if the β in `lm(Y ~ Z)` was 5 *and* the standardized mean difference (`smd`) in Z across treated and untreated groups was 1.77. That's potentially a pretty big difference! 
 
 To illustrate this, let's pretend that Z is something like years of education, with a mean of 15 and a standard deviation of 1.5. We'd need to see a standardized mean difference of 1.77 in Z across net users and net non-users. We can transform that 1.77 standardized difference into years of education by multiplying `1.77 * 1.5`, or `r 1.77 * 1.5`. That means we'd need to see a difference of almost 3 years in years of education between net users and net non-users. It might look something like this:
 
@@ -735,7 +735,7 @@ ggplot(fake_net_z, aes(x = z, fill = factor(net))) +
 
 We'd also need to assume that that disparity in net usage would need to be caused directly by years of education—that education causes a huge uptick in net use. 
 
-**tipr** tells you nothing about the plausibility of these results! It just says that if something had a β = 5 association with malaria risk, there'd have to be a 1.77 standardized mean difference in Z to break the causal effect. You decide how likely that is.
+{tipr} tells you nothing about the plausibility of these results! It just says that if something had a β = 5 association with malaria risk, there'd have to be a 1.77 standardized mean difference in Z to break the causal effect. You decide how likely that is.
 
 If you don't want to think about standardized mean differences, you can think about hypothetical βs instead. Let's say you pretend that there's a 0.5 SMD difference across treated and untreated values in your unknown confounder. How big would the β need to be in a regression of `lm(malaria_risk ~ Z)`?
 
@@ -792,7 +792,7 @@ Based on this sensitivity analysis, then, I feel fairly confident that unmeasure
 
 ### Real Catholic schools
 
-Let's try using **tipr** with our Catholic schools ATE. To get a sense of how big our existing confounders are currently, we'll run a temporary model instead of using the 2-step IPW model
+Let's try using {tipr} with our Catholic schools ATE. To get a sense of how big our existing confounders are currently, we'll run a temporary model instead of using the 2-step IPW model
 
 ```{r temporary-outcome-association-model-school}
 lm(math12 ~ catholic + I(inc8^2) + (inc8*math8) + fhowfar + 
@@ -866,19 +866,19 @@ We'd need just 8 of those kinds of confounders to tip the results and move the A
 Based on this sensitivity analysis, I don't feel super confident that unmeasured confounders aren't going to mess up the results. It doesn't take too much to push that 1.4-point ATE near 0.
 
 
-## Sensitivity analysis with **sensemakr**
+## Sensitivity analysis with {sensemakr}
 
 An alternative way to think about the power of an unmeasured confounder is to think about how much variation in the treatment and outcome might be explained by adding unknown variables, instead of thinking about standardized mean differences and outcome association βs. This involves thinking about $R^2$ and partial $R^2$ (that's why we reviewed it way at the beginning of this example!).
 
-A new method proposed by Carlos Cinelli and Chad Hazlett [@CinelliHazlett:2020]—and an accompanying [R package named **sensemakr**](https://carloscinelli.com/sensemakr/)—lets us do just that. We get a few specific numbers called **robustness values** that we can use to think about tipping thresholds. We can explore a few different questions with this kind of sensitivity analysis:
+A new method proposed by Carlos Cinelli and Chad Hazlett [@CinelliHazlett:2020]—and an accompanying [R package named {sensemakr}](https://carloscinelli.com/sensemakr/)—lets us do just that. We get a few specific numbers called **robustness values** that we can use to think about tipping thresholds. We can explore a few different questions with this kind of sensitivity analysis:
 
 1. How strong would a confounder (or lots of confounders) have to be to change the effect so that it's either 0, or so that its confidence interval includes 0 and is thus no longer statistically significant?
 2. In a worst case scenario, how likely is it that unobserved confounders could all act together to eliminate the effect?
 3. How plausible are these scenarios? 
 
-**sensemakr**'s main contribution to the world of sensitivity analysis is that it's much more formalized in its approach and its results. The authors [show that imagining different possible values that coefficients can take](https://carloscinelli.com/sensemakr/articles/informal_benchmarking.html) (kind of like what we did with **tipr**) can lead to erroneous results since that approach isn't really systematic. With **sensemakr**, though, you get hard, specific bounds for the different values of $R^2$ and how omitted confounders can bias your results.
+{sensemakr}'s main contribution to the world of sensitivity analysis is that it's much more formalized in its approach and its results. The authors [show that imagining different possible values that coefficients can take](https://carloscinelli.com/sensemakr/articles/informal_benchmarking.html) (kind of like what we did with {tipr}) can lead to erroneous results since that approach isn't really systematic. With {sensemakr}, though, you get hard, specific bounds for the different values of $R^2$ and how omitted confounders can bias your results.
 
-The best overview of how **sensemakr** works is this short presentation by Carlos Cinelli from 2020. You should ***absolutely*** watch it (especially from 3:00–13:00). There's also [an example with code here](http://carloscinelli.com/sensemakr/articles/sensemakr.html), and [their full paper is here](https://www.researchgate.net/publication/340965014_sensemakr_Sensitivity_Analysis_Tools_for_OLS_in_R_and_Stata) (see the section called "Simple measures for routine reporting" in particular).
+The best overview of how {sensemakr} works is this short presentation by Carlos Cinelli from 2020. You should ***absolutely*** watch it (especially from 3:00–13:00). There's also [an example with code here](http://carloscinelli.com/sensemakr/articles/sensemakr.html), and [their full paper is here](https://www.researchgate.net/publication/340965014_sensemakr_Sensitivity_Analysis_Tools_for_OLS_in_R_and_Stata) (see the section called "Simple measures for routine reporting" in particular).
 
 <div class="ratio ratio-16x9">
 <iframe src="https://www.youtube.com/embed/p3dfHj6ki68" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" frameborder="0"></iframe>
@@ -886,15 +886,15 @@ The best overview of how **sensemakr** works is this short presentation by Carlo
 
 \ 
 
-Let's explore the robustness of our two causal effects with **sensemakr**!
+Let's explore the robustness of our two causal effects with {sensemakr}!
 
 ### Fake mosquito net program
 
 First we'll look at how robust our mosquito net ATE is. To start, we need to feed the `sensemakr()` function a few different arguments:
 
-- `model`: The model object that has the ATE in it. Importantly, this needs to have other coefficients in it to work. Our existing `model_net_ate` thus won't work, since it only has one explanatory variable in it: `lm(malaria_risk ~ net, weights = iptw)`. **sensemakr** doesn't work with models like this, so we need to create a new model where we control for all our confounders instead of using matching or IPW. This will change the ATE a little, but that's okay! The point of using **sensemakr** isn't to estimate exact causal effects (we've already done that). Our goal with **sensemakr** is to, um, make sense of the results and learn what is needed to break them. We'll get bounds and partial $R^2$s that will be roughly the same across different types of ATEs (based on regression, matching, or IPW), so don't worry about the discrepancy too much.
+- `model`: The model object that has the ATE in it. Importantly, this needs to have other coefficients in it to work. Our existing `model_net_ate` thus won't work, since it only has one explanatory variable in it: `lm(malaria_risk ~ net, weights = iptw)`. {sensemakr} doesn't work with models like this, so we need to create a new model where we control for all our confounders instead of using matching or IPW. This will change the ATE a little, but that's okay! The point of using {sensemakr} isn't to estimate exact causal effects (we've already done that). Our goal with {sensemakr} is to, um, make sense of the results and learn what is needed to break them. We'll get bounds and partial $R^2$s that will be roughly the same across different types of ATEs (based on regression, matching, or IPW), so don't worry about the discrepancy too much.
 
-  Also, for whatever reason, **sensemakr** doesn't work with non-numeric treatment variables. Previously we used `net`, which is a TRUE/FALSE binary variable. Here we need to use `net_num`, which is a 0/1 numeric variable.
+  Also, for whatever reason, {sensemakr} doesn't work with non-numeric treatment variables. Previously we used `net`, which is a TRUE/FALSE binary variable. Here we need to use `net_num`, which is a 0/1 numeric variable.
 
 - `treatment`: The name of the treatment variable. Again, this has to be numeric, not a factor or TRUE/FALSE.
 
@@ -963,7 +963,7 @@ So how confident are we that unobserved confounding won't mess up our results? P
 
 ### Real Catholic schools
 
-How does **sensemakr** work with real data? Let's throw our Catholic schools ATE at it and see.
+How does {sensemakr} work with real data? Let's throw our Catholic schools ATE at it and see.
 
 First we'll rerun the model with all the controls rather than weighting with IPW, and we'll look at the partial $R^2$s to get a sense of how much variation in math scores each of these variables explains.
 
@@ -1042,8 +1042,8 @@ How confidence are we in our findings? As long as unmeasured confounders only re
 
 ## Which method should you use?
 
-Either! If you like thinking about hypothetical βs and SMDs, use **tipr**. If you like thinking about $R^2$, use **sensemakr**. Use both in the same analysis!
+Either! If you like thinking about hypothetical βs and SMDs, use {tipr}. If you like thinking about $R^2$, use {sensemakr}. Use both in the same analysis!
 
-**sensemakr** has one important limitation: it only works with models that use $R^2$. That means if you're estimating outcome models with things like multilevel models or logistic regression, you can't use **sensemakr**. **tipr** should work with any estimate that has a confidence interval, though, so you should be able to use it with pretty much any type of model. 
+{sensemakr} has one important limitation: it only works with models that use $R^2$. That means if you're estimating outcome models with things like multilevel models or logistic regression, you can't use {sensemakr}. {tipr} should work with any estimate that has a confidence interval, though, so you should be able to use it with pretty much any type of model. 
 
-Remember that **sensemakr**'s claim to fame is that it has clear and specific bounds. If you're using **tipr**, you can be more systematic than throwing different βs and SMDs into the function. Choose a benchmark variable and see if your results tip if you include something as strong, twice as strong, and three times its size, either as a β on the outcome or as the between-group SMD.
+Remember that {sensemakr}'s claim to fame is that it has clear and specific bounds. If you're using {tipr}, you can be more systematic than throwing different βs and SMDs into the function. Choose a benchmark variable and see if your results tip if you include something as strong, twice as strong, and three times its size, either as a β on the outcome or as the between-group SMD.

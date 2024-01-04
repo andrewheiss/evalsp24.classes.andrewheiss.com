@@ -125,7 +125,7 @@ ggplot(happiness_with_effect, aes(x = happiness_modified)) +
   coord_cartesian(xlim = c(0, 11))
 ```
 
-To fix that, we can use the `rescale()` function from the **scales** package to force the new `happiness_modified` variable to fit back in its original range:
+To fix that, we can use the `rescale()` function from the {scales} package to force the new `happiness_modified` variable to fit back in its original range:
 
 ```{r happiness-scaled-down}
 happiness_with_effect <- happiness_with_effect |>
@@ -542,7 +542,7 @@ ggdag(mosquito_dag) +
 
      Instead, we'll do some fun trickery. We'll create something called a "bed net score" that gets bigger as income and health increase. We'll say that a 1 point increase in health score is associated with a 1.5 point increase in bed net score, and a 1 dollar increase in income is associated with a 0.5 point increase in bed net score. This results in a column that ranges all over the place, from 200 to 500 (in this case; that won't always be true). This column definitely doesn't look like a TRUE/FALSE binary column—it's just a bunch of numbers. That's okay!
 
-     We'll then use the `rescale()` function from the **scales** package to take this bed net score and scale it down so that it goes from 0.05 to 0.95. This represents a person's probability of using a bed net.
+     We'll then use the `rescale()` function from the {scales} package to take this bed net score and scale it down so that it goes from 0.05 to 0.95. This represents a person's probability of using a bed net.
 
      Finally, we'll use that probability in the `rbinom()` function to generate a 0 or 1 for each person. Some people will have a high probability because of their income and health, like 0.9, and will most likely use a net. Some people might have a 0.15 probability and will likely not use a net.
 
@@ -1115,7 +1115,7 @@ ggplot(rdd_data, aes(x = income, y = net_fuzzy, color = below_cutoff)) +
    \text{Malaria risk} = \beta_0 + \beta_1 \text{Income}_\text{centered} + \beta_2 \text{Net} + \varepsilon
    $$
 
-   We'll use a bandwidth of ±$50, because why not. In real life you'd be more careful about bandwidth selection (or use `rdbwselect()` from the **rdrobust** package to find the optimal bandwidth)
+   We'll use a bandwidth of ±$50, because why not. In real life you'd be more careful about bandwidth selection (or use `rdbwselect()` from the {rdrobust} package to find the optimal bandwidth)
 
 ```{r sharp-results, indent="   ", message=FALSE}
 ggplot(rdd_data, aes(x = income, y = malaria_risk_sharp, color = net_sharp)) +
@@ -1171,7 +1171,7 @@ ggplot(rdd_data, aes(x = income, y = malaria_risk_fuzzy, color = net_fuzzy)) +
    \end{aligned}
    $$
 
-   Instead of doing these two stages by hand (ugh), we'll do the 2SLS regression with the `iv_robust()` function from the **estimatr** package:
+   Instead of doing these two stages by hand (ugh), we'll do the 2SLS regression with the `iv_robust()` function from the {estimatr} package:
 
 ```{r indent="   "}
 library(estimatr)
@@ -1183,7 +1183,7 @@ model_fuzzy <- iv_robust(malaria_risk_fuzzy ~ income_centered + net_fuzzy |
 tidy(model_fuzzy)
 ```
 
-   The effect is slightly larger now (−11.2), but that's because we are looking at a doubly local ATE: compliers in the bandwidth. But still, it's close to −10, so that's good. And we could probably get it closer if we did other mathy shenanigans like adding squared and cubed terms or using nonparametric estimation with `rdrobust()` in the **rdrobust** package.
+   The effect is slightly larger now (−11.2), but that's because we are looking at a doubly local ATE: compliers in the bandwidth. But still, it's close to −10, so that's good. And we could probably get it closer if we did other mathy shenanigans like adding squared and cubed terms or using nonparametric estimation with `rdrobust()` in the {rdrobust} package.
 
 7. **Save the data.**
 
@@ -1341,7 +1341,7 @@ tidy(model_forbidden)
    \end{aligned}
    $$
 
-   We'll run this 2SLS model with the `iv_robust()` function from the **estimatr** package:
+   We'll run this 2SLS model with the `iv_robust()` function from the {estimatr} package:
 
 ```{r indent="   "}
 library(estimatr)
@@ -1375,9 +1375,9 @@ There are several R packages that let you generate synthetic data with built-in 
 
 ### fabricatr
 
-The [**fabricatr** package](https://declaredesign.org/r/fabricatr/) is a very powerful package for simulating data. It was invented specifically for using in preregistered studies, so it can handle a ton of different data structures like [panel data](https://declaredesign.org/r/fabricatr/articles/cross_classified.html) and [time series data](https://declaredesign.org/r/fabricatr/articles/time_series.html). You can build in causal effects and force columns to be correlated with each other.
+The [{fabricatr} package](https://declaredesign.org/r/fabricatr/) is a very powerful package for simulating data. It was invented specifically for using in preregistered studies, so it can handle a ton of different data structures like [panel data](https://declaredesign.org/r/fabricatr/articles/cross_classified.html) and [time series data](https://declaredesign.org/r/fabricatr/articles/time_series.html). You can build in causal effects and force columns to be correlated with each other.
 
-**fabricatr** has exceptionally well-written documentation with like a billion detailed examples (see [the right sidebar here](https://declaredesign.org/r/fabricatr/)). This is a gold standard package and you should most definitely check it out.
+{fabricatr} has exceptionally well-written documentation with like a billion detailed examples (see [the right sidebar here](https://declaredesign.org/r/fabricatr/)). This is a gold standard package and you should most definitely check it out.
 
 Here's a simple example of simulating a bunch of voters and making older ones more likely to vote:
 
@@ -1434,11 +1434,11 @@ ggplot(panel_global_data, aes(x = year, y = gdp_measure, color = countries)) +
   labs(x = "Year", y = "Log GDP", color = "Countries")
 ```
 
-That all just scratches the surface of what **fabricatr** can do. Again, check the examples and documentation and play around with it to see what else it can do.
+That all just scratches the surface of what {fabricatr} can do. Again, check the examples and documentation and play around with it to see what else it can do.
 
 ### wakefield
 
-The [**wakefield** package](https://github.com/trinker/wakefield) is jokingly named after [Andrew Wakefield](https://en.wikipedia.org/wiki/Andrew_Wakefield), the British researcher who invented fake data to show that the MMR vaccine causes autism. This package lets you quickly generate random fake datasets. It has a bunch of pre-set column possibilities, like age, color, Likert scales, political parties, religion, and so on, and you can also use standard R functions like `rnorm()`, `rbinom()`, or `rbeta()`. It also lets you create repeated measures (1st grade score, 2nd grade score, 3rd grade score, etc.) and build correlations between variables.
+The [{wakefield} package](https://github.com/trinker/wakefield) is jokingly named after [Andrew Wakefield](https://en.wikipedia.org/wiki/Andrew_Wakefield), the British researcher who invented fake data to show that the MMR vaccine causes autism. This package lets you quickly generate random fake datasets. It has a bunch of pre-set column possibilities, like age, color, Likert scales, political parties, religion, and so on, and you can also use standard R functions like `rnorm()`, `rbinom()`, or `rbeta()`. It also lets you create repeated measures (1st grade score, 2nd grade score, 3rd grade score, etc.) and build correlations between variables.
 
 You should *definitely* [look at the documentation](https://github.com/trinker/wakefield) to see a ton of examples of how it all works. Here's a basic example:
 
@@ -1463,13 +1463,13 @@ head(wakefield_data)
 
 ### faux
 
-The [**faux** package](https://debruine.github.io/faux/) does some really neat things. We can create data that has built-in correlations without going through all the math. For instance, let's say we have 3 variables A, B, and C that are normally distributed with these parameters:
+The [{faux} package](https://debruine.github.io/faux/) does some really neat things. We can create data that has built-in correlations without going through all the math. For instance, let's say we have 3 variables A, B, and C that are normally distributed with these parameters:
 
 - **A**: mean = 10, sd = 2
 - **B**: mean = 5, sd = 1
 - **C**: mean = 20, sd = 5
 
-We want A to correlate with B at r = 0.8 (highly correlated), A to correlate with C at r = 0.3 (less correlated), and B to correlate with C at r = 0.4 (moderately correlated). Here's how to create that data with **faux**:
+We want A to correlate with B at r = 0.8 (highly correlated), A to correlate with C at r = 0.3 (less correlated), and B to correlate with C at r = 0.4 (moderately correlated). Here's how to create that data with {faux}:
 
 ```{r warning=FALSE, message=FALSE}
 library(faux)
@@ -1498,4 +1498,4 @@ cor(faux_data$A, faux_data$C)
 cor(faux_data$B, faux_data$C)
 ```
 
-**faux** can do a ton of other things too, so make sure you check out [the documentation and all the articles with examples here](https://debruine.github.io/faux/).
+{faux} can do a ton of other things too, so make sure you check out [the documentation and all the articles with examples here](https://debruine.github.io/faux/).

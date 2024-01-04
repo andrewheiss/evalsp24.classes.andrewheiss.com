@@ -154,7 +154,7 @@ We can use matching techniques to pair up similar observations and make the unco
 
 Because we know from the DAG that income, nighttime temperatures, and health help cause both net use and malaria risk (and confound that relationship!), we'll try to find observations with similar values of income, temperatures, and health that both used and didn't use nets.
 
-We can use the `matchit()` function from the **MatchIt** R package to match points based on Mahalanobis distance. There are lots of other options available—see [the online documentation](http://gking.harvard.edu/matchit) for details.
+We can use the `matchit()` function from the {MatchIt} R package to match points based on Mahalanobis distance. There are lots of other options available—see [the online documentation](http://gking.harvard.edu/matchit) for details.
 
 We can include the `replace = TRUE` option to make it so that points that have been matched already can be matched again (that is, we're not forcing a one-to-one matching; we have one-to-many matching instead).
 
@@ -187,7 +187,7 @@ model_matched <- lm(malaria_risk ~ net,
 tidy(model_matched)
 ```
 
-The `r tidy(model_matched) |> filter(term == "netTRUE") |> pull(estimate) |> abs()` point decrease here is better than the naive estimate, but it's not the true 10 point causal effect (that I built in to the data). Perhaps that's because the matches aren't great, or maybe we threw away too much data. There are a host of diagnostics you can look at to see how well things are matched (check [the documentation for **MatchIt**](http://gking.harvard.edu/matchit) for examples.)
+The `r tidy(model_matched) |> filter(term == "netTRUE") |> pull(estimate) |> abs()` point decrease here is better than the naive estimate, but it's not the true 10 point causal effect (that I built in to the data). Perhaps that's because the matches aren't great, or maybe we threw away too much data. There are a host of diagnostics you can look at to see how well things are matched (check [the documentation for {MatchIt}](http://gking.harvard.edu/matchit) for examples.)
 
 Actually, the most likely culprit for the incorrect estimate is that there's some imbalance in the data. Because we set `replace = TRUE`, we did _not_ do 1:1 matching—untreated observations were paired with more than one treated observation. As a result, the multiply-matched observations are getting overcounted and have too much importance in the model. Fortunately, `matchit()` provides us with a column called `weights` that allows us to scale down the overmatched observations when running the model. **Importantly,** these weights have nothing to do with causal inference or backdoors or inverse probability weighting—their only purpose is to help scale down the imbalance arising from overmatching. If you use `replace = FALSE` and enforce 1:1 matching, the whole `weights` column will just be 1.
 

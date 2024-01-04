@@ -82,7 +82,7 @@ ggplot(fitted_sans_gentoo, aes(x = .fitted, y = .resid)) +
   geom_smooth(method = "lm")
 ```
 
-We can do a neat little visual test for this. Let's shuffle the residuals a bunch of times and make scatterplots with those shuffled values. If we can't spot the actual residual plot among the shuffled ones, we can be fairly confident that there aren't any patterns. [The **nullabor** package](https://dicook.github.io/nullabor/) makes this easy, allowing us to create a lineup of shuffled plots with the real residual plot mixed in there somewhere.
+We can do a neat little visual test for this. Let's shuffle the residuals a bunch of times and make scatterplots with those shuffled values. If we can't spot the actual residual plot among the shuffled ones, we can be fairly confident that there aren't any patterns. [The {nullabor} package](https://dicook.github.io/nullabor/) makes this easy, allowing us to create a lineup of shuffled plots with the real residual plot mixed in there somewhere.
 
 ```{r resid-shuffled}
 library(nullabor)
@@ -206,11 +206,11 @@ Basically add `, robust` (or even just `,r`) or `cluster(whatever)` to the end o
 Doing this in R is a little trickier since our favorite standard `lm()` command doesn't have built-in support for robust or clustered standard errors, but there are some extra packages that make it really easy to do. Let's look at three different ways.
 
 
-### **sandwich** and `coeftest()`
+### {sandwich} and `coeftest()`
 
-One way to adjust errors is to use [the **sandwich** package](http://sandwich.r-forge.r-project.org/articles/sandwich.html), which actually handles the standard error correction behind the scenes for most of the other approaches we'll look at. **sandwich** comes with a bunch of standard error correction functions, like `vcovHC()` for heteroskedasticity-consistent (HC) errors, `vcovHAC()` for heteroskedastiticy- and autocorrelation-consistent (HAC) errors, and `vcovCL()` for clustered errors ([see their website](http://sandwich.r-forge.r-project.org/articles/sandwich.html) for all the different ones). Within each of these different functions, there are different types (again, things that fancy smart statisticians figure out). If you want to replicate Stata's `, robust` option exactly, you can use `vcovHC(type = "HC1")`.
+One way to adjust errors is to use [the {sandwich} package](http://sandwich.r-forge.r-project.org/articles/sandwich.html), which actually handles the standard error correction behind the scenes for most of the other approaches we'll look at. {sandwich} comes with a bunch of standard error correction functions, like `vcovHC()` for heteroskedasticity-consistent (HC) errors, `vcovHAC()` for heteroskedastiticy- and autocorrelation-consistent (HAC) errors, and `vcovCL()` for clustered errors ([see their website](http://sandwich.r-forge.r-project.org/articles/sandwich.html) for all the different ones). Within each of these different functions, there are different types (again, things that fancy smart statisticians figure out). If you want to replicate Stata's `, robust` option exactly, you can use `vcovHC(type = "HC1")`.
 
-You can use these correction functions as an argument to the `coeftest()` function, the results of which conveniently work with `tidy()` and other **broom** functions. Here's how we can get robust standard errors for our original penguin model (`model1`):
+You can use these correction functions as an argument to the `coeftest()` function, the results of which conveniently work with `tidy()` and other {broom} functions. Here's how we can get robust standard errors for our original penguin model (`model1`):
 
 ```{r robust-coeftest, warning=FALSE, message=FALSE}
 library(sandwich)  # Adjust standard errors
@@ -262,13 +262,13 @@ tidy(model1_robust_clustered_corrected, conf.int = TRUE) |>
 There we go. Now we have *absolutely massive* confidence intervals ranging from 5 to 115. Who even knows what the true parameter is?! Our net probably caught it.
 
 
-### **fixest** and `feols()`
+### {fixest} and `feols()`
 
-Standard error adjustment with the functions from **sandwich** and `coeftest()` works fine, but it requires multiple steps: (1) create a model with `lm()`, and (2) feed that model to `coeftest()`. It would be great if we could do that all at the same time in one command! Fortunately there are a few R packages that let us do this.
+Standard error adjustment with the functions from {sandwich} and `coeftest()` works fine, but it requires multiple steps: (1) create a model with `lm()`, and (2) feed that model to `coeftest()`. It would be great if we could do that all at the same time in one command! Fortunately there are a few R packages that let us do this.
 
-The `feols()` function from the [**fixest** package](https://lrberge.github.io/fixest/) was designed for OLS models that have lots of fixed effects (i.e. indicator variables), and it handles lots of fixed effects really really fast. It can also handle instrumental variables (which [we'll get to later in the semester](/example/iv.qmd)). It's a fantastic way to run models in R. It uses the same formula syntax as `lm()`, but with one extra feature: you can put fixed effects (again, indicator variables) after a `|` to specify that the variables are actually fixed effects. This (1) speeds up model estimation, and (2) hides the fixed effects from `summary()` and `tidy()` output, which is super convenient if you're using something like county, state, or country fixed effects and you don't want to see dozens or hundreds of extra rows in the regression output.
+The `feols()` function from the [{fixest} package](https://lrberge.github.io/fixest/) was designed for OLS models that have lots of fixed effects (i.e. indicator variables), and it handles lots of fixed effects really really fast. It can also handle instrumental variables (which [we'll get to later in the semester](/example/iv.qmd)). It's a fantastic way to run models in R. It uses the same formula syntax as `lm()`, but with one extra feature: you can put fixed effects (again, indicator variables) after a `|` to specify that the variables are actually fixed effects. This (1) speeds up model estimation, and (2) hides the fixed effects from `summary()` and `tidy()` output, which is super convenient if you're using something like county, state, or country fixed effects and you don't want to see dozens or hundreds of extra rows in the regression output.
 
-It includes an argument `vcov` for specifying how you want to handle the standard errors, and [you can use lots of different options](https://lrberge.github.io/fixest/articles/standard_errors.html). Here we'll make two models: one with heteroskedastic robust SEs (basically what Stata uses, or like `vcovHC()` in **sandwich**), and one with clustered robust standard errors (similar to `vcovCL()` in **sandwich**):
+It includes an argument `vcov` for specifying how you want to handle the standard errors, and [you can use lots of different options](https://lrberge.github.io/fixest/articles/standard_errors.html). Here we'll make two models: one with heteroskedastic robust SEs (basically what Stata uses, or like `vcovHC()` in {sandwich}), and one with clustered robust standard errors (similar to `vcovCL()` in {sandwich}):
 
 ```{r feols-errors}
 library(fixest)  # Run models with feols()
@@ -289,9 +289,9 @@ tidy(model_feols_clustered, conf.int = TRUE) |> filter(term == "bill_length_mm")
 
 We get basically the same standard errors we did before with `coeftest(lm(), vcov = ...)`, only now we did it all in one step.
 
-### **estimatr** and `lm_robust()`
+### {estimatr} and `lm_robust()`
 
-The `lm_robust()` function in [the **estimatr** package](https://declaredesign.org/r/estimatr/articles/getting-started.html) also allows you to calculate robust standard errors in one step using the `se_type` argument. See the documentation for all the possible options. Here we can replicate Stata's standard errors by using `se_type = "stata"` (`se_type = "HC1"` would do the same thing). `lm_robust()` also lets you specify fixed effects separately so that they're hidden in the results, but instead of including them in the formula like we did with `feols()`, we have to use the `fixed_effects` argument.
+The `lm_robust()` function in [the {estimatr} package](https://declaredesign.org/r/estimatr/articles/getting-started.html) also allows you to calculate robust standard errors in one step using the `se_type` argument. See the documentation for all the possible options. Here we can replicate Stata's standard errors by using `se_type = "stata"` (`se_type = "HC1"` would do the same thing). `lm_robust()` also lets you specify fixed effects separately so that they're hidden in the results, but instead of including them in the formula like we did with `feols()`, we have to use the `fixed_effects` argument.
 
 ```{r lmrobust-errors}
 library(estimatr)  # Run models with lm_robust()
@@ -319,7 +319,7 @@ tidy(model_feols_basic, se = "hetero") |> filter(term == "bill_length_mm")
 tidy(model_feols_basic, cluster = "species") |> filter(term == "bill_length_mm")
 ```
 
-The `modelsummary()` function from [the **modelsummary** package](https://vincentarelbundock.github.io/modelsummary/) also lets us make SE adjustments on the fly. Check this out—with just one basic model with `lm()`, we can get all these different kinds of standard errors!
+The `modelsummary()` function from [the {modelsummary} package](https://modelsummary.com/) also lets us make SE adjustments on the fly. Check this out—with just one basic model with `lm()`, we can get all these different kinds of standard errors!
 
 ```{r modelsummary-on-the-fly}
 library(modelsummary)  # Make nice tables and plots for models
@@ -341,7 +341,7 @@ modelsummary(model_basic,
 
 ### Plot all these confidence intervals
 
-The **modelsummary** package also comes with a `modelplot()` function that will create a coefficient plot showing the point estimates and 95% confidence intervals. Look at all these different standard errors!
+The {modelsummary} package also comes with a `modelplot()` function that will create a coefficient plot showing the point estimates and 95% confidence intervals. Look at all these different standard errors!
 
 ```{r modelsummary-coef-plot, fig.width=8, fig.height=4, message=FALSE, warning=FALSE}
 modelplot(

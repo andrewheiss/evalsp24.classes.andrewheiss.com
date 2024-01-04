@@ -287,7 +287,7 @@ Sometimes you'll end up with negative numbers that make no sense. Look at income
 
 To fix this, you can use something called a [truncated normal distribution](https://en.wikipedia.org/wiki/Truncated_normal_distribution), which lets you specify a mean and standard deviation, just like a regular normal distribution, but also lets you specify a minimum and/or maximum so you don't get values that go too high or too low.
 
-R doesn't have a truncated normal function built-in, but you can install [the **truncnorm** package](https://github.com/olafmersmann/truncnorm) and use the `rtruncnorm()` function. A truncated normal distribution has four parameters:
+R doesn't have a truncated normal function built-in, but you can install [the {truncnorm} package](https://github.com/olafmersmann/truncnorm) and use the `rtruncnorm()` function. A truncated normal distribution has four parameters:
 
 1. A mean (`mean`)
 2. A standard deviation (`sd`)
@@ -608,7 +608,7 @@ All these different distributions are good at generating general shapes:
 
 The shapes are great, but you also care about the values of these numbers. This can be tricky. As we saw earlier with a normal distribution, sometimes you'll get values that go below zero or above some value you care about. We fixed that with a truncated normal distribution, but not all distributions have truncated versions. Additionally, if you're using a Beta distribution, you're stuck in a 0–1 scale (or 0–10 or 0–100 if you multiply the value by 10 or 100 or whatever).
 
-What if you want a fun skewed Beta shape for a variable like income or some other value that doesn't fit within a 0–1 range? You can rescale any set of numbers after-the-fact using the `rescale()` function from the **scales** library and rescale things to whatever range you want.
+What if you want a fun skewed Beta shape for a variable like income or some other value that doesn't fit within a 0–1 range? You can rescale any set of numbers after-the-fact using the `rescale()` function from the {scales} library and rescale things to whatever range you want.
 
 For instance, let's say that income isn't normally distributed, but is right-skewed with a handful of rich people. This might look like a Beta distribution with `shape1 = 2` and `shape2 = 5`:
 

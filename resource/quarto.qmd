@@ -98,7 +98,7 @@ Names cannot contain spaces, but they can contain underscores and dashes. **All 
 
 ## Chunk options
 
-There are a bunch of different options you can set for each chunk. You can see a complete list in the [R Markdown Reference Guide](https://rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf) or at [**knitr**'s website](https://yihui.org/knitr/options/).
+There are a bunch of different options you can set for each chunk. You can see a complete list in the [R Markdown Reference Guide](https://rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf) or at [{knitr}'s website](https://yihui.org/knitr/options/).
 
 Set chunk options as special comments following `#|` at the top of the chunk (this is the preferred way):
 

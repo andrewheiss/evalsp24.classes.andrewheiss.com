@@ -6,7 +6,7 @@ title: "R, RStudio, and the tidyverse"
 
 For this week's problem set, you need to work through a few of RStudio's introductory primers. You'll do these in your browser and type code and see results there.
 
-You'll learn some of the basics of R, as well as some powerful methods for manipulating data with the **dplyr** package.
+You'll learn some of the basics of R, as well as some powerful methods for manipulating data with the {dplyr} package.
 
 Complete these primers. It seems like there are a lot, but they're short and go fairly quickly (especially as you get the hang of the syntax). Also, **I have no way of seeing what you do or what you get wrong or right**, and that's totally fine! If you get stuck and want to skip some (or if it gets too easy), go right ahead and skip them!
 

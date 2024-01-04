@@ -164,7 +164,7 @@ tidy(name_of_model) |>
 # DON'T RUN tidy() or modelsummary() without filtering out month and block coefficients
 ```
 
-That slowness is miserable. You can get around that by using a different function for OLS that has built-in support for fixed effects (or indicator variables). The `feols()` (fixed-effects OLS) function from the **fixest** package lets you include indicator variables in regression in a more sophisticated way. The math is lighting fast, and the coefficients for each block and year are hidden by default (though you can still see them if you really want).
+That slowness is miserable. You can get around that by using a different function for OLS that has built-in support for fixed effects (or indicator variables). The `feols()` (fixed-effects OLS) function from the {fixest} package lets you include indicator variables in regression in a more sophisticated way. The math is lighting fast, and the coefficients for each block and year are hidden by default (though you can still see them if you really want).
 
 The syntax for `feols()` is the same as `lm()`, but with a slight change to accommodate the fixed effects. Use the `|` character to specify a section of the formula that contains the fixed effects: 
 
@@ -173,7 +173,7 @@ model_name <- feols(car_theft ~ same_block*after | block + month,
                     data = terror)
 ```
 
-One more cool thing that `feols()` can do that normal `lm()` can't is provide robust standard errors. There is systematic variation within blocks and across time, and we can mathematically account for that variation in the standard errors of the regression. (If you've ever used Stata you do this with `reg y x, robust`). If you ever want to use robust and/or clustered standard errors with regular OLS regression in R, check out the [`lm_robust()` function in the **estimatr** package](https://declaredesign.org/r/estimatr/articles/getting-started.html#lm_robust). With `feols()`, you can add an argument to `tidy()` to get the robust standard errors.
+One more cool thing that `feols()` can do that normal `lm()` can't is provide robust standard errors. There is systematic variation within blocks and across time, and we can mathematically account for that variation in the standard errors of the regression. (If you've ever used Stata you do this with `reg y x, robust`). If you ever want to use robust and/or clustered standard errors with regular OLS regression in R, check out the [`lm_robust()` function in the {estimatr} package](https://declaredesign.org/r/estimatr/articles/getting-started.html#lm_robust). With `feols()`, you can add an argument to `tidy()` to get the robust standard errors.
 
 ```r
 # Stata's default robust SE algorithm is called "Huber-White standard errors", 

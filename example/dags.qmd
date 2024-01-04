@@ -15,7 +15,7 @@ This video shows how to use it:
 
 ## DAGs with R, ggdag, and dagitty
 
-You can use the [**ggdag**](https://ggdag.malco.io/) and [**dagitty**](http://dagitty.net/primer/) packages in R to build and work with DAGs too. I typically draw an initial DAG in my browser with dagitty.net and then I rewrite it in code in R so that it's more official and formal and reproducible.
+You can use the [{ggdag}](https://ggdag.malco.io/) and [{dagitty}](http://dagitty.net/primer/) packages in R to build and work with DAGs too. I typically draw an initial DAG in my browser with dagitty.net and then I rewrite it in code in R so that it's more official and formal and reproducible.
 
 ### Live coding example
 
@@ -41,7 +41,7 @@ library(ggdag)      # For plotting DAGs
 library(dagitty)    # For working with DAG logic
 ```
 
-The general process for making and working with DAGs in R is to create a DAG object with `dagify()` and then plot it with `ggdag()`. The documentation for **ggdag** is really good and helpful and full of examples. Check these pages for all sorts of additional details:
+The general process for making and working with DAGs in R is to create a DAG object with `dagify()` and then plot it with `ggdag()`. The documentation for {ggdag} is really good and helpful and full of examples. Check these pages for all sorts of additional details:
 
 - ["An introduction to ggdag"](https://ggdag.malco.io/articles/intro-to-ggdag.html)
 - ["An introduction to directed acyclic graphs"](https://ggdag.malco.io/articles/intro-to-dags.html)
@@ -133,32 +133,32 @@ ggdag_status(dag_with_coords_and_labels,
 
 ### Paths and adjustment sets
 
-R can also perform analysis on DAG objects. For example, we can find all the testable implications from the DAG using the `impliedConditionalIndependencies()` function from the **dagitty** package. For this simple DAG, there is only one: `a` should be independent of `b`. If we had a dataset with columns for each of these variables, we could check if this is true by running `cor(a, b)` to see if the two are related.
+R can also perform analysis on DAG objects. For example, we can find all the testable implications from the DAG using the `impliedConditionalIndependencies()` function from the {dagitty} package. For this simple DAG, there is only one: `a` should be independent of `b`. If we had a dataset with columns for each of these variables, we could check if this is true by running `cor(a, b)` to see if the two are related.
 
 ```{r find-independencies}
 impliedConditionalIndependencies(simple_dag)
 ```
 
-We can also find all the paths between `x` and `y` using the `paths()` function from the **dagitty** package. We can see that there are three open paths between `x` and `y`:
+We can also find all the paths between `x` and `y` using the `paths()` function from the {dagitty} package. We can see that there are three open paths between `x` and `y`:
 
 ```{r find-paths}
 paths(simple_dag)
 ```
 
-The first open path is fine—we want a single *d*-connected relationship between treatment and outcome—but the other two indicate that there is confounding from `a` and `b`. We can see what each of these paths are with the `ggdag_paths()` function from the **ggdag** package:
+The first open path is fine—we want a single *d*-connected relationship between treatment and outcome—but the other two indicate that there is confounding from `a` and `b`. We can see what each of these paths are with the `ggdag_paths()` function from the {ggdag} package:
 
 ```{r plot-dag-paths, fig.width=8}
 ggdag_paths(simple_dag_with_coords) +
   theme_dag()
 ```
 
-Instead of listing out all the possible paths and identifying backdoors by hand, you can use the `adjustmentSets()` function in the **dagitty** package to programmatically find all the nodes that need to be adjusted. Here we see that both `a` and `b` need to be controlled for to isolate the `x -> y` relationship.
+Instead of listing out all the possible paths and identifying backdoors by hand, you can use the `adjustmentSets()` function in the {dagitty} package to programmatically find all the nodes that need to be adjusted. Here we see that both `a` and `b` need to be controlled for to isolate the `x -> y` relationship.
 
 ```{r find-adjustment-sets}
 adjustmentSets(simple_dag)
 ```
 
-You can also visualize the adjustment sets with `ggdag_adjustment_set()` in the **ggdag** package. Make sure you set `shadow = TRUE` to draw the arrows coming out of the adjusted nodes—by default, those are not included.
+You can also visualize the adjustment sets with `ggdag_adjustment_set()` in the {ggdag} package. Make sure you set `shadow = TRUE` to draw the arrows coming out of the adjusted nodes—by default, those are not included.
 
 ```{r plot-adjustment-sets}
 ggdag_adjustment_set(simple_dag_with_coords, shadow = TRUE) +
@@ -175,7 +175,7 @@ If you use [dagitty.net](http://dagitty.net/) to draw a DAG, you'll notice that 
 knitr::include_graphics("/files/img/example/dagitty-code.png", error = FALSE)
 ```
 
-You can copy that `dag{ ... }` code and paste it into R to define a DAG object rather than use the `dagify()` function. To do this, use the `dagitty()` function from the **dagitty** library and include the whole generated model code in single quotes (`''`):
+You can copy that `dag{ ... }` code and paste it into R to define a DAG object rather than use the `dagify()` function. To do this, use the `dagitty()` function from the {dagitty} library and include the whole generated model code in single quotes (`''`):
 
 ```{r code-from-dagitty}
 model_from_dagitty <- dagitty('dag {
