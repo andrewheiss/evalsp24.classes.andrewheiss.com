@@ -3,6 +3,7 @@ title: "Making fake data"
 subtitle: "Problem set 9 --- PMAP 8521, Spring 2024"
 author: "YOUR NAME HERE"
 date: "DATE GOES HERE"
+date-format: "long"
 format:
   html:
     toc: true

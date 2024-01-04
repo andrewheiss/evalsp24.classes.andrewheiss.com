@@ -3,6 +3,7 @@ title: "RCTs, matching, and inverse probability weighting"
 subtitle: "Problem set 3 --- PMAP 8521, Spring 2024"
 author: "YOUR NAME HERE"
 date: "DATE GOES HERE"
+date-format: "long"
 format:
   html:
     toc: true

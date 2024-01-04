@@ -3,6 +3,7 @@ title: "Background and theory"
 subtitle: "Evaluation, part 1 --- PMAP 8521, Spring 2024"
 author: "YOUR NAME HERE"
 date: "DATE GOES HERE"
+date-format: "long"
 format:
   html:
     toc: true

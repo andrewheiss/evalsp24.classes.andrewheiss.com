@@ -3,6 +3,7 @@ title: "Mandatory school attendance program"
 subtitle: "Problem set 6 --- PMAP 8521, Spring 2024"
 author: "YOUR NAME HERE"
 date: "DATE GOES HERE"
+date-format: "long"
 format:
   html:
     toc: true
