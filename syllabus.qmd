@@ -224,7 +224,7 @@ This syllabus reflects a plan for the semester. Deviations may become necessary 
 
 ### Student hours
 
-Please watch this video:
+Please watch this video: <small>(*this is not me, btw—this is a different Andrew*)</small>
 
 <iframe src="https://player.vimeo.com/video/270014784" width="640" height="360" frameborder="0" allow="autoplay; fullscreen" allowfullscreen style="display: block; margin: 0 auto 1rem;"></iframe>
 
