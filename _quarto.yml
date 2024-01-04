@@ -58,7 +58,7 @@ website:
         file: example/index.qmd
       - text: "Resources"
         file: resource/index.qmd
-      - text: "News"
+      - text: "News & FAQs"
         file: news/index.qmd
       - icon: slack
         href: "https://gsuevalsp2024.slack.com"

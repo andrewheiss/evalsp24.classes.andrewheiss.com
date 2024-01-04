@@ -1,8 +1,8 @@
 ---
-title: "News"
+title: "News & FAQs"
 listing:
   id: "news-table"
-  contents: .
+  contents: "."
   sort: "date desc"
   page-size: 100
   type: table
