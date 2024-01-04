@@ -23,10 +23,8 @@ tar_config_set(
   script = here::here("_targets.R")
 )
 
-Sys.setenv("UPLOAD_WEBSITES" = FALSE)
-
 tar_option_set(
-  packages = c("tibble"),
+  packages = c("tidyverse"),
   format = "rds",
   workspace_on_error = TRUE,
   controller = crew_controller_local(workers = 4)
