@@ -31,7 +31,7 @@ The slides for today's lesson are available online as an HTML file. Use the butt
 
 ```{r show-slide-tabs, echo=FALSE, results="asis"}
 slide_buttons("/slides/03-slides")
-slide_tabs(slide_details, "/slides/03-slides.html")
+slide_frame("/slides/03-slides.html")
 ```
 
 :::{.callout-tip}

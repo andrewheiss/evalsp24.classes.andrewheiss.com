@@ -2,6 +2,14 @@ slide_buttons <- function(slide_id) {
   glue::glue('<p class="buttons"><a class="btn btn-danger" target="_blank" href="{slide_id}.html"><i class="fa-solid fa-arrow-up-right-from-square"></i> View all slides in new window</a> <a class="btn btn-danger" target="_blank" href="{slide_id}.pdf" role="button"><i class="fa-solid fa-file-pdf"></i> Download PDF of all slides</a></p>')
 }
 
+slide_frame <- function(slide_url) {
+  glue::glue(
+    '<div class="ratio ratio-16x9">\n',
+    '<iframe src="{slide_url}"></iframe>\n',
+    '</div>'
+  )
+}
+
 slide_tabs <- function(slide_df, slide_url) {
   slugify <- function(x) {
     x <- stringr::str_replace_all(x, "[^[:alnum:] ]", "")
