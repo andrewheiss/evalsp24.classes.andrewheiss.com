@@ -40,7 +40,7 @@ The slides for today's lesson are available online as an HTML file. Use the butt
 
 ```{r show-slide-tabs, echo=FALSE, results="asis"}
 slide_buttons("/slides/01-slides")
-slide_tabs(slide_details, "/slides/01-slides.html")
+slide_frame("/slides/01-slides.html")
 ```
 
 :::{.callout-tip}
@@ -58,7 +58,6 @@ slide_tabs(slide_details, "/slides/01-slides.html")
 youtube_list(slide_details, playlist_id)
 ```
 
-::: {.content-hidden}
 
 ## In-class stuff
 
@@ -68,7 +67,7 @@ Here are all the materials we'll use in class:
 
 RStudio labs:
 
-- [Posit.cloud project](https://posit.cloud/spaces/323551/content/5254772)
+- [Posit.cloud project](https://posit.cloud/spaces/462899/content/7344112)
 - [Project `.zip` file](/projects/01-class.zip)
 - [Lab slides 1: Markdown and universal writing](/slides/01-class_01_markdown-writing.html) ([PDF](/slides/01-class_01_markdown-writing.pdf))
 - [Lab slides 2: Getting started with R and RStudio](/slides/01-class_02-getting-started.html) ([PDF](/slides/01-class_02-getting-started.pdf))
@@ -76,7 +75,6 @@ RStudio labs:
 - [Lab slides 4: Visualize data with ggplot2](/slides/01-class_04_visualize-data.html) ([PDF](/slides/01-class_04_visualize-data.pdf))
 - [Lab slides 5: Transform data with dplyr](/slides/01-class_05_transform-data.html) ([PDF](/slides/01-class_05_transform-data.pdf))
 
-:::
 
 ```{verbatim include=FALSE}
 Playlist: https://www.youtube.com/playlist?list=PLS6tnpTr39sHcnk9KcoQVzDywxWRzVWHC

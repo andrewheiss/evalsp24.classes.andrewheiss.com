@@ -1,0 +1,78 @@
+---
+title: "Getting started with R and RStudio"
+format: html
+---
+
+```{r}
+#| label: setup
+#| warning: false
+#| message: false
+
+library(tidyverse)
+```
+
+## Quarto
+
+This is a [Quarto](https://quarto.org/) file (it has a .qmd file extension). When you execute code within the file, the results appear beneath the code. 
+
+R code goes in **code chunks**, denoted by three backticks. Try executing this chunk by clicking the *Run* button (a small green triangle) within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter* (or *Cmd+Shift+Enter* on Mac). 
+
+```{r}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = cty, y = hwy), alpha = 0.2)
+```
+
+## Add a new code chunk
+
+Add a new code chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd/Ctrl+Option+I*. 
+
+Put 2 + 2 in your new code chunk and run it.
+
+PUT A NEW CHUNK HERE
+
+
+## Rendering Quarto files
+
+We'll use Quarto files as notebooks as we learn because we can record text, code and output. 
+
+Quarto files are also a publication format. Try hitting the "Render" button in the toolbar above. R runs all the code in the document from top to bottom, it collects the output and puts the code, text and output together in an HTML document---you should see it as `01-getting-started.html` in the Files pane. This document is a great way to record or share your work (you can also render to PDF or Word documents).
+
+## Assigning variables
+
+What's the difference between the code in this chunk:
+
+```{r}
+filter(mtcars, cyl == 4)
+```
+
+And the code in this chunk?
+
+```{r}
+four_cyls <- filter(mtcars, cyl == 4)
+```
+
+## Functions
+
+Look at the help page for `seq`
+
+Add a chunk here that uses `seq()` to create a list of numbers from 5 to 100, spaced by 5 (so 5, 10, 15, 20, etc.)
+
+CHUNK HERE
+
+
+## Syntax gone wrong
+
+```{r}
+#| error: true
+sd(pull(.data = starwars, var = mass)
+```
+
+```{r}
+#| error: true
+my_name <- "Andrew'
+```
+
+```{r}
+#| error: true
+pull(.data = "starwars", var = height)
+```
