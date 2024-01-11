@@ -1,0 +1,19 @@
+---
+title: "Plan for the first day of class"
+date: "2024-01-10T21:20"
+categories: [getting started]
+---
+
+Hi everyone!
+
+Tomorrow's the first day of class! Exciting!
+
+Since we're still in a pandemic, I've structured the class in way that limits our exposure to each other as much as possible. [As noted in the syllabus](/syllabus.qmd#course-structure), we're using a flipped classroom this semester. What this means in practice is that you'll do all the readings *and* watch asynchronous lecture videos before class meets on Thursdays. 
+
+Our in-person time will **not** involve lectures. Instead, it'll be a more hands-on lab for working with R and answering the questions that come up from doing the readings and watching the lectures. That's the point of the [weekly check-in assignment](/assignment/weekly-check-in.qmd)—the only way this in-person time will be effective is if you do the readings + videos and ask questions in the weekly check-in.
+
+The [videos for the first day of class are live and ready to watch](/content/01-content.qmd) (along with the readings). If possible, please watch them (and do the readings) before class tomorrow so that we can start with the lab-like in-person time and get a good solid introduction to R and RStudio + answer the questions you have from the first session's materials.
+
+Ideally, please try to submit the first weekly check-in on iCollege by tomorrow too so that we can have some good Q&A time during our in-person time. [BUT no worries if not!](https://www.huffingtonpost.co.uk/entry/no-worries-if-not-psychology_uk_60fff90be4b0d017f838bf1a) The first weekly check-in isn't technically due until next week.
+
+If you don't have time to get through the materials before the first day, that's totally fine—you can do it later and there's no late penalty or anything for the first week. But if you can, let's get started!
