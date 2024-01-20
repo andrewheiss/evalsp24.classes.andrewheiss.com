@@ -61,7 +61,7 @@ youtube_list(slide_details, playlist_id)
 Here are all the materials we'll use in class:
 
 - [**Session 2 FAQ slides**](/slides/02-class.html) ([PDF](/slides/02-class.pdf))
-- [Errors vs. warnings vs. messages](https://moderndive.com/1-getting-started.html#messages) (i.e. what to do
+- [Errors vs. warnings vs. messages](https://moderndive.com/1-getting-started.html#messages) (i.e. what to do when R shows you red text)
 
 Reading in grad school:
 
