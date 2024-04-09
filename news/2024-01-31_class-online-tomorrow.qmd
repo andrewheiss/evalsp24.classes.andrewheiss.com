@@ -1,0 +1,14 @@
+---
+title: "Important! Change of plans tomorrow!"
+subtitle: "No in-person session (but yes online session)"
+date: "2024-01-31T22:17"
+categories: [course details]
+---
+
+Hi everyone!
+
+Despite our constant masking and careful social interactions, one of my daughters just tested positive for COVID this evening. Out of an abundance of caution (and because kids are little germ factories and it's inevitable that the others will start testing positive soon), I'm not going to hold the in-person lab tomorrow—I don't want to inadvertently get any of you sick in case I asymptomatically have it too.
+
+I'm not leaving you content-less though! I'll run the lab on Webex from my home tomorrow at the usual class time using the same Webex link that we use for streaming from my middle-of-the-classroom laptop. The link is accessible on iCollege in the top navigation bar under "Webex". We'll talk about your questions, we'll work a bit more on regression stuff, and we'll work through another example of a logic model and compare and contrast it to a DAG. 
+
+So **no** in-person stuff tomorrow evening, but **yes** synchronous online stuff tomorrow evening.

@@ -48,16 +48,13 @@ slide_frame("/slides/10-slides.html")
 youtube_list(slide_details, playlist_id)
 ```
 
-::: {.content-hidden}
-
 ## In-class stuff
 
 Here are all the materials we'll use in class:
 
 - [**Week 10 FAQ slides**](/slides/10-class.html) ([PDF](/slides/10-class.pdf))
-- [Week 10 R code](/projects/week-10.zip) (on [Posit.cloud](https://posit.cloud/spaces/323551/content/5659946))
+- [Week 10 R code](/projects/week-10.zip) (on [Posit.cloud](https://posit.cloud/spaces/462899/content/7853817))
 
-:::
 
 ```{verbatim include=FALSE}
 Playlist: https://www.youtube.com/playlist?list=PLS6tnpTr39sGYRrLn6OEoI5kry5gvJvdz

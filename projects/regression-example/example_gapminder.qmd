@@ -15,9 +15,14 @@ library(broom)         # This lets you convert regression models into nice table
 library(modelsummary)  # This lets you combine multiple regression models into a single table
 
 gapminder <- read_csv("data/gapminder.csv")
-
-# TODO: Make a new dataset called gapminder_2007 that:
-# 1. Only contains rows for 2007
-# 2. Omits rows from Oceania
-
 ```
+
+## Your tasks
+
+1. Make a new dataset called `gapminder_2007` that only contains rows for 2007 and omits rows from Oceania.
+
+2. Make a scatterplot of the relationship between GDP per capita and life expectancy. Add a linear regression line (hint: `geom_smooth(method = "lm")`)
+
+3. Run a model that explains the effect of GDP per capita on life expectancy. Interpret the intercept and the coefficient for GDP per capita. It might be helpful to multiply or divide GDP per capita by something so you can talk about different kinds of unit changes.
+
+4. Run a model that explains the effect of both GDP per capita and continent on life expectancy. Interpret all the coefficients.

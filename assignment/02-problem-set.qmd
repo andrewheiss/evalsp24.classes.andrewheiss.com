@@ -20,7 +20,7 @@ You'll need to download these two CSV files and put them somewhere on your compu
 
 You'll also need to download this Quarto file with a template for this problem set. Download that here and include it in your project:
 
-- [{{< fa brands r-project >}} `problem-set-2.Rmd`](/projects/problem-set-2/your-name_problem-set-2.Rmd)
+- [{{< fa brands r-project >}} `problem-set-2.qmd`](/projects/problem-set-2/your-name_problem-set-2.qmd)
 
 In the end, the structure of your project directory should look something like this:
 
@@ -30,7 +30,7 @@ your-project-name
 │   ├── food_health_politics.csv
 │   └── penguins.csv
 ├── your-project-name.Rproj
-└── your-name_problem-set-2.Rmd
+└── your-name_problem-set-2.qmd
 ```
 
 To check that you put everything in the right places, you can download and unzip this file, which contains everything in the correct structure:

@@ -1,0 +1,33 @@
+---
+title: "Extra causal inference resources"
+date: "2024-03-12T12:44"
+categories: [resources]
+---
+
+Hi everyone!
+
+I hope you're all enjoying spring break and this beautiful Atlanta weather!
+
+I just wanted to point out some really helpful resources and extra guides for all the causal inference methods we've been talking about this semester. There are a couple overarching organizations that focus on evidence-based policy that provide a ton of excellent free resources:
+
+### Evidence in Governance and Politics (EGAP)
+
+[EGAP](https://egap.org/) is a political science-focused evidence-based workgroup that sets standards for research and program evaluation (like creating best practices for preregistration), [publishes policy briefs on causal work](https://egap.org/policy-briefs/), and (most importantly for our class) provides a ton of [guides and resources](https://egap.org/methods-guides/) for causal inference.
+
+Make sure you check out their [Methods Guide](https://egap.org/methods-guides/) section, where you'll find a bunch of brief and accessible "10 Things to Know About X" guides, like these:
+
+- ["10 Strategies for Figuring Out if X Caused Y"](https://egap.org/resource/10-strategies-for-figuring-out-if-x-caused-y/)
+- ["10 Things to Know About Causal Inference"](https://egap.org/resource/10-things-to-know-about-causal-inference/)
+- ["10 Things to Know About Hypothesis Testing"](https://egap.org/resource/10-things-to-know-about-hypothesis-testing/)
+- ["10 Things to Know About Reading a Regression Table"](https://egap.org/resource/10-things-to-know-about-reading-a-regression-table/)
+- ["10 Things to Know About Pre-Analysis Plans"](https://egap.org/resource/10-things-to-know-about-pre-analysis-plans/)
+
+You already saw one of these back in [the readings for week 6](/content/06-content.qmd) (the "10 Things to Know About Statistical Power" guide), but there are lots of others that you should check out and reference in the future.
+
+### Abdul Latif Jameel Poverty Action Lab (J-PAL)
+
+[J-PAL](https://www.povertyactionlab.org/) is a economics-focused evidence-based workgroup that focuses on international development interventions (its founders Esther Duflo and Abhijit Banerjee [won the Nobel Prize in Economics in 2019](https://www.povertyactionlab.org/updates/j-pal-co-founders-abhijit-banerjee-and-esther-duflo-awarded-nobel-memorial-prize-1)). Similar to EGAP's policy briefs, they publish short ["Policy Insights"](https://www.povertyactionlab.org/policy-insights) summarizing the best evidence on specific policies like education, crime, gender, health, and so on.
+
+Importantly for our class, they also have a big library of [research resources](https://www.povertyactionlab.org/research-resources) with step-by-step guides to planning, designing, running, and analyzing projects.
+
+For instance, check out the ["Data analysis"](https://www.povertyactionlab.org/resource/data-analysis) guide, which contains R and Stata code for finding different treatment effects (ATE, ATT, ITT, LATE), as well as short, accessible explanations of what those all are.

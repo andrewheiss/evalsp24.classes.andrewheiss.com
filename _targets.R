@@ -1,5 +1,5 @@
 library(targets)
-library(crew)
+# library(crew)
 library(tarchetypes)
 suppressPackageStartupMessages(library(tidyverse))
 
@@ -26,8 +26,8 @@ tar_config_set(
 tar_option_set(
   packages = c("tidyverse"),
   format = "rds",
-  workspace_on_error = TRUE,
-  controller = crew_controller_local(workers = 4)
+  workspace_on_error = TRUE#,
+  # controller = crew_controller_local(workers = 1)
 )
 
 # here::here() returns an absolute path, which then gets stored in tar_meta and

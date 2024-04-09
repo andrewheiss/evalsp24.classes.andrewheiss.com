@@ -45,46 +45,24 @@ slide_frame("/slides/03-slides.html")
 youtube_list(slide_details, playlist_id)
 ```
 
-::: {.content-hidden}
-
 ## In-class stuff
 
 Here are all the materials we'll use in class:
 
 - [**Session 3 FAQ slides**](/slides/03-class.html) ([PDF](/slides/03-class.pdf))
 - [Errors vs. warnings vs. messages](https://moderndive.com/1-getting-started.html#messages) (i.e. what to do when R shows you red text)
-- Quarto examples:
-    - [Quarto!](https://quarto.org/)
-    - Example Quarto file used as a code-through or step-by-step teaching document:
-        - Lots of [blog posts here](https://www.andrewheiss.com/blog/)
-        - Julia Silge, ["Modeling human/computer interactions on Star Trek from #TidyTuesday with workflowsets"](https://juliasilge.com/blog/star-trek/)
-        - Bob Rudis, ["Some Covid Donuts To End The Week"](https://rud.is/b/2021/08/13/some-covid-donuts-to-end-the-week/)
-        - Holger K. von Jouanne-Diedrich, ["The “Youth Bulge” of Afghanistan: The Hidden Force behind Political Instability"](https://blog.ephorie.de/the-youth-bulge-of-afghanistan-the-hidden-force-behind-political-instability)
-    - Example Quarto file used as a publicly-consumable document: 
-        - Click on the "Manuscript" menu item [at this site](https://stats.andrewheiss.com/cautioning-canary/)
-        - See [the Rmd file here](https://github.com/andrewheiss/cautioning-canary/blob/master/manuscript/manuscript.Rmd)
 
 Hands-on R materials:
 
-- [{{< fa brands r-project >}} Introduction to the tidyverse Posit.cloud project](https://posit.cloud/spaces/323551/content/5254772)
-- [{{< fa file-zipper >}} Introduction to the tidyverse project `.zip` file](/projects/01-class.zip)
-- [{{< fa brands r-project >}} Regression playground Posit.cloud project](https://posit.cloud/spaces/323551/content/5299495)
+- [{{< fa brands r-project >}} Live code on Dropbox](https://www.dropbox.com/scl/fi/m4mm208s9sbb4zrnwavf5/2024-01-25_live.qmd?rlkey=dzom7jrr2k9rqr744bshs1znt&dl=0)
+- [{{< fa brands r-project >}} Regression playground Posit.cloud project](https://posit.cloud/spaces/462899/content/7445862)
 - [{{< fa file-zipper >}} Regression playground project `.zip` file](/projects/regression-example.zip)
-
-- [Lab slides 1: Markdown and universal writing](/slides/01-class_01_markdown-writing.html) ([PDF](/slides/01-class_01_markdown-writing.pdf))
-- [Lab slides 2: Getting started with R and RStudio](/slides/01-class_02-getting-started.html) ([PDF](/slides/01-class_02-getting-started.pdf))
-- [Lab slides 3: Data basics](/slides/01-class_03_data-basics.html) ([PDF](/slides/01-class_03_data-basics.pdf))
-- [Lab slides 4: Visualize data with ggplot2](/slides/01-class_04_visualize-data.html) ([PDF](/slides/01-class_04_visualize-data.pdf))
-- [Lab slides 5: Transform data with dplyr](/slides/01-class_05_transform-data.html) ([PDF](/slides/01-class_05_transform-data.pdf))
-
 
 ### Logic model for MPA/MPP program
 
 ```{r echo=FALSE, out.width="80%"}
 knitr::include_graphics(here::here("files", "img", "mpa-mpp-logic-model.jpg"), error = FALSE)
 ```
-
-:::
 
 ```{verbatim include=FALSE}
 Playlist: https://www.youtube.com/playlist?list=PLS6tnpTr39sHjKJRcD-ebQUbcaFhc0cQH

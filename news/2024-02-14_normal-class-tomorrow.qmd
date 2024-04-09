@@ -1,0 +1,9 @@
+---
+title: "Back to normal!"
+date: "2024-02-14T21:24"
+categories: [course details]
+---
+
+Hi everyone!
+
+I'm like 90% better, so we're back to our normal schedule tomorrow. We *will* have an in-person lab tomorrow evening. Be prepared to talk all about DAGs and potential outcomes and causal inference!

@@ -1,0 +1,14 @@
+---
+title: "Oof, no class :("
+subtitle: "COVID is the worst"
+date: "2024-02-08T13:10"
+categories: [course details]
+---
+
+Hi everyone!
+
+I was hoping I'd be able to run the in-class lab this evening over Webex, but lol nope. I'm wiped out and can barely talk.
+
+This sucks because we were going to talk about important DAG stuff and answer all your questions about causal models and do an activity where we created both a logic model and a DAG for a program (since they're very different things with different purposes). We'll do that all next week instead.
+
+Accordingly, I've changed the deadline for the causal model assignment that would be due next week. In order to give you time to get your questions answered about DAGs, **the causal model assignment is due on February 22 now**. I've changed the deadline on the class website and on iCollege.

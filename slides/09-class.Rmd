@@ -1,0 +1,358 @@
+---
+title: "Class 9: Diff-in-diff II"
+author: "Andrew Heiss"
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    lib_dir: "libs"
+    chakra: "libs/remark-latest.min.js"
+    css: ["default", "css/ath-slides.css", "css/ath-inferno-fonts.css", "css/animate.css"]
+    seal: false
+    anchor_sections: false
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: "16:9"
+      navigation:
+        scroll: false
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, 
+                      fig.retina = 3, fig.align = "center")
+```
+
+```{r packages-data, include=FALSE}
+library(tidyverse)
+library(ggdag)
+library(palmerpenguins)
+library(modelsummary)
+```
+
+```{r xaringanExtra, echo=FALSE}
+xaringanExtra::use_xaringan_extra(c("tile_view"))
+```
+
+class: center middle main-title section-title-3
+
+# In-person<br>session 9
+
+.class-info[
+
+**March 7, 2024**
+
+.light[PMAP 8521: Program evaluation<br>
+Andrew Young School of Policy Studies
+]
+
+]
+
+---
+
+name: outline
+class: title title-inv-8
+
+# Plan for today
+
+--
+
+.box-2.medium.sp-after-half[Quick questions]
+
+--
+
+.box-5.medium.sp-after-half[LLMs]
+
+--
+
+.box-1.medium.sp-after-half[Matching and IPW]
+
+--
+
+.box-6.medium.sp-after-half[Two-way fixed effects]
+
+---
+
+layout: false
+name: models-designs
+class: center middle section-title section-title-2 animated fadeIn
+
+# Quick questions
+
+---
+
+layout: true
+class: middle
+
+---
+
+.box-2.large[Can you combine design-based<br>and model-based identification?] 
+
+.box-inv-2.medium[Like diff-in-diff with a DAG?]
+
+---
+
+.box-2.large[DIDID(IDIDID)?]
+
+---
+
+.box-2.medium[The effect of mandatory<br>maternity benefits on wages]
+
+.box-inv-2.medium[New Jersey implements policy;<br>Pennsylvania doesn't]
+
+.box-inv-2.medium[Only applies to married women who have kids]
+
+---
+
+.box-inv-2.medium[Married women 20–40 - <br>single men/unmarried women/older women<br>in NJ and PA]
+
+---
+
+.center[
+<figure>
+  <img src="img/09-class/ddd-cunningham-paper.webp" alt="Diff-in-diff-in-diff" title="Diff-in-diff-in-diff" width="50%">
+</figure>
+]
+
+???
+
+- <https://causalinf.substack.com/p/triple-differences-part-1>
+- <https://causalinf.substack.com/p/triple-difference-part-3-triple-differences>
+
+---
+
+.box-2.large[The DAG from the test]
+
+---
+
+layout: false
+name: llms
+class: center middle section-title section-title-5 animated fadeIn
+
+# LLMs
+
+---
+
+layout: true
+class: middle
+
+---
+
+.box-5.medium[How have you used LLMs like ChatGPT?]
+
+.box-5.medium[What worries have you had?]
+
+---
+
+.box-5.medium[Can we use LLMs like ChatGPT?]
+
+.box-5.medium[How do we use them?]
+
+.box-5.medium[Is it okay to use them?]
+
+---
+
+.box-5.medium[LLMs are not magical. They're stats.]
+
+---
+
+.center[
+<iframe width="800" height="450" src="https://www.youtube.com/embed/67_aMPDk2zw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+]
+
+---
+
+layout: true
+class: title title-inv-5
+
+---
+
+# So many ethical issues!
+
+.pull-left.center[
+.box-5.less-medium[Environmental concerns]
+
+.tiny.center[["Environmental Impact of Large Language Models"](https://www.cutter.com/article/environmental-impact-large-language-models) and<br>["The mounting human and environmental costs of generative AI"](https://arstechnica.com/gadgets/2023/04/generative-ai-is-cool-but-lets-not-forget-its-human-and-environmental-costs/) and ["AI water footprint suggests that large language models are thirsty"](https://techhq.com/2023/04/ai-water-footprint-suggests-that-large-language-models-are-thirsty/)]
+
+.box-5.less-medium[Racial and gender bias]
+
+.tiny.center[["AI chatbots use racist stereotypes even after anti-racism training"](https://www.newscientist.com/article/2421067-ai-chatbots-use-racist-stereotypes-even-after-anti-racism-training/)]
+
+.box-5.less-medium[Human toll]
+
+.tiny.center[["OpenAI Used Kenyan Workers on Less Than $2 Per Hour to Make ChatGPT Less Toxic"](https://time.com/6247678/openai-chatgpt-kenya-workers/)]
+
+]
+
+.pull-right[
+.box-5.less-medium[Stolen training data]
+
+.tiny.center[["ChatGPT Stole Your Work. So What Are You Going to Do?"](https://www.wired.com/story/chatgpt-generative-artificial-intelligence-regulation/) and ["Congress Wants Tech Companies to Pay Up for AI Training Data"](https://www.wired.com/story/congress-senate-tech-companies-pay-ai-training-data/) and ["ChatGPT can leak training data, violate privacy"](https://www.zdnet.com/article/chatgpt-can-leak-source-data-violate-privacy-says-googles-deepmind/)]
+
+.box-5.less-medium[Ouroboros effect]
+
+.tiny.center[["Meet the Serbian DJ Running an AI Clickbait Business"](https://www.wnycstudios.org/podcasts/otm/segments/serbian-dj-internet-ai-clickbait-on-the-media) and ["The Perfect Webpage"](https://www.theverge.com/c/23998379/google-search-seo-algorithm-webpage-optimization)]
+
+.box-5.less-medium[Making stuff up]
+
+.tiny.center[["AI models make stuff up. How can hallucinations be controlled?"](https://www.economist.com/science-and-technology/2024/02/28/ai-models-make-stuff-up-how-can-hallucinations-be-controlled)]
+]
+
+???
+
+<https://www.thehairpin.com/>
+
+---
+
+layout: false
+class: middle
+
+.box-5.large[You need to figure out<br>your own ethics.]
+
+---
+
+layout: true
+class: title title-inv-5
+
+---
+
+# LLMs and programming
+
+.box-5.medium[GitHub Copilot specifically trained on code]
+
+.box-5.medium[Works *surprisingly* well]
+
+--
+
+.box-inv-5.medium[But it's dangerous if you<br>don't know what you're doing!]
+
+---
+
+# Copilot skills
+
+.box-5.medium[Talking to Copilot requires<br>special skills and practice!]
+
+.box-5.medium[***Rep***roducible ***ex***amples!]
+
+.small.center[[Reprex slides](https://datavizf23.classes.andrewheiss.com/slides/08-slides.html#15)]
+
+.box-inv-5.smal[[GitHub Gists](https://gist.github.com/)]
+
+---
+
+# Things Copilot is good at
+
+.box-5.medium[Explaining and annotating code]
+
+.box-5.medium[Translating between languages]
+
+.box-5.medium[Generating boilerplate/starter code]
+
+.box-5.medium[Cleaning and rewriting code]
+
+---
+
+.box-5.huge[Demonstration!]
+
+---
+
+layout: false
+name: ipw
+class: center middle section-title section-title-1 animated fadeIn
+
+# Matching and IPW
+
+---
+
+layout: false
+name: twfe
+class: center middle section-title section-title-6 animated fadeIn
+
+# Two-way fixed effects<br>(TWFE)
+
+---
+
+layout: true
+class: middle
+
+---
+
+.box-6.medium[Two states: Alabama vs. Arkansas]
+
+$$\begin{aligned}
+\text{Mortality}\ =&\ \beta_0 + \beta_1\ \text{Alabama} + \beta_2\ \text{After 1975}\ + \\
+&\ \beta_3\ (\text{Alabama} \times \text{After 1975})
+\end{aligned}$$
+
+---
+
+.box-6.medium[All states: `Treatment == 1`<br>if legal for 18-20-year-olds to drink]
+
+$$\text{Mortality}\ =\ \beta_0 + \beta_1\ \text{Treatment} + \beta_2\ \text{State} + \beta_3\ \text{Year}$$
+
+---
+
+$$\begin{aligned}
+\text{Mortality}\ =&\ \beta_0 + \beta_1\ \text{Alabama} + \beta_2\ \text{After 1975}\ + \\
+&\ \color{red}{\beta_3}\ (\text{Alabama} \times \text{After 1975})
+\end{aligned}$$
+
+.center[vs.]
+
+$$\text{Mortality}\ =\ \beta_0 + \color{red}{\beta_1}\ \text{Treatment} + \beta_2\ \text{State} + \beta_3\ \text{Year}$$
+
+---
+
+$$\begin{aligned}
+\text{Mortality}\ =&\ \beta_0 + \beta_1\ \text{Alabama} + \beta_2\ \text{After 1975}\ + \\
+&\ \color{red}{\beta_3}\ (\text{Alabama} \times \text{After 1975})
+\end{aligned}$$
+
+.center[vs.]
+
+$$\text{Mortality}\ =\ \beta_0 + \color{red}{\beta_1}\ \text{Treatment} + \beta_2\ \text{State} + \beta_3\ \text{Year}$$
+
+.center[vs.]
+
+$$\begin{aligned}
+\text{Mortality}\ =\ & \beta_0 + \color{red}{\beta_1}\ \text{Treatment} + \beta_2\ \text{State} + \beta_3\ \text{Year}\ +\\
+&\beta_4\ (\text{State} \times \text{Year})
+\end{aligned}$$
+
+---
+
+.center[
+<figure>
+  <img src="img/08-class/mm-tbl-5-2.png" alt="Mastering Metrics Table 5.2" title="Mastering Metrics Table 5.2" width="55%">
+</figure>
+]
+
+---
+
+$$\begin{aligned}
+\text{Donation rate}\ =&\ \beta_0 + \beta_1\ \text{California} + \beta_2\ \text{After Q22011}\ + \\
+&\ \beta_3\ (\text{California} \times \text{After Q22011})
+\end{aligned}$$
+
+.center[vs.]
+
+$$
+\begin{aligned}
+\text{Donation rate}\ =\ & \beta_0 + \color{red}{\beta_1}\ \text{Treatment}\ + \\
+& \beta_2\ \text{State} + \beta_3\ \text{Quarter}
+\end{aligned}
+$$
+
+---
+
+.box-6.large[What about this<br>staggered treatment stuff?]
+
+.box-inv-6[[See this](https://www.andrewheiss.com/blog/2021/08/25/twfe-diagnostics/)]
+
+???
+
+This is good for ethical reasons!
+
+Blog post

@@ -48,17 +48,15 @@ slide_frame("/slides/11-slides.html")
 youtube_list(slide_details, playlist_id)
 ```
 
-::: {.content-hidden}
-
 ## In-class stuff
 
 Here are all the materials we'll use in class:
 
 - [**Week 11 FAQ slides**](/slides/11-class.html) ([PDF](/slides/11-class.pdf))
-- [Week 11 R code](/projects/week-11.zip) (on [Posit.cloud](https://posit.cloud/spaces/323551/content/5707238))
-
-:::
-
+- [Week 11 R code](/projects/week-11.zip) (on [Posit.cloud](https://posit.cloud/spaces/462899/content/7897134))
+- [Generating random numbers](/example/random-numbers.qmd)
+- [The ultimate guide to generating synthetic data for causal inference](/example/synthetic-data.qmd)
+- [{{< fa brands r-project >}} Live R script](https://www.dropbox.com/scl/fi/xgkpdrl2wkvhzzb07ug20/synthetic-data-sp24.R)
 
 ```{verbatim include=FALSE}
 Playlist: https://www.youtube.com/playlist?list=PLS6tnpTr39sEsOSeMK19h6RWUB5kHrn0q

@@ -1,0 +1,12 @@
+---
+title: "Helpful extra resources on causal inference and dplyr"
+date: "2024-04-09T14:30"
+categories: [resources]
+---
+
+Hi again everyone!
+
+I recently posted a couple blog posts with some extra details and resources about core concepts in the class. You should check them out!
+
+- [Visualizing {dplyr}'s `mutate()`, `summarize()`, `group_by()` and `ungroup()` with animations](https://www.andrewheiss.com/blog/2024/04/04/group_by-summarize-ungroup-animations/) - I made some little animations showing what happens when you group, summarize, and mutate
+- [Demystifying causal inference estimands: ATE, ATT, and ATU](https://www.andrewheiss.com/blog/2024/03/21/demystifying-ate-att-atu/) - This is a helpful little exploration of the ATE, ATT, and ATU—those things that we talked about weeks ago at the beginning of the semester but haven't really done a lot with since.

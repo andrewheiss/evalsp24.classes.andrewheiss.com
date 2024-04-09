@@ -1,0 +1,287 @@
+---
+title: "Making nicer and fancier tables"
+date: "2024-04-09T18:40"
+categories: [resources]
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  fig.width = 6, 
+  fig.height = 6 * 0.618, 
+  fig.align = "center", 
+  out.width = "90%",
+  collapse = TRUE
+)
+
+library(tidyverse)
+```
+
+Many of you have asked about how to make prettier tables with R and Quarto. There's a whole world of packages for making beautiful tables with R! Four of the most common ones are [{gt}](https://gt.rstudio.com/), the brand new and invented-to-improve-on-{kableExtra} [{tinytable}](https://vincentarelbundock.github.io/tinytable/), [{kableExtra}](https://haozhu233.github.io/kableExtra/), and [{flextable}](https://ardata-fr.github.io/flextable-book/):
+
+```{r table-summary, echo=FALSE}
+#| classes: no-stripe
+library(gt)
+
+tribble(
+  ~`Package`, ~HTML, ~PDF, ~Word, ~` `, ~Notes,
+  "[**{gt}**](https://gt.rstudio.com/)", "**Great**", "Okay", "Okay", "[Examples](https://gt.rstudio.com/articles/case-study-gtcars.html)", 'Has the goal of becoming the “grammar of tables” (hence “gt”). It is supported by developers at Posit and gets updated and improved regularly. It\'ll likely become the main table-making package for R.',
+  "[**{tinytable}**](https://vincentarelbundock.github.io/tinytable/)", "**Great**", "**Great**", "Okay", "[Examples](https://vincentarelbundock.github.io/tinytable/vignettes/tutorial.html)", 'Made by the same developer as {modelsummary}, this brand new package essentially replaces the now-defunct {kableExtra} and is designed to work spectaularly well with PDF and HTML.',
+  "[**{kableExtra}**](https://haozhu233.github.io/kableExtra/)", "**Great**", "**Great**", "Okay", "[Examples](https://haozhu233.github.io/kableExtra/awesome_table_in_html.html)", "Works really well for HTML output and has the best support for PDF output, but development has stalled for the past couple years and it seems to maybe be abandoned, which is sad.",
+  "[**{flextable}**](https://ardata-fr.github.io/flextable-book/)", "**Great**", "Okay", "**Great**", "[Examples](https://ardata-fr.github.io/flextable-book/index.html#walkthrough-simple-example)", "Works really well for HTML output and has the best support for Word output. It's not abandoned and gets regular updates."
+) |> 
+  gt() |> 
+  cols_width(
+    Package ~ pct(13),
+    one_of(c("HTML", "PDF", "Word")) ~ pct(6),
+    ` ` ~ pct(10),
+    Notes ~ pct(59)
+  ) |> 
+  fmt_markdown(
+    columns = everything()
+  ) |> 
+  tab_spanner(
+    label = "Output support",
+    columns = c(HTML, PDF, Word)
+  ) |> 
+  opt_table_font(font = "Barlow") |> 
+  tab_options(column_labels.font.weight = "bold",
+              row_group.font.weight = "bold") |> 
+  tab_style(
+    style = "vertical-align: top;",
+    locations = cells_body()
+  )
+```
+
+\ 
+
+## General examples
+
+Here's a quick illustration of these packages. All four are incredibly powerful and let you do all sorts of really neat formatting things ([{gt} even makes interactive HTML tables!](https://gt.rstudio.com/reference/opt_interactive.html)), so make sure you check out the documentation and examples. I personally use all of them, depending on which output I'm working with. When rendering to HTML, I use {gt} or {tinytable}; when rendering to PDF I use {tinytable} or {gt}; when knitting to Word I use {flextable}.
+
+::: {.panel-tabset}
+### Dataset to table-ify
+
+```{r create-table-data, warning=FALSE, message=FALSE}
+library(tidyverse)
+
+cars_summary <- mpg |> 
+  group_by(year, drv) |>
+  summarize(
+    n = n(),
+    avg_mpg = mean(hwy),
+    median_mpg = median(hwy),
+    min_mpg = min(hwy),
+    max_mpg = max(hwy)
+  ) |> 
+  ungroup()
+```
+
+### {gt}
+
+```{r gt-example}
+#| classes: no-stripe
+library(gt)
+
+cars_summary |> 
+  group_by(year) |> 
+  gt() |> 
+  cols_label(
+    drv = "Drive",
+    n = "N",
+    avg_mpg = "Average",
+    median_mpg = "Median",
+    min_mpg = "Minimum",
+    max_mpg = "Maximum"
+  ) |> 
+  tab_spanner(
+    label = "Highway MPG",
+    columns = c(avg_mpg, median_mpg, min_mpg, max_mpg)
+  ) |> 
+  fmt_number(
+    columns = avg_mpg,
+    decimals = 2
+  ) |> 
+  tab_options(
+    row_group.as_column = TRUE
+  )
+```
+
+### {tinytable}
+
+```{r tinytable-example}
+library(tinytable)
+
+cars_summary |> 
+  select(-year) |> 
+  rename(
+    "Drive" = drv,
+    "N" = n,
+    "Average" = avg_mpg,
+    "Median" = median_mpg,
+    "Minimum" = min_mpg,
+    "Maximum" = max_mpg
+  ) |> 
+  tt() |> 
+  group_tt(
+    i = list("1999" = 1, "2008" = 4),
+    j = list("Highway MPG" = 3:6)
+  ) |>
+  style_tt(
+    i = c(1, 5),
+    bold = TRUE,
+    line = "b",
+    line_color = "#cccccc"
+  ) |> 
+  style_tt(j = 2:6, align = "c") |> 
+  format_tt(j = 3, digits = 2, num_fmt = "decimal")
+```
+
+### {kableExtra}
+
+```{r kableExtra-example, warning=FALSE, message=FALSE}
+#| classes: no-stripe
+library(kableExtra)
+
+cars_summary |> 
+  select(-year) |> 
+  kbl(
+    col.names = c("Drive", "N", "Average", "Median", "Minimum", "Maximum"),
+    digits = 2
+  ) |> 
+  kable_styling() |> 
+  pack_rows("1999", 1, 3) |> 
+  pack_rows("2008", 4, 6) |> 
+  add_header_above(c(" " = 2, "Highway MPG" = 4))
+```
+
+
+### {flextable}
+
+```{r flextable-example, message=FALSE}
+#| tbl-cap: Flextable example
+library(flextable)
+
+cars_summary |> 
+  rename(
+    "Year" = year,
+    "Drive" = drv,
+    "N" = n,
+    "Average" = avg_mpg,
+    "Median" = median_mpg,
+    "Minimum" = min_mpg,
+    "Maximum" = max_mpg
+    ) |> 
+  mutate(Year = as.character(Year)) |> 
+  flextable() |> 
+  colformat_double(j = "Average", digits = 2) |>
+  add_header_row(values = c(" ", "Highway MPG"), colwidths = c(3, 4)) |> 
+  align(i = 1, part = "header", align = "center") |> 
+  merge_v(j = ~ Year) |> 
+  valign(j = 1, valign = "top")
+```
+
+:::
+
+
+## Fancier {modelsummary}
+
+{modelsummary} works with all of these table-making packages, and you can control which one is used with the `output` argument. As of {modelsummary} v2.0, the default table-making backend is {tinytable} (it used to be {kableExtra}, but again, that's relatively abandoned nowadays).
+
+You can see [examples of how to use each of these table-making packages to customize {modelsummary} output at the documentation](https://modelsummary.com/vignettes/appearance.html).
+
+Here's one quick example using {tinytable} for customization:
+
+```{r modelsummary-example, message=FALSE}
+#| classes: no-stripe
+library(modelsummary)
+
+model1 <- lm(hwy ~ displ, data = mpg)
+model2 <- lm(hwy ~ displ + drv, data = mpg)
+
+modelsummary(
+  list(model1, model2),
+  stars = TRUE,
+  # Rename the coefficients
+  coef_rename = c(
+    "(Intercept)" = "Intercept",
+    "displ" = "Displacement",
+    "drvf" = "Drive (front)",
+    "drvr" = "Drive (rear)"),
+  # Get rid of some of the extra goodness-of-fit statistics
+  gof_omit = "IC|RMSE|F|Log",
+  # Use {tinytable} (this is optional since it's the default)
+  output = "tinytable"
+) |> 
+  style_tt(i = 3:4, j = 2, background = "yellow") |> 
+  style_tt(i = 3:4, j = 3, background = "black", color = "white")
+```
+
+## Table captions and numbering
+
+One really nice Quarto feature is the ability to automatically generate cross references to figures and tables. To do this, you'll need to do three things:
+
+1. Add a chunk label using the `label` option in the chunk options. For tables, you need to use a `tbl-` prefix; for figures you need to use a `fig-` prefix.
+2. Add a caption using either the `tbl-cap` or `fig-cap` option in the chunk options.
+3. Reference the table or figure in your text by typing `@tbl-whatever-your-label-is` or `@fig-whatever-your-label-is`
+
+Here's how it all works—type this…
+
+````
+Blah blah blah I'm typing about causal inference; see @fig-example.
+
+```{{r}}
+#| label: fig-example
+#| fig-cap: "This is a histogram"
+#| fig-width: 5
+#| fig-height: 3
+
+ggplot(mpg, aes(x = hwy)) + 
+  geom_histogram(binwidth = 2, color = "white", fill = "darkorange") +
+  theme_bw()
+```
+
+And more blah stuff here, and @tbl-other-example has some results in it.
+
+```{{r}}
+#| label: tbl-other-example
+#| tbl-cap: "A table with stuff in it"
+
+mpg |> 
+  select(year, cyl, trans, drv) |> 
+  slice(1:4) |> 
+  tt()
+```
+````
+
+… to get this:
+
+::: {.border .p-4 .m-3 .shadow}
+Blah blah blah I'm typing about causal inference; see @fig-example.
+
+```{r}
+#| label: fig-example
+#| fig-cap: "This is a histogram"
+#| fig-width: 5
+#| fig-height: 3
+#| out-width: 65%
+#| echo: false
+
+ggplot(mpg, aes(x = hwy)) + 
+  geom_histogram(binwidth = 2, color = "white", fill = "darkorange") +
+  theme_bw()
+```
+
+And more blah stuff here, and @tbl-other-example has some results in it. 
+
+```{r}
+#| label: tbl-other-example
+#| tbl-cap: "A table with stuff in it"
+#| echo: false
+
+mpg |> 
+  select(year, cyl, trans, drv) |> 
+  slice(1:4) |> 
+  tt()
+```
+
+:::

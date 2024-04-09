@@ -3,6 +3,7 @@ title: "Schedule"
 sidebar: false
 toc: false
 page-layout: full
+freeze: false
 ---
 
 ```{r packages-data, include=FALSE}

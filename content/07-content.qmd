@@ -53,15 +53,13 @@ slide_frame("/slides/07-slides.html")
 youtube_list(slide_details, playlist_id)
 ```
 
-::: {.content-hidden}
-
 ## In-class stuff
 
 Here are all the materials we'll use in class:
 
 - [**Session 7 FAQ slides**](/slides/07-class.html) ([PDF](/slides/07-class.pdf))
 - [In-class `.zip` file](/projects/rcts-ipw.zip)
-- [Posit.cloud project](https://posit.cloud/spaces/323551/content/5479370)
+- [Posit.cloud project](https://posit.cloud/spaces/462899/content/7658310)
 
 Other helpful resources:
 
@@ -72,7 +70,6 @@ Other helpful resources:
 - [Standard errors](/example/standard-errors.qmd)
 - [Unobserved confounding and sensitivity analysis](/example/confounding-sensitivity.qmd)
 
-:::
 
 ```{verbatim include=FALSE}
 Playlist: https://www.youtube.com/playlist?list=PLS6tnpTr39sGJURMOwN9tf9MNDN4t0JMz

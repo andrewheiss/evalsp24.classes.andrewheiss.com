@@ -1,0 +1,664 @@
+---
+title: "Class 4: Logic models, measuring stuff, and DAGs"
+author: "Andrew Heiss"
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    lib_dir: "libs"
+    chakra: "libs/remark-latest.min.js"
+    css: ["default", "css/ath-slides.css", "css/ath-inferno-fonts.css", "css/animate.css"]
+    seal: false
+    anchor_sections: false
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: "16:9"
+      navigation:
+        scroll: false
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, 
+                      fig.retina = 3, fig.align = "center")
+```
+
+```{r packages-data, include=FALSE}
+library(tidyverse)
+library(ggdag)
+library(palmerpenguins)
+library(modelsummary)
+```
+
+```{r xaringanExtra, echo=FALSE}
+xaringanExtra::use_xaringan_extra(c("tile_view"))
+```
+
+class: center middle main-title section-title-3
+
+# <strike>In-person</strike><br>Online<br>session 4
+
+.class-info[
+
+**February 1, 2024**
+
+.light[PMAP 8521: Program evaluation<br>
+Andrew Young School of Policy Studies
+]
+
+]
+
+---
+
+name: outline
+class: title title-inv-8
+
+# Plan for today
+
+--
+
+.box-5.medium[Regression FAQs]
+
+--
+
+.box-4.medium[Regression with R]
+
+--
+
+.box-2.medium[Measuring outcomes]
+
+--
+
+.box-5.medium[.small[(Maybe)]<br>DAGs]
+
+---
+
+layout: false
+name: regression-faqs
+class: center middle section-title section-title-5 animated fadeIn
+
+# Regression FAQs
+
+---
+
+layout: true
+class: middle
+
+---
+
+.box-5.medium[How was the 0.05 significance<br>threshold determined?] 
+
+.box-5.medium[Could we say something is significant<br>if p > 0.05, but just note that it is at<br>a higher p-value?<br>Or does it have to fall under 0.05?]
+
+---
+
+.box-5.large[Why all this convoluted<br>logic of null worlds?]
+
+---
+
+.center[
+<figure>
+  <img src="img/02-class/oatmeal-ratings.png" alt="Oatmeal ratings" title="Oatmeal ratings" width="80%">
+</figure>
+]
+
+
+---
+
+.center[
+<figure>
+  <img src="img/02-class/oatmeal-ratings-1.png" alt="Oatmeal ratings" title="Oatmeal ratings" width="80%">
+</figure>
+]
+
+---
+
+.box-5.large[Why does this matter for evaluation?]
+
+.box-inv-5.small[Statistical power!]
+
+---
+
+.box-5.medium[Do we care about the actual coefficients<br>or just whether or not they're significant?]
+
+.box-5.medium[How does significance relate to causation?]
+
+.box-5.medium[If we can't use statistics to assert causation<br>how are we going to use this information<br>in program evaluation?]
+
+---
+
+.box-5.large[What counts as a "good" R²?]
+
+---
+
+.center[
+<figure>
+  <img src="img/02-class/nice-plot-1.png" alt="Euler diagram" title="Euler diagram" width="45%">
+</figure>
+]
+
+---
+
+.center[
+<figure>
+  <img src="img/02-class/plot-diagram-prediction-1.png" alt="R2 prediction" title="R2 prediction" width="75%">
+</figure>
+]
+
+---
+
+.center[
+<figure>
+  <img src="img/02-class/plot-diagram-estimation-1.png" alt="R2 estimation" title="R2 estimation" width="75%">
+</figure>
+]
+
+---
+
+.center[
+<figure>
+  <img src="img/02-class/prediction-vs-estimation.jpg" alt="R2 estimation vs prediction" title="R2 estimation vs prediction" width="100%">
+</figure>
+]
+
+---
+
+.box-5.large[Simpson's Paradox]
+
+---
+
+layout: false
+name: regression
+class: center middle section-title section-title-4 animated fadeIn
+
+# Regression with R
+
+---
+
+layout: false
+name: outcomes
+class: center middle section-title section-title-2 animated fadeIn
+
+# Measuring<br>outcomes
+
+---
+
+layout: true
+class: title title-2
+
+---
+
+# The paradox of evaluation
+
+--
+.box-2.medium[Evaluation is good, but expensive]
+
+.box-inv-2.sp-after.SMALL["Evaluation thinking"]
+
+--
+
+.box-2.medium[Too much evaluation is bad]
+
+.box-inv-2.sp-after-half.SMALL[Taming programs]
+
+---
+
+# Outcomes and programs
+
+.box-2.medium[Outcome variable]
+
+.box-inv-2.sp-after-half.SMALL[Thing you're measuring]
+
+--
+
+.box-2.medium[Outcome change]
+
+.box-inv-2.sp-after-half.SMALL[∆ in thing you're measuring over time]
+
+--
+
+.box-2.medium[Program effect]
+
+.box-inv-2.SMALL[∆ in thing you're measuring over time *because of* the program]
+
+---
+
+# Outcomes and programs
+
+<figure>
+  <img src="img/04/program-effect.png" alt="Outcomes and program effect" title="Outcomes and program effect" width="100%">
+</figure>
+
+---
+
+layout: false
+class: middle
+
+.box-2.large[Abstraction]
+
+---
+
+layout: false
+name: dags
+class: center middle section-title section-title-5 animated fadeIn
+
+# DAGs
+
+---
+
+layout: true
+class: middle
+
+---
+
+.box-5.large[Causal thinking is necessary—<br>even for descriptive work!]
+
+---
+
+.center[
+
+<figure>
+  <img src="img/04-class/supercentenarians.png" alt="Supercentenarians" title="Supercentenarians" width="46%">
+</figure>
+
+]
+
+???
+
+Necessity of causal thinking: Mention the McElreath tweet on birth certificate introduction and death ages: <https://twitter.com/rlmcelreath/status/1427564280744976384>
+
+<https://www.biorxiv.org/content/10.1101/704080v2>
+
+---
+
+layout: false
+
+.box-5.less-medium["Every time I get a haircut, I become more mature!"]
+
+<figure>
+  <img src="img/04-class/ben-hair.jpg" alt="Benjamin haircut" title="Benjamin haircut" width="100%">
+</figure>
+
+---
+
+.box-5.less-medium["Every time I get a haircut, I become more mature!"]
+
+```{r echo=FALSE, fig.width=5, fig.height=2, out.width="70%", fig.align="center"}
+set.seed(1234)
+dagify(
+  Y ~ X,
+  coords = list(x = c(X = 1, Y = 3),
+                y = c(X = 1, Y = 1)),
+  exposure = "X",
+  outcome = "Y",
+  labels = c("X" = "Haircut", "Y" = "Maturity")
+) %>% 
+  tidy_dagitty() %>% 
+  node_status() %>% 
+  ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_edges() +
+  geom_dag_point(aes(color = status), size = 15) +
+  geom_dag_text(color = "white", size = 5) +
+  geom_dag_text(aes(label = label), nudge_y = 0.1, 
+                size = 5, color = "black") +
+  scale_color_manual(values = c("#FF4136", "#0074D9"),
+                     na.value = "#7FDBFF") +
+  coord_cartesian(ylim = c(0.9, 1.2)) +
+  guides(color = "none") +
+  theme_dag()
+```
+
+.center[$$E[\text{Maturity} \mid \operatorname{do} (\text{Get haircut})]$$]
+
+---
+
+.box-5.less-medium[Getting older opens a backdoor path]
+
+```{r echo=FALSE, fig.width=5, fig.height=3, out.width="70%", fig.align="center"}
+dagify(
+  Y ~ X + Z,
+  X ~ Z,
+  coords = list(x = c(X = 1, Y = 3, Z = 2),
+                y = c(X = 1, Y = 1, Z = 2)),
+  exposure = "X",
+  outcome = "Y",
+  labels = c("X" = "Haircut", "Y" = "Maturity",
+             "Z" = "Getting older")
+) %>% 
+  tidy_dagitty() %>% 
+  node_status() %>% 
+  ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_edges() +
+  geom_dag_point(aes(color = status), size = 15) +
+  geom_dag_text(color = "white", size = 5) +
+  geom_dag_text(aes(label = label), nudge_y = 0.25, 
+                size = 5, color = "black") +
+  scale_color_manual(values = c("#FF4136", "#0074D9"),
+                     na.value = "#7FDBFF") +
+  coord_cartesian(ylim = c(0.9, 2.2)) +
+  guides(color = "none") +
+  theme_dag()
+```
+
+---
+
+class: middle
+
+.box-5.medium[But what does that mean,<br>"opening a backdoor path"?]
+
+.box-5.medium[How does statistical association<br>get passed through paths?]
+
+---
+
+.box-5.less-medium.sp-after[How do I know which of these is which?]
+
+.center[
+<figure>
+  <img src="img/05-class/dag-associations.png" alt="DAG associations" title="DAG associations" width="100%">
+</figure>
+]
+
+---
+
+class: middle
+
+.pull-left[
+<figure>
+  <img src="img/04-class/slider-switch-plain-80.jpg" alt="Switch and slider" title="Switch and slider" width="100%">
+</figure>
+]
+
+.pull-right[
+```{r confounding-dag-alone, echo=FALSE, fig.width=4.5, fig.height=3.35, out.width="100%"}
+dagify(
+  Y ~ X + Z,
+  X ~ Z,
+  coords = list(x = c(X = 1, Y = 3, Z = 2),
+                y = c(X = 1, Y = 1, Z = 2))
+) %>% 
+  ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_edges() +
+  geom_dag_point(color = "grey80", size = 17) +
+  geom_dag_text(color = "black", size = 5) +
+  theme_dag()
+```
+]
+
+---
+
+class: middle
+
+.pull-left[
+<figure>
+  <img src="img/04-class/slider-switch-plain-80.jpg" alt="Switch and slider" title="Switch and slider" width="100%">
+</figure>
+]
+
+.pull-right[
+```{r mediating-dag-alone, echo=FALSE, fig.width=4.5, fig.height=3.35, out.width="100%"}
+dagify(
+  Y ~ X + Z,
+  Z ~ X,
+  coords = list(x = c(X = 1, Y = 3, Z = 2),
+                y = c(X = 1, Y = 1, Z = 2))
+) %>% 
+  ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_edges() +
+  geom_dag_point(color = "grey80", size = 17) +
+  geom_dag_text(color = "black", size = 5) +
+  theme_dag()
+```
+]
+
+---
+
+class: middle
+
+.pull-left[
+<figure>
+  <img src="img/04-class/slider-switch-plain-80.jpg" alt="Switch and slider" title="Switch and slider" width="100%">
+</figure>
+]
+
+.pull-right[
+```{r colliding-dag-alone, echo=FALSE, fig.width=4.5, fig.height=3.35, out.width="100%"}
+dagify(
+  Y ~ X,
+  Z ~ Y,
+  Z ~ X,
+  coords = list(x = c(X = 1, Y = 3, Z = 2),
+                y = c(X = 1, Y = 1, Z = 2))
+) %>% 
+  ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_edges() +
+  geom_dag_point(color = "grey80", size = 17) +
+  geom_dag_text(color = "black", size = 5) +
+  theme_dag()
+```
+]
+
+---
+
+.center[
+<video controls loop>
+  <source src="img/05-class/video-confounding-unblocked.mp4" type="video/mp4">
+</video>
+]
+
+---
+
+.center[
+<video controls loop>
+  <source src="img/05-class/video-confounding-blocked.mp4" type="video/mp4">
+</video>
+]
+
+---
+
+.center[
+<video controls loop>
+  <source src="img/05-class/video-mediation.mp4" type="video/mp4">
+</video>
+]
+
+---
+
+layout: true
+class: middle
+
+---
+
+.box-5.medium[d-separation]
+
+.box-inv-5[Except for the one arrow between X and Y,<br>no statistical association can flow between X and Y]
+
+.box-inv-5[This is **identification**—<br>all alternative stories are ruled out<br>and the relationship is isolated]
+
+---
+
+.box-5.large[How exactly do colliders<br>mess up your results?]
+
+.box-5.medium[It looks like you can<br>still get the effect of X on Y]
+
+---
+
+```{r nba-dag, echo=FALSE, fig.width=5, fig.height=3, out.width="65%"}
+set.seed(1234)
+dagify(
+  Y ~ X,
+  Z ~ Y,
+  Z ~ X,
+  coords = list(x = c(X = 1, Y = 3, Z = 2),
+                y = c(X = 1, Y = 1, Z = 2)),
+  exposure = "X",
+  outcome = "Y",
+  labels = c("X" = "Height", "Y" = "Points",
+             "Z" = "Being in the NBA")
+) %>% 
+  tidy_dagitty() %>% 
+  node_status() %>% 
+  ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_edges() +
+  geom_dag_point(aes(color = status), size = 15) +
+  geom_dag_text(color = "white", size = 5) +
+  geom_dag_text(aes(label = label), nudge_y = c(0.25, 0.25, -0.25), color = "black", size = 5) +
+  scale_color_manual(values = c("#FF4136", "#0074D9"),
+                     na.value = "#7FDBFF") +
+  guides(color = "none") +
+  theme_dag()
+```
+
+---
+
+.center[
+<figure>
+  <img src="img/04-class/facebook.png" alt="Facebook collider" title="Facebook collider" width="55%">
+</figure>
+]
+
+???
+
+<https://www.businessinsider.com/facebook-sent-incomplete-misinformation-data-flawed-researchers-2021-9>
+
+<https://www.nytimes.com/live/2020/2020-election-misinformation-distortions#facebook-sent-flawed-data-to-misinformation-researchers>
+
+---
+
+layout: false
+class: title title-5
+
+# Does niceness improve appearance?
+
+```{r niceness-appearance-data, include=FALSE}
+set.seed(1234)
+nice_appearance_data <- tibble(niceness = rnorm(10000, mean = 0, sd = 1),
+                               appearance = rnorm(10000, mean = 0, sd = 1))
+
+plot_labels <- tribble(
+  ~x, ~y, ~label, 
+  -2, 2, "Mean and attractive",
+  2, 2, "Nice and attractive",
+  2, -2, "Nice and ugly",
+  -2, -2, "Mean and ugly",
+)
+
+full_sample <- ggplot(nice_appearance_data, aes(x = niceness, y = appearance)) +
+  geom_point(color = "grey40", size = 0.5, alpha = 0.8) +
+  geom_smooth(size = 2, method = "lm") +
+  labs(x = "Niceness", y = "Appearance") +
+  theme_bw(base_family = "Fira Sans Condensed")
+
+full_sample_annotated <- full_sample +
+  geom_vline(xintercept = 0) +
+  geom_hline(yintercept = 0) +
+  geom_label(data = plot_labels, aes(label = label, x = x, y = y),
+             fill = "#CF4446", color = "white",
+             family = "Fira Sans Condensed", fontface = "bold")
+
+collider_bias <- ggplot(filter(nice_appearance_data, 
+                               !(niceness <= 0 & appearance <= 0)), 
+       aes(x = niceness, y = appearance)) +
+  geom_point(color = "grey40", size = 0.5, alpha = 0.8) +
+  geom_vline(xintercept = 0) +
+  geom_hline(yintercept = 0) +
+  geom_smooth(size = 2, method = "lm") +
+  geom_label(data = plot_labels, aes(label = label, x = x, y = y),
+             fill = "#CF4446", color = "white",
+             family = "Fira Sans Condensed", fontface = "bold") +
+  labs(x = "Niceness", y = "Appearance") +
+  theme_bw(base_family = "Fira Sans Condensed")
+collider_bias
+
+collider_dag <- dagify(
+  Y ~ X,
+  Z ~ X + Y,
+  coords = list(x = c(X = 1, Y = 3, Z = 2),
+                y = c(X = 1, Y = 1, Z = 2)),
+  exposure = "X",
+  outcome = "Y"
+) %>% 
+  tidy_dagitty() %>% 
+  node_status() %>% 
+  mutate(across(c(name, to), 
+                ~recode(., X = "Niceness", Y = "Appearance", 
+                        Z = "People you've dated"))) %>% 
+  mutate(arrow_color = ifelse(to == "People you've dated", "#F012BE", "black"))
+
+plot_dag <- ggplot(collider_dag, aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_edges(aes(edge_color = arrow_color)) +
+  geom_dag_point(aes(color = status), size = 17) +
+  geom_dag_text(data = filter(collider_dag, name != "People you've dated"),
+                color = "black", size = 5, nudge_y = -0.2,
+                family = "Fira Sans Condensed", fontface = "bold") +
+  geom_dag_text(data = filter(collider_dag, name == "People you've dated"),
+                color = "black", size = 5, nudge_y = 0.2,
+                family = "Fira Sans Condensed", fontface = "bold") +
+  scale_color_manual(values = c("#2ECC40", "#0074D9"), 
+                     na.value = "grey80", guide = "none") +
+  coord_cartesian(xlim = c(0.8, 3.2), ylim = c(0.8, 2.2)) +
+  theme_dag()
+```
+
+.pull-left[
+
+```{r echo=FALSE, fig.width=4.5, fig.height=3.35, out.width="100%"}
+full_sample
+```
+
+]
+
+--
+
+.pull-right[
+
+```{r echo=FALSE, fig.width=4.5, fig.height=3.35, out.width="100%"}
+full_sample_annotated
+```
+
+]
+
+---
+
+class: title title-5
+
+# Collider distorts the true effect!
+
+.pull-left[
+
+```{r echo=FALSE, fig.width=4.5, fig.height=3.35, out.width="100%"}
+plot_dag
+```
+
+]
+
+--
+
+.pull-right[
+
+```{r echo=FALSE, fig.width=4.5, fig.height=3.35, out.width="100%"}
+collider_bias
+```
+
+]
+
+---
+
+.box-5.large[Effect of race on police use of force<br>using administrative data]
+
+---
+
+.box-5.medium[Effect of race on police use of force<br>using administrative data]
+
+.pull-left[
+<figure>
+  <img src="img/05-class/klm-dag.png" alt="Use of force" title="Use of force" width="100%">
+</figure>
+]
+
+.pull-right[
+<figure>
+  <img src="img/05-class/klm.png" alt="Use of force" title="Use of force" width="100%">
+</figure>
+]

@@ -13,7 +13,7 @@ set.seed(1234)
 options("digits" = 2, "width" = 150)
 ```
 
-In class session 2 ([see this from the FAQ slides](/slides/02-class.html#12)) we talked briefly about the difference between frequentist statistics, where you test for the probability of your data given a null hypothesis, or $P(\text{data} \mid H_0)$, and Bayesian statistics, where you test for the probability of your hypothesis given your data, or $P(H \mid \text{data})$. 
+In class session 7 ([see this from the FAQ slides](/slides/07-class.html#55)) we talked briefly about the difference between frequentist statistics, where you test for the probability of your data given a null hypothesis, or $P(\text{data} \mid H_0)$, and Bayesian statistics, where you test for the probability of your hypothesis given your data, or $P(H \mid \text{data})$. 
 
 This difference is important. In the world of frequentism and null hypothesis significance testing (NHST), which is what pretty much all statistics classes use (including this one!), you have to compare your findings to a hypothetical null world and you have to talk about rejecting null hypotheses. In the Bayes world, though, you get to talk about the probability that your hypothesis is correct rather than the probability of seeing a value in a null world. So much more convenient and easy to interpret!
 

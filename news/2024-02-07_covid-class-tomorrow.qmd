@@ -1,0 +1,14 @@
+---
+title: "Important! Another change of plans tomorrow!"
+subtitle: "No in-person session (but maybe online session)"
+date: "2024-02-07T10:59"
+categories: [course details]
+---
+
+Hi everyone!
+
+Despite our best efforts, we've had a bit of a COVID outbreak at home, and I unfortunately just tested positive this morning.
+
+So sadly, like last week, there will be **no in-person session tomorrow**. Depending on how I'm feeling, I'll run the in-person lab on Webex again, like last week. I'll make that call tomorrow afternoon—I'll let you all know by 2 PM. 
+
+So **no** in-person stuff tomorrow evening, but **maybe** synchronous online stuff tomorrow evening.

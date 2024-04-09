@@ -1,0 +1,11 @@
+---
+title: "Exam 2 details"
+date: "2024-04-09T14:13"
+categories: [course details]
+---
+
+Hi everyone!
+
+Exam 2 opens on Thursday morning and will be available until 11:59 PM on April 19. It's like Exam 1—open book, open note, open internet, just not open other people. [There's a study guide here](/resource/exam2.qmd).
+
+You should have access to all the answer keys after you submit each assignment. If you submitted an assignment to me via e-mail, let me know and I can make the answer key available to you.
